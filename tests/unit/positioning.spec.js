@@ -290,6 +290,8 @@ describe('mapa de Google Maps embebido', () => {
     expect(src).toContain('google.com/maps');
     expect(src).toContain('output=embed');
     expect(src).not.toContain('key=');
+    // La ficha oficial del Dr., identificada por su CID inmutable.
+    expect(src).toContain('cid=14958856411200805908');
 
     expect(iframe.attributes('loading')).toBe('lazy');
     expect(iframe.attributes('referrerpolicy')).toBe('no-referrer-when-downgrade');

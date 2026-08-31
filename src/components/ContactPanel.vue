@@ -8,7 +8,7 @@ const { t } = useI18n();
 /** Null mientras el numero internacional de WhatsApp no este confirmado. */
 const whatsapp = computed(() => whatsappUrl());
 
-/** Mapa embebido apuntando a la direccion confirmada del consultorio. */
+/** Mapa embebido apuntando a la ficha oficial del consultorio en Google Maps. */
 const mapSrc = computed(() => mapEmbedUrl());
 </script>
 

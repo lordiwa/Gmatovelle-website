@@ -56,14 +56,29 @@ describe('datos de contacto', () => {
     );
   });
 
-  it('apunta el mapa embebido a La Esquina y no exige API key', () => {
+  it('apunta el mapa embebido a la ficha oficial del Dr. y no exige API key', () => {
+    // El CID sale del enlace de la ficha verificada por Google
+    // (data=!4m2!3m1!1s0x91d5910062e59cc3:0xcf9888a68bb2dc14): el segundo
+    // hexadecimal en decimal. Es el identificador inmutable de la ficha.
+    expect(contact.mapCid).toBe(String(BigInt('0xcf9888a68bb2dc14')));
+
     const url = mapEmbedUrl();
-    expect(url.startsWith('https://www.google.com/maps?q=')).toBe(true);
+    expect(url).toBe('https://www.google.com/maps?cid=14958856411200805908&output=embed');
     expect(url).toContain('output=embed');
     expect(url).not.toContain('key=');
-    expect(decodeURIComponent(url)).toContain('Centro de Negocios La Esquina');
-    expect(decodeURIComponent(url)).toContain('Chimborazo y Av Pampite');
-    expect(decodeURIComponent(url)).toContain('Quito');
+  });
+
+  it('no vuelve a la busqueda de texto generica que caia fuera de la ficha', () => {
+    // El embed anterior era ?q=Centro+de+Negocios+La+Esquina...: resolvia un
+    // punto del edificio, no la ficha del consultorio con sus resenas.
+    expect(mapEmbedUrl()).not.toContain('q=');
+    expect(contact.mapQuery).toBeUndefined();
+  });
+
+  it('conserva el nombre exacto de la ficha como referencia legible', () => {
+    expect(contact.mapPlaceName).toBe(
+      'Dr. Gonzalo Matovelle Médico Psiquiatra, Chimborazo y Av Pampite, Quito',
+    );
   });
 
   it('no deja rastro de los placeholders descartados en el codigo fuente', () => {

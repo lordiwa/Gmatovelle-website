@@ -51,12 +51,31 @@ export const contact = {
   address: 'Centro de Negocios del centro comercial La Esquina, calle Chimborazo y Av Pampite, torre 1, piso 2 oficina 3A',
 
   /**
-   * Consulta que se envia a Google Maps para el mapa embebido. Es una version
-   * corta de la direccion: el buscador de Maps resuelve mejor el punto con el
-   * nombre del centro de negocios y la interseccion que con el detalle de
-   * torre, piso y oficina, que no aportan geolocalizacion.
+   * Ficha oficial del consultorio en Google Maps: la entrada verificada por
+   * Google, con su nombre, sus datos y sus resenas. Sustituye a la busqueda por
+   * texto que se usaba antes ('Centro de Negocios La Esquina, ...'), que caia en
+   * un punto generico del edificio y no en la ficha del Dr.
+   *
+   * El identificador estable es el CID que Google publica dentro del enlace de
+   * la ficha, en el segmento data=!4m2!3m1!1s<featureId>:<cid>. Para esta ficha
+   * el enlace es
+   *   .../maps/place/Dr.+Gonzalo+Matovelle+Medico+Psiquiatra,...
+   *   /data=!4m2!3m1!1s0x91d5910062e59cc3:0xcf9888a68bb2dc14!18m1!1e1
+   * y el CID es el segundo hexadecimal, 0xcf9888a68bb2dc14, aqui en decimal.
+   *
+   * Se embebe por CID y no por nombre porque el CID es inmutable y apunta
+   * siempre a esta ficha, mientras que una consulta de texto la resuelve Google
+   * en cada carga y puede derivar a otro negocio si aparece uno con nombre
+   * parecido en la misma zona.
    */
-  mapQuery: 'Centro de Negocios La Esquina, Chimborazo y Av Pampite, Quito, Ecuador',
+  mapCid: '14958856411200805908',
+
+  /**
+   * Nombre exacto de la ficha, tal como lo publica Google. No se usa para
+   * construir el embed (eso lo hace mapCid); queda como referencia legible para
+   * reencontrar la ficha si alguna vez hay que volver a resolver el CID.
+   */
+  mapPlaceName: 'Dr. Gonzalo Matovelle Médico Psiquiatra, Chimborazo y Av Pampite, Quito',
 
   openingHours: null,
 };
@@ -72,9 +91,13 @@ export function mailtoHref(email) {
 }
 
 /**
- * Embed de Google Maps sin API key: el endpoint publico ?q=...&output=embed
- * acepta una direccion en texto y no exige credenciales ni facturacion.
+ * Embed de la ficha oficial del consultorio, sin API key: el endpoint publico
+ * ?cid=...&output=embed acepta el CID de una ficha de Google Maps y no exige
+ * credenciales ni facturacion (la Embed API con clave es la otra via, y aqui no
+ * hace falta). Google redirige este parametro a /maps/embed?pb=... resolviendo
+ * la ficha del lado del servidor, asi que no dependemos de un pb opaco que
+ * habria que copiar a mano y que caduca.
  */
 export function mapEmbedUrl() {
-  return 'https://www.google.com/maps?q=' + encodeURIComponent(contact.mapQuery) + '&output=embed';
+  return 'https://www.google.com/maps?cid=' + contact.mapCid + '&output=embed';
 }
