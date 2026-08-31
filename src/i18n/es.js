@@ -240,6 +240,7 @@ export default {
     heading: 'Contacto',
     lead: 'La consulta del Dr. Matovelle se coordina por teléfono.',
     phoneLabel: 'Teléfono del consultorio',
+    emailLabel: 'Correos del consultorio',
     callCta: 'Llamar al ' + contact.phone,
     whatsappCta: 'Escribir por WhatsApp',
     noBookingNote:

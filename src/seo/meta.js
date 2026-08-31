@@ -66,6 +66,7 @@ export function physicianJsonLd(locale) {
     medicalSpecialty: 'Psychiatric',
     jobTitle: locale === 'es' ? 'Neurocientífico · Médico Neuropsiquiatra' : 'Neuroscientist · Neuropsychiatrist',
     telephone: contact.phone,
+    email: contact.emails,
     address: {
       '@type': 'PostalAddress',
       streetAddress: contact.address,
@@ -103,6 +104,7 @@ export function physicianJsonLd(locale) {
       '@type': 'ContactPoint',
       contactType: locale === 'es' ? 'Agendamiento de citas' : 'Appointments',
       telephone: contact.phone,
+      email: contact.emails,
     },
   };
 

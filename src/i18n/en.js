@@ -240,6 +240,7 @@ export default {
     heading: 'Contact',
     lead: 'Appointments with Dr. Matovelle are arranged by phone.',
     phoneLabel: 'Practice phone number',
+    emailLabel: 'Practice email',
     callCta: 'Call ' + contact.phone,
     whatsappCta: 'Message on WhatsApp',
     noBookingNote:

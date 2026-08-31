@@ -1,12 +1,15 @@
 <script setup>
 import { computed } from 'vue';
 import { useI18n } from '@/i18n/index.js';
-import { contact, whatsappUrl } from '@/data/contact.js';
+import { contact, whatsappUrl, mailtoHref, mapEmbedUrl } from '@/data/contact.js';
 
 const { t } = useI18n();
 
 /** Null mientras el numero internacional de WhatsApp no este confirmado. */
 const whatsapp = computed(() => whatsappUrl());
+
+/** Mapa embebido apuntando a la direccion confirmada del consultorio. */
+const mapSrc = computed(() => mapEmbedUrl());
 </script>
 
 <template>
@@ -15,6 +18,13 @@ const whatsapp = computed(() => whatsappUrl());
       <p class="contact-panel__label">{{ t.contact.phoneLabel }}</p>
       <a class="contact-panel__phone" :href="contact.phoneHref">{{ contact.phone }}</a>
       <p class="contact-panel__note">{{ t.contact.noBookingNote }}</p>
+
+      <div class="contact-panel__emails">
+        <p class="contact-panel__label">{{ t.contact.emailLabel }}</p>
+        <p v-for="email in contact.emails" :key="email" class="contact-aside__value">
+          <a class="contact-panel__email" :href="mailtoHref(email)">{{ email }}</a>
+        </p>
+      </div>
 
       <div class="contact-panel__actions">
         <a class="btn btn--on-dark" :href="contact.phoneHref">{{ t.contact.callCta }}</a>
@@ -35,7 +45,7 @@ const whatsapp = computed(() => whatsappUrl());
         <p class="contact-aside__value">{{ t.contact.locationValue }}</p>
         <iframe
           class="contact-map"
-          src="https://www.google.com/maps?q=Av.+Eloy+Alfaro+y+Republica,+Quito,+Ecuador&output=embed"
+          :src="mapSrc"
           :title="t.contact.mapTitle"
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"

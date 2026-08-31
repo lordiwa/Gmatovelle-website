@@ -231,12 +231,15 @@ describe('retrato profesional del Dr.', () => {
 });
 
 /**
- * Direccion confirmada, unica y literal, tal como la entrego el cliente
- * (DATO 4 del brief de TASK-008). Los tests de abajo comparan contra este
- * literal en vez de contra `contact.address` para no volverse tautologicos:
- * si alguien vacia o corrompe contact.address, deben fallar igual.
+ * Direccion confirmada, unica y literal, tal como la entrego el cliente en el
+ * lote de datos definitivos que reemplazo a los placeholders. Los tests de
+ * abajo comparan contra este literal en vez de contra `contact.address` para no
+ * volverse tautologicos: si alguien vacia o corrompe contact.address, deben
+ * fallar igual.
  */
-const CONFIRMED_ADDRESS = 'Av. Eloy Alfaro y República';
+const CONFIRMED_ADDRESS =
+  'Centro de Negocios del centro comercial La Esquina, calle Chimborazo y Av Pampite, ' +
+  'torre 1, piso 2 oficina 3A';
 
 describe('direccion real del consultorio', () => {
   it('es la direccion confirmada, y vive en un unico modulo fuente', () => {

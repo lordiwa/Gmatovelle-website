@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import { pathFor } from '@/router/routes.js';
 import { useI18n } from '@/i18n/index.js';
 import { profile } from '@/data/profile.js';
-import { contact } from '@/data/contact.js';
+import { contact, mailtoHref } from '@/data/contact.js';
 
 const { locale, t } = useI18n();
 
@@ -33,6 +33,10 @@ const links = computed(() => [
           <p class="contact-panel__label">{{ t.contact.phoneLabel }}</p>
           <p class="contact-aside__value">
             <a :href="contact.phoneHref">{{ contact.phone }}</a>
+          </p>
+          <p class="contact-panel__label">{{ t.contact.emailLabel }}</p>
+          <p v-for="email in contact.emails" :key="email" class="contact-aside__value">
+            <a :href="mailtoHref(email)">{{ email }}</a>
           </p>
         </div>
       </div>

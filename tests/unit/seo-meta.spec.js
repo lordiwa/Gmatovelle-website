@@ -22,10 +22,12 @@ describe('JSON-LD de la entidad medica', () => {
     expect(physicianJsonLd('en').description).toContain('40 years');
   });
 
-  it('publica la direccion real confirmada, pero no correo ni perfiles externos sin confirmar', () => {
+  it('publica direccion y correos confirmados, pero no perfiles externos sin confirmar', () => {
     const node = physicianJsonLd('es');
-    expect(node.address.streetAddress).toBe('Av. Eloy Alfaro y República');
-    expect(node.email).toBeUndefined();
+    expect(node.address.streetAddress).toBe(contact.address);
+    expect(node.address.streetAddress).toContain('La Esquina');
+    expect(node.email).toEqual(contact.emails);
+    expect(node.contactPoint.email).toEqual(contact.emails);
     expect(node.openingHours).toBeUndefined();
     expect(node.sameAs).toBeUndefined();
     expect(profile.sameAs).toEqual([]);
