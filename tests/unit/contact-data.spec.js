@@ -38,7 +38,6 @@ describe('datos de contacto', () => {
 
   it('deja en null todo dato de contacto no confirmado', () => {
     expect(contact.openingHours).toBeNull();
-    expect(contact.whatsapp).toBeNull();
   });
 
   it('publica los dos correos confirmados y sus enlaces mailto', () => {
@@ -91,14 +90,26 @@ describe('datos de contacto', () => {
     expect(sources).not.toContain('Eloy Alfaro');
   });
 
-  it('no genera enlace de WhatsApp mientras el numero internacional falte', () => {
-    expect(whatsappUrl()).toBeNull();
+  it('publica el WhatsApp confirmado en el formato internacional de wa.me', () => {
+    // El celular confirmado es 0999835666. wa.me solo acepta digitos, sin + y
+    // sin el 0 inicial del numero local: 593 (Ecuador) + 999835666.
+    expect(contact.whatsapp).toBe('593999835666');
+    expect(contact.whatsapp).toMatch(/^593\d{9}$/);
+    expect(contact.whatsapp.startsWith('5930')).toBe(false);
+    expect(whatsappUrl()).toBe('https://wa.me/593999835666');
   });
 
-  it('arma el enlace de WhatsApp en cuanto el numero se confirme', () => {
+  it('mantiene WhatsApp y el fijo como canales distintos', () => {
+    // El fijo es el canal de llamada y no sirve para WhatsApp; activar uno no
+    // puede haber pisado al otro.
+    expect(contact.phone).toBe('022892716');
+    expect(whatsappUrl()).not.toContain(contact.phone);
+  });
+
+  it('vuelve a ocultar el enlace si algun dia el numero se retira', () => {
     const original = contact.whatsapp;
-    contact.whatsapp = '593999999999';
-    expect(whatsappUrl()).toBe('https://wa.me/593999999999');
+    contact.whatsapp = null;
+    expect(whatsappUrl()).toBeNull();
     contact.whatsapp = original;
   });
 

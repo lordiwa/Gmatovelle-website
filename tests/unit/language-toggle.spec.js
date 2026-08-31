@@ -22,9 +22,17 @@ describe('selector de idioma ES/EN', () => {
     const options = wrapper.findAll('.lang-toggle__option');
     expect(options[1].attributes('href')).toBe('/en/contact');
 
-    const { wrapper: blog } = await mountAt(App, '/en/blog');
-    const blogOptions = blog.findAll('.lang-toggle__option');
-    expect(blogOptions[0].attributes('href')).toBe('/blog');
+    const { wrapper: en } = await mountAt(App, '/en/contact');
+    const enOptions = en.findAll('.lang-toggle__option');
+    expect(enOptions[0].attributes('href')).toBe('/contacto');
+  });
+
+  it('cae a la portada en una ruta sin equivalente, como la 404', async () => {
+    // /blog quedo fuera de PAGES al retirar la seccion de articulos: el toggle
+    // no puede intentar resolver una pagina que ya no existe.
+    const { wrapper } = await mountAt(App, '/blog');
+    const options = wrapper.findAll('.lang-toggle__option');
+    expect(options.map((o) => o.attributes('href'))).toEqual(['/', '/en']);
   });
 
   it('cambia el contenido al navegar al otro idioma', async () => {

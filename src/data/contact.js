@@ -11,7 +11,6 @@
  *
  * PENDIENTES (no inventar, dejar en null hasta confirmacion del Dr.):
  *   - horarios de atencion
- *   - numero de WhatsApp en formato internacional (ver nota en whatsapp)
  */
 export const contact = {
   /**
@@ -24,15 +23,20 @@ export const contact = {
   phoneHref: 'tel:022892716',
 
   /**
-   * WhatsApp deshabilitado a proposito.
+   * WhatsApp del Dr., en el formato internacional que exige wa.me: solo
+   * digitos, sin +, sin espacios y sin el 0 inicial del numero local.
    *
-   * wa.me exige un numero movil en formato internacional completo
-   * (593 + celular sin el 0 inicial) y el dato confirmado es un fijo, que no
-   * sirve para WhatsApp. Cuando el Dr. confirme un celular, el boton se activa
-   * solo con editar este campo: basta con poner aqui el string internacional
-   * (ej. '5939XXXXXXXX'), nada mas.
+   * El celular confirmado por el cliente es 0999835666 (10 digitos, que es el
+   * largo real de un movil ecuatoriano; el dato anterior de 9 digitos era un
+   * recorte y quedo descartado). La conversion es la estandar de Ecuador:
+   * codigo de pais 593 + el celular sin su 0 inicial, o sea
+   * 0999835666 -> 593 999835666, que se escribe +593 99 983 5666 y produce
+   * https://wa.me/593999835666.
+   *
+   * Es un canal adicional, no un reemplazo: el fijo del consultorio sigue
+   * siendo el de las llamadas.
    */
-  whatsapp: null,
+  whatsapp: '593999835666',
 
   /**
    * Correos confirmados del consultorio, en orden de preferencia. El primero
@@ -80,7 +84,13 @@ export const contact = {
   openingHours: null,
 };
 
-/** URL de wa.me, o null si el numero de WhatsApp aun no esta confirmado. */
+/**
+ * URL de wa.me, o null si el numero de WhatsApp aun no esta confirmado.
+ *
+ * Se usa wa.me y no api.whatsapp.com porque es el enlace corto oficial y
+ * resuelve solo a la app en movil o a WhatsApp Web en escritorio, sin
+ * parametros extra.
+ */
 export function whatsappUrl() {
   return contact.whatsapp ? 'https://wa.me/' + contact.whatsapp : null;
 }

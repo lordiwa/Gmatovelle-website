@@ -70,7 +70,17 @@ describe('head por pagina e idioma', () => {
     expect(buildHead('home', 'es').canonical).toBe(SITE_ORIGIN + '/');
     expect(buildHead('home', 'en').canonical).toBe(SITE_ORIGIN + '/en');
     expect(buildHead('contact', 'es').canonical).toBe(SITE_ORIGIN + '/contacto');
-    expect(buildHead('blog', 'en').canonical).toBe(SITE_ORIGIN + '/en/blog');
+    expect(buildHead('contact', 'en').canonical).toBe(SITE_ORIGIN + '/en/contact');
+  });
+
+  it('degrada la seccion de articulos retirada a head generico y noindex', () => {
+    // Ya no esta en PAGES: no debe emitir canonical propio, ni hreflang, ni
+    // JSON-LD que la anuncie como pagina existente.
+    const head = buildHead('blog', 'en');
+    expect(head.canonical).toBe(SITE_ORIGIN + '/');
+    expect(head.robots).toContain('noindex');
+    expect(head.alternates).toEqual([]);
+    expect(head.jsonLd).toEqual([]);
   });
 
   it('cruza las dos versiones idiomaticas con hreflang y x-default', () => {

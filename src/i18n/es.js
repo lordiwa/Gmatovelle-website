@@ -254,6 +254,9 @@ export default {
       'Si usted o alguien cercano está en riesgo inmediato, acuda al servicio de emergencias más cercano o llame al 911. Este sitio no atiende urgencias.',
   },
 
+  // Cadenas de la seccion de articulos. La seccion esta DESACTIVADA (ver los
+  // pasos de reactivacion en src/router/routes.js); se conservan intactas para
+  // que reactivarla no exija reescribir el copy ni sus metadatos.
   blog: {
     heading: 'Artículos',
     lead: 'Un espacio de divulgación en psiquiatría y psicofarmacología escrito por el Dr. Matovelle.',

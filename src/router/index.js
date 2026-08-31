@@ -3,13 +3,16 @@ import { LOCALES, DEFAULT_LOCALE } from '@/site.config.js';
 import { PAGES, routeNameFor } from './routes.js';
 import HomeView from '@/views/HomeView.vue';
 import ContactView from '@/views/ContactView.vue';
-import BlogView from '@/views/BlogView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
+// BLOG DESACTIVADO: ver la nota con los pasos de reactivacion en
+// src/router/routes.js. El import queda comentado a proposito para que el
+// bundle no arrastre una vista inalcanzable.
+// import BlogView from '@/views/BlogView.vue';
 
 const VIEWS = {
   home: HomeView,
   contact: ContactView,
-  blog: BlogView,
+  // blog: BlogView,
 };
 
 export function buildRoutes() {

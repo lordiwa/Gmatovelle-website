@@ -5,7 +5,10 @@ import { contact, whatsappUrl, mailtoHref, mapEmbedUrl } from '@/data/contact.js
 
 const { t } = useI18n();
 
-/** Null mientras el numero internacional de WhatsApp no este confirmado. */
+/**
+ * Enlace wa.me del consultorio. Sigue siendo computed y con v-if porque el
+ * campo puede volver a null: la fuente unica es src/data/contact.js.
+ */
 const whatsapp = computed(() => whatsappUrl());
 
 /** Mapa embebido apuntando a la ficha oficial del consultorio en Google Maps. */

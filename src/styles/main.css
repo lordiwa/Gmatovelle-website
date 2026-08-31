@@ -651,7 +651,10 @@ ul {
   margin-top: 2rem;
 }
 
-/* --- Estado vacio (blog) -------------------------------------------------- */
+/* --- Estado vacio (blog) --------------------------------------------------
+   La seccion de articulos esta desactivada (ver src/router/routes.js), asi que
+   hoy no hay ninguna vista montada que use estas clases. Se conservan para que
+   reactivarla sea descomentar rutas y nada mas. */
 
 .empty-state {
   max-width: 42rem;

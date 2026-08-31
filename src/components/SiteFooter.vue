@@ -9,7 +9,8 @@ const { locale, t } = useI18n();
 
 const links = computed(() => [
   { key: 'home', label: t.value.nav.home, to: pathFor('home', locale.value) },
-  { key: 'blog', label: t.value.nav.blog, to: pathFor('blog', locale.value) },
+  // BLOG DESACTIVADO: ver los pasos de reactivacion en src/router/routes.js.
+  // { key: 'blog', label: t.value.nav.blog, to: pathFor('blog', locale.value) },
   { key: 'contact', label: t.value.nav.contact, to: pathFor('contact', locale.value) },
 ]);
 </script>

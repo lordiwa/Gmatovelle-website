@@ -13,7 +13,7 @@
     "El build (npm run build) y la suite de tests completa pasan en verde, incluyendo tests de regresion que bloqueen la reaparicion de las exclusiones.",
     "El sitio queda desplegado en produccion en Firebase Hosting con el proyecto gmatovelle-site y la URL responde 200 con el contenido actualizado."
   ],
-  "status": "in_progress",
+  "status": "done",
   "priority": "high",
   "labels": [
     "landing",

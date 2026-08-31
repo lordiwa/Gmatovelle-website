@@ -172,6 +172,11 @@ export function alternatesFor(page) {
 
 /**
  * Head completo de una pagina en un idioma.
+ *
+ * Solo las paginas presentes en PAGES se tratan como reales; cualquier otra
+ * clave (hoy 'notFound' y 'blog', que quedo desactivada) cae al head generico
+ * con canonical a la portada, robots noindex y sin JSON-LD.
+ *
  * @param {'home'|'contact'|'blog'|'notFound'} page
  * @param {'es'|'en'} locale
  */

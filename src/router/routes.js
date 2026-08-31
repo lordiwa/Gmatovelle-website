@@ -11,7 +11,21 @@ import { DEFAULT_LOCALE, LOCALES } from '@/site.config.js';
 export const PAGES = [
   { name: 'home', paths: { es: '/', en: '/en' } },
   { name: 'contact', paths: { es: '/contacto', en: '/en/contact' } },
-  { name: 'blog', paths: { es: '/blog', en: '/en/blog' } },
+  // BLOG DESACTIVADO (peticion del cliente, 2026-08-31): la seccion se retira
+  // hasta que existan articulos reales. Se publicaba vacia y una pagina sin
+  // contenido en el sitemap resta mas de lo que suma en SEO/GEO.
+  //
+  // COMO REACTIVARLA cuando haya articulos, en este orden:
+  //   1. descomentar la linea de abajo (esta lista alimenta el router, el
+  //      sitemap y el prerender, asi que la ruta vuelve sola en los tres);
+  //   2. descomentar el import de BlogView y su entrada en VIEWS en
+  //      src/router/index.js;
+  //   3. descomentar el item 'blog' de links en src/components/SiteHeader.vue
+  //      y en src/components/SiteFooter.vue.
+  // Nada mas hay que tocar: la vista src/views/BlogView.vue, las cadenas
+  // messages.*.blog / messages.*.meta.blog y los estilos .empty-state siguen
+  // en el repo intactos.
+  // { name: 'blog', paths: { es: '/blog', en: '/en/blog' } },
 ];
 
 /** Devuelve la ruta de una pagina en un idioma dado. */

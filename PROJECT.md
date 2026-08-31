@@ -42,9 +42,10 @@ El Dr. Gonzalo Patricio Matovelle Mediavilla, medico psiquiatra con 40 anos de e
 - Seccion de membresias: World Psychiatric Association (WPA); World Federation of Societies of Biological Psychiatry (WFSBP); American Academy of Sleep Disorders; sociedades de psiquiatria biologica de Argentina; Peru y Uruguay
 - Seccion de publicaciones: Manual Latinoamericano para la Enfermedad Depresiva; Enfermedad de Alzheimer (Cangrejal Editores); multiples articulos cientificos
 - Seccion de conferencias: conferencista nacional e internacional e invitado a advisory boards internacionales
-- Seccion de contacto con el telefono confirmado del Dr. (099835666); direccion de consultorio, correo y horarios quedan pendientes hasta que el Dr. los entregue
+- Seccion de contacto con los datos definitivos del Dr.: telefono fijo del consultorio 022892716, dos correos y la direccion del Centro de Negocios La Esquina; los horarios de atencion quedan pendientes hasta que el Dr. los entregue
 - Sitio bilingue espanol / ingles con selector de idioma y una URL indexable por idioma (decision del cliente, 2026-08-31)
-- Seccion de blog publicada vacia, como marcador para los articulos SEO/GEO que el Dr. publicara despues (decision del cliente, 2026-08-31)
+- Seccion de blog RETIRADA hasta que el Dr. tenga articulos reales (decision del cliente, 2026-08-31). Se publico vacia como marcador y luego se desactivo: ruta, navegacion y sitemap fuera; la vista, el copy y los estilos siguen en el repo y se reactivan descomentando (pasos en src/router/routes.js)
+- Canal de WhatsApp del consultorio (+593 99 983 5666) como via adicional al telefono fijo, con boton en la landing y en contacto (dato confirmado por el cliente, 2026-08-31)
 - Estrategia y ejecucion SEO tecnica y de contenido: metadatos; datos estructurados schema.org Physician y MedicalBusiness; sitemap; robots.txt; rendimiento y accesibilidad
 - Estrategia y ejecucion GEO: contenido en prosa citable; preguntas frecuentes; entidad medica bien definida y consistente para que los asistentes de IA puedan atribuir y citar al Dr.
 - Despliegue del sitio a un hosting estatico
@@ -53,7 +54,7 @@ El Dr. Gonzalo Patricio Matovelle Mediavilla, medico psiquiatra con 40 anos de e
 - Sistema de agendamiento o reserva de citas en linea
 - Telemedicina; videoconsulta o chat con pacientes
 - Historia clinica; almacenamiento o procesamiento de datos de salud de pacientes
-- Blog con publicacion continua o CMS administrable por el Dr. (la ruta existe vacia; la redaccion y carga de articulos es trabajo posterior)
+- Blog con publicacion continua o CMS administrable por el Dr. (la seccion esta desactivada; la redaccion y carga de articulos es trabajo posterior y solo entonces se reactiva la ruta)
 - Backend propio y base de datos: el sitio es estatico
 - Pasarela de pagos
 - Publicar datos de contacto inventados o no confirmados por el Dr.

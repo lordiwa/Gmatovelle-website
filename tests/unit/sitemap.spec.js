@@ -8,10 +8,15 @@ describe('sitemap.xml', () => {
 
   it('incluye todas las rutas del sitio en los dos idiomas', () => {
     const routes = allRoutePaths();
-    expect(routes.length).toBe(6);
+    // 2 paginas (portada y contacto) x 2 idiomas. El blog quedo desactivado.
+    expect(routes.length).toBe(4);
     for (const route of routes) {
       expect(xml).toContain('<loc>' + absoluteUrl(route.path) + '</loc>');
     }
+  });
+
+  it('ya no anuncia la seccion de articulos retirada', () => {
+    expect(xml).not.toContain('/blog');
   });
 
   it('declara las alternativas de idioma con hreflang y x-default', () => {

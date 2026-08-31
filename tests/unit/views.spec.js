@@ -5,6 +5,7 @@ import App from '@/App.vue';
 import { messages } from '@/i18n/index.js';
 import { contact } from '@/data/contact.js';
 import { profile } from '@/data/profile.js';
+import { PAGES, pathFor } from '@/router/routes.js';
 import { mountAt } from '../helpers/mount.js';
 
 describe('portada: perfil del Dr. Matovelle', () => {
@@ -115,11 +116,6 @@ describe('pagina de contacto', () => {
     expect(wrapper.find('form').exists()).toBe(false);
   });
 
-  it('oculta el boton de WhatsApp mientras el numero no este confirmado', async () => {
-    const { wrapper } = await mountAt(App, '/contacto');
-    expect(wrapper.html()).not.toContain('wa.me');
-  });
-
   it('indica la ciudad de la consulta y la via de emergencia', async () => {
     const { wrapper } = await mountAt(App, '/en/contact');
     expect(wrapper.text()).toContain('Quito');
@@ -127,19 +123,69 @@ describe('pagina de contacto', () => {
   });
 });
 
-describe('blog', () => {
-  it('existe como ruta publica con estado vacio en ambos idiomas', async () => {
-    const { wrapper: es } = await mountAt(App, '/blog');
-    expect(es.text()).toContain(messages.es.blog.comingSoonTitle);
+describe('boton de WhatsApp', () => {
+  // '/' es la landing: ContactPanel se monta tanto ahi como en /contacto, y el
+  // cliente pidio expresamente ver el boton en la landing.
+  for (const [path, locale] of [
+    ['/', 'es'],
+    ['/contacto', 'es'],
+    ['/en', 'en'],
+    ['/en/contact', 'en'],
+  ]) {
+    it('ofrece el WhatsApp del consultorio en ' + path, async () => {
+      const { wrapper } = await mountAt(App, path);
+      const link = wrapper
+        .findAll('.contact-panel__actions a')
+        .find((a) => (a.attributes('href') || '').includes('wa.me'));
 
-    const { wrapper: en } = await mountAt(App, '/en/blog');
-    expect(en.text()).toContain(messages.en.blog.comingSoonTitle);
+      expect(link, 'falta el boton de WhatsApp en ' + path).toBeDefined();
+      expect(link.attributes('href')).toBe('https://wa.me/593999835666');
+      expect(link.text()).toBe(messages[locale].contact.whatsappCta);
+      // Pestana nueva: el visitante no pierde el sitio al saltar a WhatsApp.
+      expect(link.attributes('target')).toBe('_blank');
+      expect(link.attributes('rel')).toContain('noopener');
+    });
+  }
+
+  it('no sustituye el boton de llamada al fijo', async () => {
+    const { wrapper } = await mountAt(App, '/');
+    const hrefs = wrapper.findAll('.contact-panel__actions a').map((a) => a.attributes('href'));
+    expect(hrefs).toEqual([contact.phoneHref, 'https://wa.me/593999835666']);
+  });
+});
+
+describe('seccion de articulos desactivada', () => {
+  it('no registra /blog ni /en/blog como paginas del sitio', () => {
+    expect(PAGES.map((p) => p.name)).toEqual(['home', 'contact']);
+    expect(() => pathFor('blog', 'es')).toThrow();
   });
 
-  it('devuelve al visitante al perfil o al contacto', async () => {
-    const { wrapper } = await mountAt(App, '/blog');
-    const hrefs = wrapper.findAll('.empty-state__actions a').map((a) => a.attributes('href'));
-    expect(hrefs).toEqual(['/', '/contacto']);
+  it('trata /blog y /en/blog como ruta inexistente en vez de servir la vista vacia', async () => {
+    for (const path of ['/blog', '/en/blog']) {
+      const { wrapper } = await mountAt(App, path);
+      expect(wrapper.text(), path + ' sigue sirviendo el estado vacio').not.toContain(
+        messages.es.blog.comingSoonTitle,
+      );
+      expect(wrapper.text()).toContain(messages.es.notFound.heading);
+      // La navegacion sigue en pie: la 404 no es una pagina rota.
+      expect(wrapper.find('.site-header').exists()).toBe(true);
+    }
+  });
+
+  it('no deja enlaces internos al blog en la navegacion ni en el pie', async () => {
+    for (const path of ['/', '/en', '/contacto']) {
+      const { wrapper } = await mountAt(App, path);
+      const hrefs = wrapper.findAll('a').map((a) => a.attributes('href') || '');
+      expect(hrefs.some((href) => /\/blog$/.test(href)), 'enlace a blog en ' + path).toBe(false);
+    }
+  });
+
+  it('conserva la vista y las cadenas para poder reactivarla sin reescribirlas', () => {
+    // El cliente pidio retirar la seccion, no borrarla: cuando haya articulos
+    // se reactiva descomentando (ver src/router/routes.js).
+    expect(existsSync(resolve(process.cwd(), 'src/views/BlogView.vue'))).toBe(true);
+    expect(messages.es.blog.comingSoonTitle).toBeTruthy();
+    expect(messages.en.blog.comingSoonTitle).toBeTruthy();
   });
 });
 

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-31T16:32:06.412Z",
+  "generated_at": "2026-08-31T21:25:00.000Z",
   "tasks": [
     {
       "key": "TASK-001",
@@ -41,6 +41,18 @@
       "key": "TASK-007",
       "title": "Definir la estrategia GEO (Generative Engine Optimization) del sitio",
       "status": "todo",
+      "priority": "high"
+    },
+    {
+      "key": "TASK-008",
+      "title": "Integrar el enfoque comercial real del Dr. Matovelle y desplegar a produccion",
+      "status": "done",
+      "priority": "high"
+    },
+    {
+      "key": "TASK-009",
+      "title": "Activar el boton de WhatsApp y retirar la seccion de blog hasta que haya articulos",
+      "status": "done",
       "priority": "high"
     }
   ]

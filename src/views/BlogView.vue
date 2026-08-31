@@ -6,9 +6,16 @@ import SectionHeading from '@/components/SectionHeading.vue';
 const { locale, t } = useI18n();
 
 /**
- * La seccion existe vacia a proposito: la ruta, el titulo, los metadatos y la
- * entrada en el sitemap ya estan publicados para que los articulos SEO/GEO del
- * Dr. se puedan sumar despues sin volver a tocar la arquitectura del sitio.
+ * VISTA DESCONECTADA A PROPOSITO (peticion del cliente, 2026-08-31).
+ *
+ * Este archivo ya no lo monta ninguna ruta: la seccion de articulos se retiro
+ * del sitio hasta que el Dr. tenga articulos reales, porque una pagina vacia
+ * indexada resta mas de lo que suma. Se conserva completo, y no borrado, para
+ * que reactivar la seccion sea descomentar y no reescribir.
+ *
+ * Los pasos exactos de reactivacion estan en src/router/routes.js, junto a la
+ * entrada comentada de PAGES.
+ *
  * Cuando existan articulos, este estado vacio se sustituye por su listado.
  */
 </script>

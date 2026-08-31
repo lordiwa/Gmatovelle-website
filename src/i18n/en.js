@@ -254,6 +254,9 @@ export default {
       'If you or someone close to you is at immediate risk, go to the nearest emergency department or call 911. This site does not handle emergencies.',
   },
 
+  // Copy for the articles section. The section is DISABLED (see the
+  // reactivation steps in src/router/routes.js); the strings stay untouched so
+  // bringing it back does not mean rewriting the copy or its metadata.
   blog: {
     heading: 'Articles',
     lead: 'A space for writing on psychiatry and psychopharmacology by Dr. Matovelle.',

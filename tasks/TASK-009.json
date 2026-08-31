@@ -1,0 +1,39 @@
+{
+  "key": "TASK-009",
+  "title": "Activar el boton de WhatsApp y retirar la seccion de blog hasta que haya articulos",
+  "description": "Dos cambios pequenos y relacionados sobre el sitio ya desplegado, pedidos por el cliente el 2026-08-31.\n\nPARTE 1 - WHATSAPP: el cliente confirmo el celular completo 0999835666 (10 digitos; el dato anterior de 9 digitos era un recorte y quedo descartado como placeholder). En Ecuador el prefijo internacional es +593 y se elimina el 0 inicial del celular, asi que el numero para wa.me es 593999835666 y la URL https://wa.me/593999835666. La infraestructura ya existe: contact.whatsapp esta en null, whatsappUrl() arma la URL y ContactPanel.vue ya tiene el boton detras de un v-if. Basta con poblar el campo. El boton debe verse en la landing (ContactPanel se monta en HomeView y en ContactView) junto al boton de llamada, y abrirse en pestana nueva. El fijo 022892716 no se toca: WhatsApp es un canal adicional, no un reemplazo.\n\nPARTE 2 - BLOG: el cliente pidio retirar la seccion de blog/articulos hasta que existan articulos reales. Se desactivan la ruta, el item de navegacion en el encabezado y el pie, y la entrada en el sitemap y en el prerender. NO se borran archivos: BlogView.vue, las cadenas i18n y los estilos del estado vacio se conservan, y la desactivacion queda comentada con la instruccion exacta para reactivarla cuando haya articulos. /blog y /en/blog quedan atendidos por la 404 existente (noindex), sin enlaces internos que apunten alli.",
+  "acceptance_criteria": [
+    "contact.whatsapp contiene el numero internacional 593999835666 y whatsappUrl() devuelve https://wa.me/593999835666.",
+    "El boton de WhatsApp se renderiza en la landing y en la pagina de contacto, junto al boton de llamada, con target=_blank y rel=noopener, en ES y EN.",
+    "El telefono fijo 022892716 sigue publicado sin cambios como canal de llamada, y el placeholder descartado no reaparece en src/.",
+    "PAGES ya no incluye blog: el router no registra /blog ni /en/blog, el sitemap baja a 4 URLs y el prerender no genera dist/blog.",
+    "No queda ningun enlace interno a /blog ni /en/blog en el encabezado, el pie ni ninguna vista.",
+    "BlogView.vue, las cadenas i18n de blog y los estilos del estado vacio siguen en el repo, con un comentario que explica como reactivar la seccion.",
+    "npm run build (con prerender) y npm test pasan en verde, con tests que fijan la URL de wa.me y la ausencia de la ruta de blog."
+  ],
+  "status": "done",
+  "priority": "high",
+  "labels": [
+    "landing",
+    "contacto",
+    "whatsapp",
+    "blog",
+    "seo"
+  ],
+  "assignee": null,
+  "depends_on": [
+    "TASK-008"
+  ],
+  "linked_commits": [],
+  "linked_prs": [],
+  "comments": [
+    {
+      "author": "orchestrator",
+      "body": "Cerrado con los siete criterios verificados. WHATSAPP: contact.whatsapp = '593999835666' (0999835666 sin el 0 inicial, con el codigo 593 de Ecuador; +593 99 983 5666) y whatsappUrl() devuelve https://wa.me/593999835666. El boton ya existia detras de un v-if en ContactPanel.vue, que se monta en HomeView (landing) y en ContactView, asi que aparece junto al de llamada en las cuatro paginas, con target=_blank y rel=noopener. El fijo 022892716 quedo intacto. BLOG: se comento la entrada de PAGES en src/router/routes.js, que es la fuente unica del router, del sitemap y del prerender, mas el import y la entrada de VIEWS en router/index.js y el item de nav en SiteHeader y SiteFooter. No se borro nada: BlogView.vue, messages.*.blog, messages.*.meta.blog y los estilos .empty-state siguen en el repo, con los pasos de reactivacion escritos en routes.js. /blog y /en/blog caen en la 404 existente (noindex) y el toggle de idioma degrada a la portada. VERIFICACION: 95 tests en verde (antes 85) y build con prerender en verde, con 4 URLs en el sitemap, sin dist/blog, sin ningun href=/blog en el HTML prerenderizado y con wa.me/593999835666 presente en las cuatro paginas. NO se desplego: el push a main queda a la espera de la orden de deploy."
+    }
+  ],
+  "created_at": "2026-08-31T21:10:00.000Z",
+  "updated_at": "2026-08-31T21:25:00.000Z",
+  "jira_key": null,
+  "verification_tier": "tests-after"
+}
