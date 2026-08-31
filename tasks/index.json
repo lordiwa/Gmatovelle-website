@@ -22,7 +22,7 @@
     {
       "key": "TASK-004",
       "title": "Crear la landing page en Vue 3 con el perfil profesional del Dr. Matovelle",
-      "status": "todo",
+      "status": "done",
       "priority": "high"
     },
     {

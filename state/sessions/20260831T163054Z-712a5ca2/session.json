@@ -2,14 +2,27 @@
   "schema_version": 2,
   "session_id": "20260831T163054Z-712a5ca2",
   "lifecycle_state": "active",
-  "updated_at": "2026-08-31T16:30:54.988Z",
-  "active_task": null,
-  "workflow_step": "idle",
-  "next_action": null,
-  "handoff_summary": "session started",
-  "open_questions": [],
-  "blockers": [],
-  "decisions": [],
+  "updated_at": "2026-08-31T19:10:00.000Z",
+  "active_task": "TASK-004",
+  "workflow_step": "done",
+  "next_action": "Confirmar con el cliente la revision visual del sitio (npm run dev) y decidir el siguiente ticket. TASK-006 y TASK-007 (estrategia SEO y GEO) quedaron parcialmente cubiertos por la implementacion tecnica de TASK-004: revisarlos y reducirlos a lo que falta (estrategia de contenido y medicion). TASK-005 (contacto placeholder) quedo absorbido por TASK-004.",
+  "handoff_summary": "TASK-004 completado: SPA Vue 3 + Vite bilingue ES/EN del Dr. Gonzalo Matovelle, con portada (perfil, credenciales, publicaciones, FAQ), contacto y blog vacio, prerenderizada a HTML estatico y con SEO/GEO tecnico completo. Build y 55 tests en verde; commit en main. No se hizo deploy: falta el ID del proyecto Firebase.",
+  "open_questions": [
+    "Que areas y tratamientos quiere destacar el Dr. (Mato se lo preguntara).",
+    "Numero de WhatsApp en formato internacional: el telefono entregado (099835666) tiene 9 digitos y los celulares ecuatorianos tienen 10; no se completo para no inventar un digito.",
+    "Direccion del consultorio, correo y horarios de atencion.",
+    "Dominio definitivo: SITE_ORIGIN en src/site.config.js y robots.txt usan un placeholder que hay que reemplazar."
+  ],
+  "blockers": [
+    "Deploy a Firebase Hosting bloqueado: falta el ID del proyecto Firebase que esta creando el cliente."
+  ],
+  "decisions": [
+    "Sitio premium bilingue ES/EN con una URL indexable por idioma (/ y /en), no un toggle solo de strings: hreflang y canonical exigen una URL por idioma para SEO/GEO.",
+    "Sin formulario ni sistema de citas: todo el contacto es telefonico, por decision del cliente.",
+    "Retrato provisional (monograma) en lugar de fotografia de banco de imagenes, hasta que el Dr. tenga fotos profesionales.",
+    "Prerender a HTML estatico en el build: los rastreadores de modelos generativos no ejecutan JavaScript y una SPA pura les entregaria una pagina vacia.",
+    "Sin testimonios y sin areas de tratamiento inventadas."
+  ],
   "subagent_results": [],
   "pending_human_confirmation": null
 }

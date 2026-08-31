@@ -8,7 +8,7 @@
     "Todo dato del perfil publicado coincide literalmente con el CV del Dr.: no se inventa ni se infla ninguna credencial.",
     "La pagina es responsive y legible en movil y escritorio."
   ],
-  "status": "todo",
+  "status": "done",
   "priority": "high",
   "labels": [
     "landing",
@@ -18,9 +18,15 @@
   "depends_on": [],
   "linked_commits": [],
   "linked_prs": [],
-  "comments": [],
+  "comments": [
+    {
+      "author": "orchestrator",
+      "created_at": "2026-08-31T19:10:00.000Z",
+      "body": "Entregado. El alcance del ticket se amplio con decisiones del cliente tomadas despues de redactarlo: sitio bilingue ES/EN con una URL por idioma, seccion de blog publicada vacia, telefono de contacto confirmado (099835666) y SEO/GEO tecnico (JSON-LD Physician + FAQPage, Open Graph, hreflang, robots.txt, sitemap.xml, prerender a HTML estatico). Criterios verificados: build sin errores (vite build + SSR + prerender de 6 rutas), 55 tests unitarios en verde, secciones del perfil renderizadas y contrastadas contra el CV por test, y layout responsive. Pendientes que NO bloquean el ticket: fotografia profesional del Dr. (hay retrato provisional), areas y tratamientos a destacar, dominio definitivo y datos de contacto adicionales."
+    }
+  ],
   "created_at": "2026-08-31T16:31:36.376Z",
-  "updated_at": "2026-08-31T16:31:36.376Z",
+  "updated_at": "2026-08-31T19:10:00.000Z",
   "jira_key": null,
   "verification_tier": "tests-after"
 }

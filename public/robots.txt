@@ -1,0 +1,39 @@
+# Sitio del Dr. Gonzalo Matovelle, medico psiquiatra en Quito, Ecuador.
+# El objetivo del sitio es ser encontrado y citado, tanto por buscadores como
+# por asistentes de IA, por lo que el rastreo esta abierto de forma explicita.
+
+User-agent: *
+Allow: /
+
+# Rastreadores de modelos generativos (GEO). Se listan uno a uno para dejar
+# constancia expresa de que su acceso esta permitido.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# NOTA: actualizar este dominio cuando se contrate el definitivo
+# (debe coincidir con SITE_ORIGIN en src/site.config.js).
+Sitemap: https://www.gonzalomatovelle.com/sitemap.xml

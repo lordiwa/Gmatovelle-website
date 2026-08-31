@@ -42,7 +42,9 @@ El Dr. Gonzalo Patricio Matovelle Mediavilla, medico psiquiatra con 40 anos de e
 - Seccion de membresias: World Psychiatric Association (WPA); World Federation of Societies of Biological Psychiatry (WFSBP); American Academy of Sleep Disorders; sociedades de psiquiatria biologica de Argentina; Peru y Uruguay
 - Seccion de publicaciones: Manual Latinoamericano para la Enfermedad Depresiva; Enfermedad de Alzheimer (Cangrejal Editores); multiples articulos cientificos
 - Seccion de conferencias: conferencista nacional e internacional e invitado a advisory boards internacionales
-- Seccion de contacto en estado placeholder hasta que el Dr. entregue telefono; direccion de consultorio y correo
+- Seccion de contacto con el telefono confirmado del Dr. (099835666); direccion de consultorio, correo y horarios quedan pendientes hasta que el Dr. los entregue
+- Sitio bilingue espanol / ingles con selector de idioma y una URL indexable por idioma (decision del cliente, 2026-08-31)
+- Seccion de blog publicada vacia, como marcador para los articulos SEO/GEO que el Dr. publicara despues (decision del cliente, 2026-08-31)
 - Estrategia y ejecucion SEO tecnica y de contenido: metadatos; datos estructurados schema.org Physician y MedicalBusiness; sitemap; robots.txt; rendimiento y accesibilidad
 - Estrategia y ejecucion GEO: contenido en prosa citable; preguntas frecuentes; entidad medica bien definida y consistente para que los asistentes de IA puedan atribuir y citar al Dr.
 - Despliegue del sitio a un hosting estatico
@@ -51,11 +53,13 @@ El Dr. Gonzalo Patricio Matovelle Mediavilla, medico psiquiatra con 40 anos de e
 - Sistema de agendamiento o reserva de citas en linea
 - Telemedicina; videoconsulta o chat con pacientes
 - Historia clinica; almacenamiento o procesamiento de datos de salud de pacientes
-- Blog con publicacion continua o CMS administrable por el Dr.
+- Blog con publicacion continua o CMS administrable por el Dr. (la ruta existe vacia; la redaccion y carga de articulos es trabajo posterior)
 - Backend propio y base de datos: el sitio es estatico
 - Pasarela de pagos
-- Sitio multi-idioma en la primera version: se publica en espanol
 - Publicar datos de contacto inventados o no confirmados por el Dr.
+- Publicar areas o tratamientos especificos que el Dr. no haya confirmado
+- Testimonios de pacientes
+- Fotografia definitiva del Dr. (se usa un retrato provisional hasta que existan las fotos profesionales)
 
 ## Stack
 - claude_md_consent: true
