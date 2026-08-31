@@ -13,9 +13,22 @@ const { t } = useI18n();
  * hidrata apunten exactamente al mismo archivo (un asset importado se resuelve
  * con hash en cada build por separado).
  *
- * El marco es el mismo que sostenia el medallon provisional: proporcion 4/5 y
- * anillo interior; solo cambio el contenido.
+ * El marco por defecto es el mismo que sostenia el medallon provisional:
+ * proporcion 4/5 y anillo interior.
+ *
+ * La variante "hero-navy" es el encuadre del redisenio 1c: proporcion 4/4.6,
+ * apoyado en el borde inferior de la banda navy y con las esquinas superiores
+ * redondeadas. Se anade como variante y no como sustitucion para no romper el
+ * marco 4/5, que sigue siendo el encuadre neutro del componente.
  */
+defineProps({
+  variant: {
+    type: String,
+    default: 'default',
+    validator: (value) => ['default', 'hero-navy'].includes(value),
+  },
+});
+
 const portrait = {
   src: profile.portraitPath,
   width: profile.portraitWidth,
@@ -24,7 +37,7 @@ const portrait = {
 </script>
 
 <template>
-  <figure class="portrait">
+  <figure class="portrait" :class="'portrait--' + variant">
     <div class="portrait__frame">
       <img
         class="portrait__image"

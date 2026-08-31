@@ -1,45 +1,72 @@
 <script setup>
-import { pathFor } from '@/router/routes.js';
+import { computed } from 'vue';
 import { useI18n } from '@/i18n/index.js';
-import { contact } from '@/data/contact.js';
+import { contact, whatsappUrl } from '@/data/contact.js';
 import SectionHeading from '@/components/SectionHeading.vue';
 import ProfilePortrait from '@/components/ProfilePortrait.vue';
 import FaqList from '@/components/FaqList.vue';
 import ContactPanel from '@/components/ContactPanel.vue';
 
-const { locale, t } = useI18n();
+const { t } = useI18n();
+
+/**
+ * WhatsApp del consultorio como CTA secundario del hero (redisenio 1c). Va
+ * detras de un v-if porque el campo puede volver a null: la fuente unica es
+ * src/data/contact.js.
+ */
+const whatsapp = computed(() => whatsappUrl());
 </script>
 
 <template>
   <div>
-    <section class="hero">
+    <!--
+      Hero del redisenio 1c "Navy de confianza": banda navy a sangre de ancho
+      completo (el .shell va dentro de la banda) con el retrato apoyado en su
+      borde inferior. El h1 es un titular editorial y no el nombre del Dr.; la
+      linea de credencial que va justo debajo conserva el nombre y la
+      titulacion, que es la senal de entidad que el SEO/GEO necesita.
+    -->
+    <section class="hero hero--navy">
       <div class="shell">
         <div class="hero__grid">
-          <div>
+          <div class="hero__copy">
             <p class="hero__eyebrow">{{ t.hero.eyebrow }}</p>
-            <h1 class="hero__name">{{ t.hero.name }}</h1>
+            <h1 class="hero__headline">{{ t.hero.headline }}</h1>
             <p class="hero__credential">{{ t.hero.credentialLine }}</p>
             <p class="hero__summary">{{ t.hero.summary }}</p>
 
             <div class="hero__actions">
-              <a class="btn btn--primary" :href="contact.phoneHref">{{ t.hero.primaryCta }}</a>
-              <a class="btn btn--ghost" href="#perfil">{{ t.hero.secondaryCta }}</a>
+              <a class="btn btn--brass" :href="contact.phoneHref">{{ t.hero.primaryCta }}</a>
+              <a
+                v-if="whatsapp"
+                class="btn btn--on-dark"
+                :href="whatsapp"
+                rel="noopener"
+                target="_blank"
+                >{{ t.contact.whatsappCta }}</a
+              >
             </div>
           </div>
 
-          <ProfilePortrait />
+          <ProfilePortrait variant="hero-navy" />
         </div>
-
-        <dl class="hero__facts">
-          <div v-for="fact in t.hero.facts" :key="fact.value" class="fact">
-            <dt class="fact__value">{{ fact.value }}</dt>
-            <dd class="fact__label">{{ fact.label }}</dd>
-          </div>
-        </dl>
       </div>
     </section>
 
-    <section id="perfil" class="section">
+    <!--
+      Banda de credenciales: sustituye a la vieja fila de "facts" del hero. Solo
+      resume hechos que la seccion de credenciales ya publica literalmente.
+    -->
+    <section class="credential-band">
+      <div class="shell credential-band__inner">
+        <p v-for="entry in t.hero.credentialBand" :key="entry.term" class="credential-band__item">
+          <strong class="credential-band__term">{{ entry.term }}</strong>
+          <span class="credential-band__detail">{{ entry.detail }}</span>
+        </p>
+      </div>
+    </section>
+
+    <section id="perfil" class="section section--plain">
       <div class="shell">
         <SectionHeading index="01" :title="t.about.heading" :lead="t.about.lead" />
         <div class="prose">
@@ -61,12 +88,20 @@ const { locale, t } = useI18n();
       </div>
     </section>
 
-    <!-- Areas de experiencia confirmadas por el cliente (ver profile.declaredConditions). -->
+    <!--
+      Areas de experiencia confirmadas por el cliente (ver
+      profile.declaredConditions). En la 1c esta seccion lleva antetitulo en vez
+      de indice numerico y sus tarjetas pierden la caja: solo una regla superior.
+    -->
     <section class="section">
       <div class="shell">
-        <SectionHeading index="03" :title="t.expertise.heading" :lead="t.expertise.lead" />
-        <div class="card-grid">
-          <article v-for="item in t.expertise.items" :key="item.title" class="card">
+        <SectionHeading
+          :eyebrow="t.expertise.heading"
+          :title="t.expertise.headline"
+          :lead="t.expertise.lead"
+        />
+        <div class="card-grid card-grid--rule">
+          <article v-for="item in t.expertise.items" :key="item.title" class="card card--rule">
             <h3 class="card__title">{{ item.title }}</h3>
             <p class="card__body">{{ item.body }}</p>
           </article>
@@ -74,7 +109,19 @@ const { locale, t } = useI18n();
       </div>
     </section>
 
+    <!--
+      "Contacto primero": en la 1c la franja de contacto sube por delante de las
+      secciones largas de CV. Usa la variante compacta del panel; la ficha
+      completa (mapa, correos, emergencias) sigue viviendo en /contacto.
+    -->
     <section class="section section--sunk">
+      <div class="shell">
+        <SectionHeading index="03" :title="t.contact.heading" :lead="t.contact.lead" />
+        <ContactPanel variant="compact" />
+      </div>
+    </section>
+
+    <section class="section">
       <div class="shell">
         <SectionHeading index="04" :title="t.credentials.heading" :lead="t.credentials.lead" />
         <div>
@@ -94,7 +141,7 @@ const { locale, t } = useI18n();
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section--sunk">
       <div class="shell">
         <SectionHeading index="05" :title="t.publications.heading" :lead="t.publications.lead" />
         <ul>
@@ -107,20 +154,10 @@ const { locale, t } = useI18n();
       </div>
     </section>
 
-    <section class="section section--sunk">
+    <section class="section">
       <div class="shell">
         <SectionHeading index="06" :title="t.faq.heading" :lead="t.faq.lead" />
         <FaqList :items="t.faq.items" />
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="shell">
-        <SectionHeading index="07" :title="t.contact.heading" :lead="t.contact.lead" />
-        <ContactPanel />
-        <p class="publication-note">
-          <RouterLink :to="pathFor('contact', locale)">{{ t.nav.contact }}</RouterLink>
-        </p>
       </div>
     </section>
   </div>

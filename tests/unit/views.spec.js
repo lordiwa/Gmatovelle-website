@@ -9,9 +9,24 @@ import { PAGES, pathFor } from '@/router/routes.js';
 import { mountAt } from '../helpers/mount.js';
 
 describe('portada: perfil del Dr. Matovelle', () => {
-  it('presenta nombre, titulacion y resumen en el encabezado', async () => {
+  /**
+   * El h1 dejo de ser el nombre del Dr. con el redisenio 1c "Navy de
+   * confianza": el cliente eligio un titular editorial para el hero. Este test
+   * cambio por esa decision de diseno, no porque la senal de entidad se haya
+   * degradado: la afirmacion sobre el h1 se sustituye por el titular nuevo Y se
+   * agrega la comprobacion de que el propio hero (no otra seccion de la pagina)
+   * sigue nombrando al Dr. y su titulacion, que es lo que el SEO/GEO necesita.
+   */
+  it('presenta el titular, el nombre del Dr., su titulacion y el resumen en el hero', async () => {
     const { wrapper } = await mountAt(App, '/');
-    expect(wrapper.find('h1').text()).toBe('Dr. Gonzalo Matovelle');
+    expect(wrapper.find('h1').text()).toBe(messages.es.hero.headline);
+    expect(wrapper.find('h1').text()).toBe('Cuarenta años cuidando la salud mental con rigor médico');
+
+    const hero = wrapper.find('.hero').text();
+    expect(hero).toContain('Dr. Gonzalo Matovelle');
+    expect(hero).toContain('Doctor en Medicina y Cirugía');
+    expect(hero).toContain('Especialista en Psiquiatría');
+
     expect(wrapper.text()).toContain('Doctor en Medicina y Cirugía');
     expect(wrapper.text()).toContain('Especialista en Psiquiatría');
     expect(wrapper.text()).toContain('40 años');

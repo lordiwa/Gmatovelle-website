@@ -41,22 +41,36 @@ export default {
     menuClose: 'Cerrar menú',
   },
 
+  /**
+   * Hero de la portada, redisenio 1c "Navy de confianza".
+   *
+   * El h1 dejo de ser el nombre del Dr. y paso a ser un titular editorial
+   * (decision de diseno del cliente). La senal de entidad no se pierde: el
+   * nombre y la titulacion viven en `credentialLine`, que se renderiza
+   * inmediatamente debajo del h1 dentro del mismo hero.
+   */
   hero: {
-    eyebrow: 'Neurocientífico · Médico Neuropsiquiatra · Quito, Ecuador',
-    name: 'Dr. Gonzalo Matovelle',
+    eyebrow: 'Quito, Ecuador · 40 años de práctica',
+    headline: 'Cuarenta años cuidando la salud mental con rigor médico',
     credentialLine:
-      'Doctor en Medicina y Cirugía · Especialista en Psiquiatría · Enfoque en Neurociencias',
+      'Dr. Gonzalo Matovelle · Doctor en Medicina y Cirugía · Especialista en Psiquiatría',
     summary:
       'El Dr. Gonzalo Patricio Matovelle Mediavilla es neurocientífico y médico neuropsiquiatra, con 40 años de práctica privada en Quito, Ecuador. El eje de su consulta es el manejo y control experto de la medicación, con especial experiencia en ansiedad, depresión y trastorno bipolar.',
     primaryCta: 'Llamar al consultorio',
-    secondaryCta: 'Conocer la trayectoria',
     portraitAlt:
       'Retrato del Dr. Gonzalo Matovelle, médico neuropsiquiatra en Quito, Ecuador',
     portraitCaption: 'Dr. Gonzalo Patricio Matovelle Mediavilla · Quito, Ecuador',
-    facts: [
-      { value: '40 años', label: 'de práctica privada en psiquiatría y psicofarmacología' },
-      { value: 'Quito', label: 'consulta privada en Ecuador' },
-      { value: 'WPA · WFSBP', label: 'miembro de sociedades científicas internacionales' },
+    /**
+     * Banda de credenciales que sustituye a la vieja fila de "facts" del hero.
+     * Cada `term` y cada `detail` debe aparecer LITERALMENTE dentro de
+     * `credentials` (hay un lock que lo verifica): la banda resume el CV, no
+     * agrega nada que el CV no respalde.
+     */
+    credentialBand: [
+      { term: 'Past Presidente', detail: 'Asociación Ecuatoriana de Psiquiatría' },
+      { term: 'Perito Psiquiatra certificado', detail: 'Función Judicial de Pichincha' },
+      { term: 'Profesor invitado', detail: 'Universidad Central del Ecuador' },
+      { term: 'Psiquiatra para Ecuador', detail: 'Veterans Evaluation System (VES)' },
     ],
   },
 
@@ -101,6 +115,7 @@ export default {
    */
   expertise: {
     heading: 'Áreas de experiencia',
+    headline: 'Tres condiciones, un mismo estándar de cuidado',
     lead: 'Las condiciones en las que el Dr. Matovelle concentra su experiencia clínica y el manejo de la medicación.',
     items: [
       {
@@ -242,7 +257,13 @@ export default {
     phoneLabel: 'Teléfono del consultorio',
     emailLabel: 'Correos del consultorio',
     callCta: 'Llamar al ' + contact.phone,
+    callNowCta: 'Llamar ahora',
     whatsappCta: 'Escribir por WhatsApp',
+    // Cadenas de la franja compacta de contacto de la portada (variante
+    // "compact" de ContactPanel): etiqueta corta y nota con la ubicacion breve.
+    enquiriesLabel: 'Consultas',
+    compactNote:
+      'La cita se agenda por teléfono, hablando directamente con el consultorio. Consulta privada en Quito, Ecuador.',
     noBookingNote:
       'No hay formulario ni reserva en línea: la cita se agenda hablando directamente con el consultorio.',
     locationLabel: 'Ubicación',

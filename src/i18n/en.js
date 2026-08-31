@@ -41,22 +41,35 @@ export default {
     menuClose: 'Close menu',
   },
 
+  /**
+   * Home hero, "Navy of trust" (1c) redesign.
+   *
+   * The h1 is no longer the Dr.'s name but an editorial headline (client design
+   * decision). The entity signal is not lost: the name and qualifications live
+   * in `credentialLine`, rendered immediately below the h1 inside the hero.
+   */
   hero: {
-    eyebrow: 'Neuroscientist · Neuropsychiatrist · Quito, Ecuador',
-    name: 'Dr. Gonzalo Matovelle',
+    eyebrow: 'Quito, Ecuador · 40 years of practice',
+    headline: 'Four decades of mental health care with medical rigour',
     credentialLine:
-      'Doctor of Medicine and Surgery · Specialist in Psychiatry · Focus in Neuroscience',
+      'Dr. Gonzalo Matovelle · Doctor of Medicine and Surgery · Specialist in Psychiatry',
     summary:
       'Dr. Gonzalo Patricio Matovelle Mediavilla is a neuroscientist and neuropsychiatrist, with 40 years of private practice in Quito, Ecuador. His practice centres on expert medication management and control, with particular experience in anxiety, depression and bipolar disorder.',
     primaryCta: 'Call the practice',
-    secondaryCta: 'See his background',
     portraitAlt:
       'Portrait of Dr. Gonzalo Matovelle, neuropsychiatrist in Quito, Ecuador',
     portraitCaption: 'Dr. Gonzalo Patricio Matovelle Mediavilla · Quito, Ecuador',
-    facts: [
-      { value: '40 years', label: 'of private practice in psychiatry and psychopharmacology' },
-      { value: 'Quito', label: 'private practice in Ecuador' },
-      { value: 'WPA · WFSBP', label: 'member of international scientific societies' },
+    /**
+     * Credential band replacing the old hero "facts" row. Every `term` and
+     * `detail` must appear LITERALLY inside `credentials` (there is a lock for
+     * it): the band summarises the CV, it never adds anything the CV does not
+     * already back.
+     */
+    credentialBand: [
+      { term: 'Past President', detail: 'Ecuadorian Psychiatric Association' },
+      { term: 'Certified Forensic Psychiatrist', detail: 'Judiciary of Pichincha' },
+      { term: 'Visiting lecturer', detail: 'Universidad Central del Ecuador' },
+      { term: 'Psychiatrist for Ecuador', detail: 'Veterans Evaluation System (VES)' },
     ],
   },
 
@@ -101,6 +114,7 @@ export default {
    */
   expertise: {
     heading: 'Areas of expertise',
+    headline: 'Three conditions, one standard of care',
     lead: 'The conditions where Dr. Matovelle concentrates his clinical experience and medication management.',
     items: [
       {
@@ -242,7 +256,13 @@ export default {
     phoneLabel: 'Practice phone number',
     emailLabel: 'Practice email',
     callCta: 'Call ' + contact.phone,
+    callNowCta: 'Call now',
     whatsappCta: 'Message on WhatsApp',
+    // Strings for the home page's compact contact strip (ContactPanel variant
+    // "compact"): short label plus a note carrying the short location.
+    enquiriesLabel: 'Enquiries',
+    compactNote:
+      'Appointments are arranged by phone, speaking directly with the practice. Private practice in Quito, Ecuador.',
     noBookingNote:
       'There is no form and no online booking: appointments are arranged by speaking directly with the practice.',
     locationLabel: 'Location',

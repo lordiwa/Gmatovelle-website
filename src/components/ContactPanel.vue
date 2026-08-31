@@ -1,9 +1,29 @@
 <script setup>
 import { computed } from 'vue';
+import { pathFor } from '@/router/routes.js';
 import { useI18n } from '@/i18n/index.js';
 import { contact, whatsappUrl, mailtoHref, mapEmbedUrl } from '@/data/contact.js';
 
-const { t } = useI18n();
+const { locale, t } = useI18n();
+
+/**
+ * Dos encuadres del mismo panel:
+ *   - "full": el de /contacto, con mapa, correos y aviso de emergencia.
+ *   - "compact": la franja navy del redisenio 1c para la portada (telefono,
+ *     nota corta y CTA). Sin mapa, sin correos y sin emergencias, porque la
+ *     portada la usa como llamada a la accion y no como ficha completa.
+ *
+ * Las clases .contact-panel, .contact-panel__label, .contact-panel__phone y
+ * .contact-panel__actions se conservan en las dos variantes: son el contrato
+ * que fijan los locks del telefono y del boton de WhatsApp.
+ */
+defineProps({
+  variant: {
+    type: String,
+    default: 'full',
+    validator: (value) => ['full', 'compact'].includes(value),
+  },
+});
 
 /**
  * Enlace wa.me del consultorio. Sigue siendo computed y con v-if porque el
@@ -16,7 +36,33 @@ const mapSrc = computed(() => mapEmbedUrl());
 </script>
 
 <template>
-  <div class="contact-panel">
+  <div v-if="variant === 'compact'" class="contact-panel contact-panel--compact">
+    <div>
+      <p class="contact-panel__label">{{ t.contact.enquiriesLabel }}</p>
+      <a class="contact-panel__phone" :href="contact.phoneHref">{{ contact.phone }}</a>
+    </div>
+
+    <div>
+      <p class="contact-panel__note">{{ t.contact.compactNote }}</p>
+      <p class="contact-panel__more">
+        <RouterLink :to="pathFor('contact', locale)">{{ t.nav.contact }}</RouterLink>
+      </p>
+    </div>
+
+    <div class="contact-panel__actions">
+      <a class="btn btn--brass" :href="contact.phoneHref">{{ t.contact.callNowCta }}</a>
+      <a
+        v-if="whatsapp"
+        class="btn btn--on-dark"
+        :href="whatsapp"
+        rel="noopener"
+        target="_blank"
+        >{{ t.contact.whatsappCta }}</a
+      >
+    </div>
+  </div>
+
+  <div v-else class="contact-panel">
     <div>
       <p class="contact-panel__label">{{ t.contact.phoneLabel }}</p>
       <a class="contact-panel__phone" :href="contact.phoneHref">{{ contact.phone }}</a>

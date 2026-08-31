@@ -219,15 +219,30 @@ ul {
   color: var(--brass-soft);
 }
 
-/* --- Cabecera ------------------------------------------------------------ */
+/* Boton solido de laton sobre fondo oscuro (redisenio 1c). El texto va en
+   navy profundo y no en blanco: sobre el laton #a8874c, el navy da 5.2:1 y el
+   blanco apenas 2.4:1, o sea que solo esta combinacion cumple AA. */
+.btn--brass {
+  background-color: var(--brass);
+  color: var(--navy-deep);
+  font-weight: 600;
+}
+
+.btn--brass:hover {
+  background-color: var(--brass-soft);
+  color: var(--navy-deep);
+}
+
+/* --- Cabecera -------------------------------------------------------------
+   Cabecera navy del redisenio 1c. Es opaca, asi que ya no hace falta el
+   backdrop-filter que difuminaba el marfil translucido anterior. */
 
 .site-header {
   position: sticky;
   top: 0;
   z-index: 40;
-  background-color: rgba(251, 248, 243, 0.86);
-  backdrop-filter: saturate(150%) blur(12px);
-  border-bottom: 1px solid var(--line);
+  background-color: var(--navy-deep);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .site-header__inner {
@@ -250,13 +265,14 @@ ul {
   font-size: 1.125rem;
   font-weight: 600;
   letter-spacing: -0.01em;
+  color: #fff;
 }
 
 .brand__role {
-  font-size: 0.72rem;
+  font-size: 0.656rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--brass-soft);
 }
 
 .site-nav {
@@ -266,30 +282,39 @@ ul {
 }
 
 .site-nav__link {
-  font-size: 0.95rem;
+  font-size: 0.906rem;
   text-decoration: none;
-  color: var(--ink-soft);
+  color: rgba(255, 255, 255, 0.65);
   padding-block: 0.35rem;
   border-bottom: 1px solid transparent;
   transition: color 160ms ease, border-color 160ms ease;
 }
 
 .site-nav__link:hover {
-  color: var(--ink);
+  color: #fff;
 }
 
 .site-nav__link.is-active {
-  color: var(--ink);
+  color: #fff;
   border-bottom-color: var(--brass);
 }
 
+/* Boton de llamada de la cabecera: mismo laton solido de los CTA, en la
+   proporcion compacta que pide la 1c para la barra de navegacion. */
+.site-nav__call {
+  padding: 0.688rem 1.25rem;
+  font-size: 0.875rem;
+}
+
+/* El selector de idioma vive ahora sobre navy: contorno claro, opcion inactiva
+   en blanco atenuado y opcion activa en laton con texto navy. */
 .lang-toggle {
   display: inline-flex;
   align-items: center;
-  border: 1px solid var(--line-strong);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 999px;
   padding: 2px;
-  background-color: var(--paper-raised);
+  background-color: transparent;
 }
 
 .lang-toggle__option {
@@ -297,28 +322,43 @@ ul {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-decoration: none;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.6);
   padding: 0.3rem 0.7rem;
   border-radius: 999px;
   transition: background-color 160ms ease, color 160ms ease;
 }
 
-.lang-toggle__option.is-active {
-  background-color: var(--navy);
+.lang-toggle__option:hover {
   color: #fff;
 }
 
-/* --- Hero ---------------------------------------------------------------- */
+.lang-toggle__option.is-active {
+  background-color: var(--brass);
+  color: var(--navy-deep);
+}
 
-.hero {
-  padding-block: clamp(3.5rem, 8vw, 7rem) clamp(3rem, 6vw, 5rem);
+/* --- Hero navy a sangre (redisenio 1c) ------------------------------------
+   La banda ocupa todo el ancho de la ventana y el .shell vive dentro de ella.
+   align-items:end y la ausencia de padding inferior son lo que hace que el
+   retrato se apoye en el borde de la banda: la columna de texto compensa con
+   su propio padding-bottom. */
+
+.hero--navy {
+  background-color: var(--navy-deep);
+  color: #fff;
+  padding-top: clamp(3rem, 7vw, 4.5rem);
+  overflow: hidden;
 }
 
 .hero__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
-  gap: clamp(2.5rem, 6vw, 5rem);
-  align-items: center;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: end;
+}
+
+.hero__copy {
+  padding-bottom: clamp(3rem, 6vw, 4.5rem);
 }
 
 .hero__eyebrow {
@@ -326,28 +366,33 @@ ul {
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--brass);
+  color: var(--brass-soft);
 }
 
-.hero__name {
+.hero__headline {
   margin-top: 1.5rem;
-  font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+  font-size: clamp(2.4rem, 5.6vw, 3.875rem);
+  line-height: 1.06;
   letter-spacing: -0.03em;
+  color: #fff;
 }
 
+/* Nombre y titulacion del Dr. inmediatamente bajo el titular: es la senal de
+   entidad que el h1 dejo de llevar al volverse editorial. */
 .hero__credential {
-  margin-top: 1rem;
+  margin-top: 1.25rem;
   font-family: var(--font-display);
-  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
   font-style: italic;
-  color: var(--ink-soft);
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .hero__summary {
-  margin-top: 1.75rem;
-  max-width: 38rem;
-  font-size: 1.125rem;
-  color: var(--ink-soft);
+  margin-top: 1.5rem;
+  max-width: 32rem;
+  font-size: 1.094rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .hero__actions {
@@ -357,26 +402,29 @@ ul {
   margin-top: 2.25rem;
 }
 
-.hero__facts {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: clamp(1.5rem, 4vw, 3rem);
-  margin-top: clamp(3rem, 7vw, 4.5rem);
-  padding-top: 2.5rem;
-  border-top: 1px solid var(--line);
+/* --- Banda de credenciales ------------------------------------------------
+   Franja horizontal bajo el hero. Sustituye a la fila de "facts" y solo
+   resume hechos que la seccion de credenciales publica literalmente. */
+
+.credential-band {
+  background-color: var(--paper-sunk);
+  border-bottom: 1px solid var(--line);
 }
 
-.fact__value {
-  font-family: var(--font-display);
-  font-size: 1.65rem;
-  font-weight: 600;
+.credential-band__inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-block: 1.625rem;
+  font-size: 0.813rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.credential-band__term {
   color: var(--navy);
-}
-
-.fact__label {
-  margin-top: 0.4rem;
-  font-size: 0.9rem;
-  color: var(--muted);
+  margin-right: 0.4rem;
 }
 
 /* --- Retrato profesional --------------------------------------------------
@@ -428,6 +476,43 @@ ul {
   text-align: center;
 }
 
+/* Variante del hero navy: encuadre mas alto (4/4.6), apoyado en el borde
+   inferior de la banda, con las esquinas superiores redondeadas y un anillo de
+   laton al filo en lugar del marco de papel. El pie de foto se mantiene en el
+   DOM pero oculto a la vista: el diseno no lo lleva y el alt de la imagen ya
+   describe al Dr., asi que quitarlo del HTML solo restaria contexto a quien
+   navega con lector de pantalla. */
+
+.portrait--hero-navy {
+  align-self: end;
+}
+
+.portrait--hero-navy .portrait__frame {
+  aspect-ratio: 4 / 4.6;
+  border: 0;
+  border-radius: 4px 4px 0 0;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(201, 174, 123, 0.35);
+}
+
+.portrait--hero-navy .portrait__frame::after {
+  content: none;
+}
+
+.portrait--hero-navy .portrait__image {
+  object-position: center 20%;
+}
+
+.portrait--hero-navy .portrait__caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
 /* --- Prosa y tarjetas ---------------------------------------------------- */
 
 .prose > p + p {
@@ -461,6 +546,31 @@ ul {
   margin-top: 0.75rem;
   font-size: 0.98rem;
   color: var(--ink-soft);
+}
+
+/* Tarjetas sin caja de la 1c: solo una regla superior en azul tinta. Se aplica
+   unicamente a las areas de experiencia; el enfoque de la consulta conserva la
+   caja para que las dos rejillas no se confundan entre si. */
+
+.card-grid--rule {
+  gap: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.card--rule {
+  background: none;
+  border: 0;
+  border-top: 2px solid var(--navy);
+  border-radius: 0;
+  padding: 1.375rem 0 0;
+}
+
+.card--rule .card__title {
+  font-size: 1.375rem;
+}
+
+.card--rule .card__body {
+  font-size: 0.938rem;
+  line-height: 1.65;
 }
 
 /* --- Credenciales -------------------------------------------------------- */
@@ -651,6 +761,41 @@ ul {
   margin-top: 2rem;
 }
 
+/* Franja compacta de la portada (variante "compact" del panel): telefono,
+   nota y CTA en una sola linea navy. Sin mapa ni correos: esos siguen en la
+   ficha completa de /contacto. */
+
+.contact-panel--compact {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 2.5rem;
+  align-items: center;
+  padding: 2.25rem 2.75rem;
+}
+
+.contact-panel--compact .contact-panel__label {
+  font-size: 0.688rem;
+}
+
+.contact-panel--compact .contact-panel__phone {
+  margin-top: 0.5rem;
+  font-size: clamp(1.75rem, 4vw, 2.125rem);
+}
+
+.contact-panel--compact .contact-panel__note {
+  margin-top: 0;
+  font-size: 0.906rem;
+}
+
+.contact-panel--compact .contact-panel__actions {
+  margin-top: 0;
+}
+
+.contact-panel__more {
+  margin-top: 0.75rem;
+  font-size: 0.906rem;
+  color: var(--brass-soft);
+}
+
 /* --- Estado vacio (blog) --------------------------------------------------
    La seccion de articulos esta desactivada (ver src/router/routes.js), asi que
    hoy no hay ninguna vista montada que use estas clases. Se conservan para que
@@ -768,6 +913,22 @@ ul {
     order: -1;
   }
 
+  /* En el hero navy el retrato va DEBAJO del texto, no encima: sigue apoyado
+     en el borde inferior de la banda igual que en escritorio. */
+  .portrait--hero-navy {
+    order: 0;
+  }
+
+  .hero__copy {
+    padding-bottom: clamp(2rem, 6vw, 3rem);
+  }
+
+  .contact-panel--compact {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    padding: 2rem;
+  }
+
   .credential-group__layout {
     grid-template-columns: 1fr;
   }
@@ -796,6 +957,21 @@ ul {
 
   .site-nav__link {
     font-size: 0.88rem;
+  }
+
+  /* El boton de laton se aprieta para que la segunda fila de la cabecera
+     (enlaces + idioma + llamada) no desborde el ancho del movil. */
+  .site-nav__call {
+    padding: 0.563rem 0.75rem;
+    font-size: 0.813rem;
+  }
+
+  /* La banda de credenciales pasa a dos columnas: en fila plana las cuatro
+     entradas quedan apretadas contra el gutter. */
+  .credential-band__inner {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 1.25rem;
   }
 
   .hero__actions .btn,
