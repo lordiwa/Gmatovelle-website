@@ -24,7 +24,9 @@
   "depends_on": [
     "TASK-008"
   ],
-  "linked_commits": [],
+  "linked_commits": [
+    "eab1138"
+  ],
   "linked_prs": [],
   "comments": [
     {
