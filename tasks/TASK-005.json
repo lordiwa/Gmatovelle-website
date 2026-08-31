@@ -1,0 +1,28 @@
+{
+  "key": "TASK-005",
+  "title": "Seccion de contacto en estado placeholder",
+  "description": "Construir la seccion de contacto de la landing con marcadores de posicion explicitos. El Dr. Matovelle aun no ha entregado sus datos de contacto (telefono, direccion del consultorio en Quito, correo electronico, horarios). La seccion debe quedar lista para recibirlos sin rehacer la maquetacion, y no debe publicar ningun dato inventado o no confirmado. Cuando el Dr. entregue los datos definitivos, se abrira un ticket aparte para poblarlos.",
+  "acceptance_criteria": [
+    "Existe una seccion de contacto visible en la landing con la estructura final (telefono, direccion de consultorio, correo, horarios).",
+    "Cada dato pendiente se muestra como placeholder identificable y no como un valor real.",
+    "No se publica ningun telefono, correo, direccion ni horario que el Dr. no haya confirmado.",
+    "Los datos de contacto viven en un unico archivo o modulo de configuracion, de modo que completarlos despues sea un cambio de un solo punto."
+  ],
+  "status": "todo",
+  "priority": "medium",
+  "labels": [
+    "landing",
+    "contacto"
+  ],
+  "assignee": null,
+  "depends_on": [
+    "TASK-004"
+  ],
+  "linked_commits": [],
+  "linked_prs": [],
+  "comments": [],
+  "created_at": "2026-08-31T16:31:45.416Z",
+  "updated_at": "2026-08-31T16:31:45.416Z",
+  "jira_key": null,
+  "verification_tier": "uat-only"
+}

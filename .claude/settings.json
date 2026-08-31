@@ -1,0 +1,29 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "node \"/opt/data/home/.claude/plugins/cache/hivemind-marketplace/hivemind/0.22.0/context-monitor/statusline.mjs\""
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/opt/data/home/.claude/plugins/cache/hivemind-marketplace/hivemind/0.22.0/context-monitor/stop-hook.mjs\""
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/opt/data/home/.claude/plugins/cache/hivemind-marketplace/hivemind/0.22.0/context-monitor/session-start.mjs\""
+          }
+        ]
+      }
+    ]
+  }
+}

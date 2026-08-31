@@ -1,0 +1,27 @@
+{
+  "key": "TASK-006",
+  "title": "Definir la estrategia SEO del sitio",
+  "description": "Definir y documentar la estrategia de posicionamiento en motores de busqueda para que el sitio del Dr. Matovelle sea encontrado por quien busca un psiquiatra en Quito o en Ecuador. Cubre investigacion de palabras clave en espanol para el mercado ecuatoriano, SEO tecnico (metadatos, titulos, canonical, sitemap.xml, robots.txt, rendimiento y accesibilidad), datos estructurados schema.org (Physician / MedicalBusiness / Person) y SEO local (Quito, Pichincha, Ecuador). Incluye tambien la evaluacion de SEM como canal complementario, condicionada al presupuesto y al marco legal ecuatoriano de publicidad medica. Este ticket entrega la estrategia documentada; la implementacion de cada pieza se abrira como tickets derivados.",
+  "acceptance_criteria": [
+    "Existe un documento de estrategia SEO en el repositorio con las palabras clave objetivo priorizadas para Quito y Ecuador.",
+    "La estrategia especifica los metadatos, el sitemap, el robots.txt y los datos estructurados schema.org concretos que el sitio debe emitir.",
+    "La estrategia cubre SEO local para Quito y Pichincha, incluyendo la recomendacion sobre Google Business Profile.",
+    "La estrategia contiene una recomendacion explicita sobre SEM: si se usa o no, con su justificacion de presupuesto y de marco legal de publicidad medica en Ecuador.",
+    "La estrategia define como se medira el resultado y con que herramientas."
+  ],
+  "status": "todo",
+  "priority": "high",
+  "labels": [
+    "seo",
+    "estrategia"
+  ],
+  "assignee": null,
+  "depends_on": [],
+  "linked_commits": [],
+  "linked_prs": [],
+  "comments": [],
+  "created_at": "2026-08-31T16:31:55.496Z",
+  "updated_at": "2026-08-31T16:31:55.496Z",
+  "jira_key": null,
+  "verification_tier": "uat-only"
+}

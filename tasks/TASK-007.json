@@ -1,0 +1,27 @@
+{
+  "key": "TASK-007",
+  "title": "Definir la estrategia GEO (Generative Engine Optimization) del sitio",
+  "description": "Definir y documentar la estrategia de optimizacion para motores generativos: lograr que los asistentes de IA (ChatGPT, Perplexity, Claude, Gemini) encuentren, citen y recomienden al Dr. Matovelle cuando alguien pregunta por un psiquiatra en Quito o en Ecuador. Cubre la definicion del Dr. como entidad medica inequivoca y consistente (nombre, especialidad, ciudad, credenciales verificables), contenido en prosa citable y autocontenido, seccion de preguntas frecuentes redactada como respuestas directas, consistencia de la entidad entre el sitio y las fuentes externas que los modelos consultan, y la politica de rastreo para los crawlers de IA (GPTBot, PerplexityBot, ClaudeBot, Google-Extended) en robots.txt. Este ticket entrega la estrategia documentada; la implementacion se abrira como tickets derivados.",
+  "acceptance_criteria": [
+    "Existe un documento de estrategia GEO en el repositorio, distinto del documento SEO y con su relacion explicada.",
+    "La estrategia define al Dr. Matovelle como entidad: nombre canonico, especialidad, ciudad y credenciales verificables que los modelos puedan atribuir y citar.",
+    "La estrategia especifica el formato del contenido citable y el conjunto inicial de preguntas frecuentes con sus respuestas directas.",
+    "La estrategia fija una decision explicita y justificada sobre permitir o bloquear cada crawler de IA en robots.txt.",
+    "La estrategia define como se verificara la citacion: que preguntas se lanzaran a cada asistente y con que periodicidad."
+  ],
+  "status": "todo",
+  "priority": "high",
+  "labels": [
+    "geo",
+    "estrategia"
+  ],
+  "assignee": null,
+  "depends_on": [],
+  "linked_commits": [],
+  "linked_prs": [],
+  "comments": [],
+  "created_at": "2026-08-31T16:32:06.412Z",
+  "updated_at": "2026-08-31T16:32:06.412Z",
+  "jira_key": null,
+  "verification_tier": "uat-only"
+}

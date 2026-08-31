@@ -1,0 +1,32 @@
+{
+  "key": "TASK-003",
+  "title": "Draft an implementation plan against the stated goals/scope",
+  "description": "Draft an implementation plan against the stated goals/scope before any implementation ticket for this project starts.\n\nProblem statement (captured verbatim at intake):\nEl Dr. Gonzalo Patricio Matovelle Mediavilla, medico psiquiatra con 40 anos de experiencia y consulta privada en Quito (Ecuador), no tiene presencia web propia: no aparece en resultados de busqueda ni es citado por asistentes de IA cuando alguien busca un psiquiatra en Quito o Ecuador. Necesita un sitio de presentacion personal que lo haga visible, verificable y citable tanto para motores de busqueda como para modelos generativos.",
+  "acceptance_criteria": [
+    "Plan explicitly addresses every stated goal: Publicar una landing page de presentacion personal del Dr. Gonzalo Matovelle, medico psiquiatra en Quito (Ecuador); Posicionar el sitio en motores de busqueda (SEO) para consultas del tipo psiquiatra en Quito y psiquiatra en Ecuador; Optimizar el sitio para motores generativos (GEO) de modo que ChatGPT, Perplexity, Claude y Gemini encuentren, citen y recomienden al Dr. Matovelle; Presentar de forma clara y verificable las credenciales, dignidades gremiales y publicaciones del Dr. Matovelle tomadas de su CV; Dejar preparada una seccion de contacto que se completara cuando el Dr. entregue sus datos de contacto definitivos; Evaluar SEM (marketing en buscadores) como canal complementario si aplica al presupuesto y al marco legal de publicidad medica en Ecuador",
+    "Plan stays within the stated in-scope items: Landing page de una sola pagina construida con Vue 3 + Vite; Seccion de perfil profesional: Dr. en Medicina y Cirugia; Especialista en Psiquiatria; Seccion de ocupacion actual: medico psiquiatra experto en el manejo de medicacion neuropsiquiatrica y psicoeducacion; consulta privada; Seccion de experiencia: 40 anos de practica privada como psiquiatra y psicofarmacologo; Seccion de representaciones y dignidades: Past Presidente de la Asociacion Ecuatoriana de Psiquiatria; Past Presidente de la Sociedad Ecuatoriana de Psiquiatria Biologica; Past Secretario Tesorero de la Federacion Latinoamericana de Psiquiatria Biologica; Psiquiatra para Ecuador de VES (Veterans Evaluation System) USA; Seccion de docencia y peritaje: Profesor invitado de Psicofarmacologia en la Escuela de Postgrado de Psiquiatria de la Universidad Central del Ecuador; Perito Psiquiatra certificado de la Funcion Judicial de Pichincha; Seccion de membresias: World Psychiatric Association (WPA); World Federation of Societies of Biological Psychiatry (WFSBP); American Academy of Sleep Disorders; sociedades de psiquiatria biologica de Argentina; Peru y Uruguay; Seccion de publicaciones: Manual Latinoamericano para la Enfermedad Depresiva; Enfermedad de Alzheimer (Cangrejal Editores); multiples articulos cientificos; Seccion de conferencias: conferencista nacional e internacional e invitado a advisory boards internacionales; Seccion de contacto en estado placeholder hasta que el Dr. entregue telefono; direccion de consultorio y correo; Estrategia y ejecucion SEO tecnica y de contenido: metadatos; datos estructurados schema.org Physician y MedicalBusiness; sitemap; robots.txt; rendimiento y accesibilidad; Estrategia y ejecucion GEO: contenido en prosa citable; preguntas frecuentes; entidad medica bien definida y consistente para que los asistentes de IA puedan atribuir y citar al Dr.; Despliegue del sitio a un hosting estatico",
+    "Plan explicitly excludes the stated out-of-scope items: Sistema de agendamiento o reserva de citas en linea; Telemedicina; videoconsulta o chat con pacientes; Historia clinica; almacenamiento o procesamiento de datos de salud de pacientes; Blog con publicacion continua o CMS administrable por el Dr.; Backend propio y base de datos: el sitio es estatico; Pasarela de pagos; Sitio multi-idioma en la primera version: se publica en espanol; Publicar datos de contacto inventados o no confirmados por el Dr.",
+    "Plan is recorded as a ticket comment or linked doc before any implementation ticket for this project starts."
+  ],
+  "status": "todo",
+  "priority": "high",
+  "labels": [
+    "seed",
+    "plan"
+  ],
+  "assignee": null,
+  "depends_on": [],
+  "linked_commits": [],
+  "linked_prs": [],
+  "comments": [
+    {
+      "author": "backlog-seeder",
+      "at": "2026-08-31T16:30:55.039Z",
+      "body": "derived from the captured problem/goals/scope definition at intake"
+    }
+  ],
+  "created_at": "2026-08-31T16:30:55.036Z",
+  "updated_at": "2026-08-31T16:30:55.039Z",
+  "jira_key": null,
+  "verification_tier": "uat-only"
+}
