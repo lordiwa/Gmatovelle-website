@@ -2,25 +2,28 @@
   "schema_version": 2,
   "session_id": "20260831T163054Z-712a5ca2",
   "lifecycle_state": "active",
-  "updated_at": "2026-08-31T19:10:00.000Z",
-  "active_task": "TASK-004",
+  "updated_at": "2026-08-31T20:15:00.000Z",
+  "active_task": "TASK-008",
   "workflow_step": "done",
-  "next_action": "Confirmar con el cliente la revision visual del sitio (npm run dev) y decidir el siguiente ticket. TASK-006 y TASK-007 (estrategia SEO y GEO) quedaron parcialmente cubiertos por la implementacion tecnica de TASK-004: revisarlos y reducirlos a lo que falta (estrategia de contenido y medicion). TASK-005 (contacto placeholder) quedo absorbido por TASK-004.",
-  "handoff_summary": "TASK-004 completado: SPA Vue 3 + Vite bilingue ES/EN del Dr. Gonzalo Matovelle, con portada (perfil, credenciales, publicaciones, FAQ), contacto y blog vacio, prerenderizada a HTML estatico y con SEO/GEO tecnico completo. Build y 55 tests en verde; commit en main. No se hizo deploy: falta el ID del proyecto Firebase.",
+  "next_action": "Revision visual con Mato del sitio en produccion (https://gmatovelle-site.web.app/). Pedirle al Dr. el original en alta resolucion de la fotografia: el archivo integrado es de 252x320 px y se vera blando en pantallas retina. Cuando compre el dominio, actualizar SITE_ORIGIN en src/site.config.js y public/robots.txt, reconstruir y redesplegar. Revisar TASK-006 y TASK-007 y reducirlos a lo que falta (estrategia de contenido y medicion).",
+  "handoff_summary": "TASK-008 completado y en produccion. Se integro la fotografia profesional del Dr. (public/dr-gonzalo-matovelle.jpg) en lugar del medallon con monograma, conservando el marco 4/5 y declarandola como ImageObject en el nodo Physician; se completo el CV ampliado en ES y EN (psiquiatra de enlace en clinicas de Quito, Vocal Cientifico de la SEPB, International Scientific Advisor del Hellenic Psychiatric Congress 2004-2006, membresias correspondientes de la Soc. Peruana de Obstetricia y Ginecologia y de la Soc. Ecuatoriana de Escritores Medicos, pie editorial Cangrejal Editores L.A.); y se consolidaron las ediciones pendientes del posicionamiento neurocientifico (manejo y control de la medicacion, ansiedad/depresion/trastorno bipolar, direccion Av. Eloy Alfaro y Republica, mapa embebido, telefono 099835666). Build con prerender en verde y 79 tests pasando (antes 69). Commit d592ad7 en main, pusheado a lordiwa/Gmatovelle-website. Deploy a Firebase Hosting completado: https://gmatovelle-site.web.app/ responde 200 en ES, EN, contacto, sitemap y la foto.",
   "open_questions": [
-    "Que areas y tratamientos quiere destacar el Dr. (Mato se lo preguntara).",
+    "Original en alta resolucion de la fotografia del Dr.: el archivo entregado es de 252x320 px, suficiente para el marco actual pero blando en pantallas de alta densidad y demasiado pequeno para una imagen Open Graph decente (1200x630).",
     "Numero de WhatsApp en formato internacional: el telefono entregado (099835666) tiene 9 digitos y los celulares ecuatorianos tienen 10; no se completo para no inventar un digito.",
-    "Direccion del consultorio, correo y horarios de atencion.",
-    "Dominio definitivo: SITE_ORIGIN en src/site.config.js y robots.txt usan un placeholder que hay que reemplazar."
+    "Correo del consultorio y horarios de atencion: se omiten del JSON-LD en vez de rellenarse.",
+    "Dominio definitivo: SITE_ORIGIN en src/site.config.js y robots.txt siguen con el placeholder gonzalomatovelle.com, por indicacion expresa de no sustituirlo por otro dominio.",
+    "Perfiles externos verificables del Dr. (LinkedIn, Doctoralia, ficha institucional) para poblar profile.sameAs y reforzar la desambiguacion de la entidad."
   ],
-  "blockers": [
-    "Deploy a Firebase Hosting bloqueado: falta el ID del proyecto Firebase que esta creando el cliente."
-  ],
+  "blockers": [],
   "decisions": [
     "Sitio premium bilingue ES/EN con una URL indexable por idioma (/ y /en), no un toggle solo de strings: hreflang y canonical exigen una URL por idioma para SEO/GEO.",
     "Sin formulario ni sistema de citas: todo el contacto es telefonico, por decision del cliente.",
-    "Retrato provisional (monograma) en lugar de fotografia de banco de imagenes, hasta que el Dr. tenga fotos profesionales.",
+    "La fotografia se sirve desde public/ y no como asset importado de Vite: el build corre el bundle cliente y el prerender SSR por separado, y una ruta publica estable garantiza que el HTML estatico y el bundle hidratado apunten al mismo archivo.",
+    "El retrato lleva width/height explicitos para evitar salto de layout (CLS) en el hero.",
+    "La foto se declara como ImageObject en el nodo Physician: ancla la entidad a una cara concreta, que es lo que usan buscadores y asistentes para desambiguar personas. No se anadio og:image porque el original es demasiado pequeno para una tarjeta social.",
+    "Los matices del vinculo con cada sociedad ('miembro correspondiente extranjero', 'miembro y Past Presidente') viven en el copy traducible; profile.memberships guarda solo el nombre limpio de la organizacion porque alimenta memberOf de schema.org.",
     "Prerender a HTML estatico en el build: los rastreadores de modelos generativos no ejecutan JavaScript y una SPA pura les entregaria una pagina vacia.",
+    "Exclusiones duras verificadas por test: el sitio no menciona manejo de adicciones ni terapia de pareja en ningun idioma, ni en el copy, ni en el JSON-LD, ni en el HTML prerenderizado.",
     "Sin testimonios y sin areas de tratamiento inventadas."
   ],
   "subagent_results": [],
