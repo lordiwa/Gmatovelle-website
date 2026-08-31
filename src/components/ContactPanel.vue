@@ -33,6 +33,13 @@ const whatsapp = computed(() => whatsappUrl());
       <div class="contact-aside">
         <p class="contact-panel__label">{{ t.contact.locationLabel }}</p>
         <p class="contact-aside__value">{{ t.contact.locationValue }}</p>
+        <iframe
+          class="contact-map"
+          src="https://www.google.com/maps?q=Av.+Eloy+Alfaro+y+Republica,+Quito,+Ecuador&output=embed"
+          :title="t.contact.mapTitle"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
       </div>
       <div class="contact-aside">
         <p class="contact-panel__label">{{ t.contact.emergencyTitle }}</p>

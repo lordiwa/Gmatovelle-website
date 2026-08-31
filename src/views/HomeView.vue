@@ -48,11 +48,7 @@ const { locale, t } = useI18n();
       </div>
     </section>
 
-    <!--
-      Enfoque de la consulta. Solo recoge lo que el CV respalda.
-      PENDIENTE: cuando el Dr. confirme las areas y tratamientos que quiere
-      destacar, se agregan como una seccion propia despues de esta.
-    -->
+    <!-- Enfoque de la consulta. Solo recoge lo que el CV respalda. -->
     <section class="section section--sunk">
       <div class="shell">
         <SectionHeading index="02" :title="t.practice.heading" :lead="t.practice.lead" />
@@ -65,9 +61,22 @@ const { locale, t } = useI18n();
       </div>
     </section>
 
+    <!-- Areas de experiencia confirmadas por el cliente (ver profile.declaredConditions). -->
     <section class="section">
       <div class="shell">
-        <SectionHeading index="03" :title="t.credentials.heading" :lead="t.credentials.lead" />
+        <SectionHeading index="03" :title="t.expertise.heading" :lead="t.expertise.lead" />
+        <div class="card-grid">
+          <article v-for="item in t.expertise.items" :key="item.title" class="card">
+            <h3 class="card__title">{{ item.title }}</h3>
+            <p class="card__body">{{ item.body }}</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--sunk">
+      <div class="shell">
+        <SectionHeading index="04" :title="t.credentials.heading" :lead="t.credentials.lead" />
         <div>
           <section
             v-for="group in t.credentials.groups"
@@ -85,9 +94,9 @@ const { locale, t } = useI18n();
       </div>
     </section>
 
-    <section class="section section--sunk">
+    <section class="section">
       <div class="shell">
-        <SectionHeading index="04" :title="t.publications.heading" :lead="t.publications.lead" />
+        <SectionHeading index="05" :title="t.publications.heading" :lead="t.publications.lead" />
         <ul>
           <li v-for="item in t.publications.items" :key="item.title" class="publication">
             <span class="publication__title">{{ item.title }}</span>
@@ -98,16 +107,16 @@ const { locale, t } = useI18n();
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section--sunk">
       <div class="shell">
-        <SectionHeading index="05" :title="t.faq.heading" :lead="t.faq.lead" />
+        <SectionHeading index="06" :title="t.faq.heading" :lead="t.faq.lead" />
         <FaqList :items="t.faq.items" />
       </div>
     </section>
 
     <section class="section">
       <div class="shell">
-        <SectionHeading index="06" :title="t.contact.heading" :lead="t.contact.lead" />
+        <SectionHeading index="07" :title="t.contact.heading" :lead="t.contact.lead" />
         <ContactPanel />
         <p class="publication-note">
           <RouterLink :to="pathFor('contact', locale)">{{ t.nav.contact }}</RouterLink>

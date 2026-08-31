@@ -47,12 +47,28 @@ export function physicianJsonLd(locale) {
     givenName: profile.givenName,
     familyName: profile.familyName,
     url: absoluteUrl(pathFor('home', locale)),
+    // Retrato profesional del Dr. Ancla la entidad a una cara concreta, que es
+    // justamente lo que usan buscadores y asistentes para desambiguar a una
+    // persona con nombre comun. Se construye sobre SITE_ORIGIN, asi que apunta
+    // al dominio definitivo en cuanto se actualice src/site.config.js.
+    image: {
+      '@type': 'ImageObject',
+      url: absoluteUrl(profile.portraitPath),
+      width: profile.portraitWidth,
+      height: profile.portraitHeight,
+      caption: t.hero.portraitAlt,
+    },
     description: t.hero.summary,
+    // 'Psychiatric' es el unico valor del enum MedicalSpecialty de schema.org
+    // que aplica: no existe un miembro "Neurologic"/"Neuropsychiatric" en ese
+    // enum, asi que no se inventa uno. El posicionamiento en neurociencias se
+    // declara en jobTitle y knowsAbout, que son texto libre.
     medicalSpecialty: 'Psychiatric',
-    jobTitle: locale === 'es' ? 'Médico Psiquiatra' : 'Psychiatrist',
+    jobTitle: locale === 'es' ? 'Neurocientífico · Médico Neuropsiquiatra' : 'Neuroscientist · Neuropsychiatrist',
     telephone: contact.phone,
     address: {
       '@type': 'PostalAddress',
+      streetAddress: contact.address,
       addressLocality: profile.city,
       addressRegion: profile.region,
       addressCountry: profile.countryCode,
@@ -64,17 +80,21 @@ export function physicianJsonLd(locale) {
     knowsAbout:
       locale === 'es'
         ? [
-            'Psiquiatría',
-            'Psicofarmacología',
-            'Medicación neuropsiquiátrica',
-            'Psicoeducación',
+            'Neurociencias',
+            'Neuropsiquiatría',
+            'Manejo y control de la medicación',
+            'Ansiedad',
+            'Depresión',
+            'Trastorno bipolar',
             'Peritaje psiquiátrico',
           ]
         : [
-            'Psychiatry',
-            'Psychopharmacology',
-            'Neuropsychiatric medication',
-            'Psychoeducation',
+            'Neuroscience',
+            'Neuropsychiatry',
+            'Medication management and control',
+            'Anxiety',
+            'Depression',
+            'Bipolar disorder',
             'Forensic psychiatry',
           ],
     memberOf: profile.memberships.map((name) => ({ '@type': 'Organization', name })),

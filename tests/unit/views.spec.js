@@ -1,7 +1,10 @@
 import { describe, it, expect } from 'vitest';
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 import App from '@/App.vue';
 import { messages } from '@/i18n/index.js';
 import { contact } from '@/data/contact.js';
+import { profile } from '@/data/profile.js';
 import { mountAt } from '../helpers/mount.js';
 
 describe('portada: perfil del Dr. Matovelle', () => {
@@ -67,10 +70,34 @@ describe('portada: perfil del Dr. Matovelle', () => {
     expect(wrapper.text()).toContain('Certified Forensic Psychiatrist');
   });
 
-  it('usa un retrato provisional en vez de una fotografia de archivo', async () => {
+  it('muestra la fotografia profesional del Dr. dentro del marco del retrato', async () => {
     const { wrapper } = await mountAt(App, '/');
     expect(wrapper.find('.portrait__frame').exists()).toBe(true);
-    expect(wrapper.find('.portrait img').exists()).toBe(false);
+
+    const img = wrapper.find('.portrait img');
+    expect(img.exists()).toBe(true);
+    expect(img.attributes('src')).toBe(profile.portraitPath);
+    // width/height explicitos: sin ellos el retrato del hero provoca un salto
+    // de layout al cargar, que es justo la metrica que Google mide como CLS.
+    expect(img.attributes('width')).toBe(String(profile.portraitWidth));
+    expect(img.attributes('height')).toBe(String(profile.portraitHeight));
+    // El alt tiene que describir al Dr., no quedarse en "foto" o vacio.
+    expect(img.attributes('alt')).toBe(messages.es.hero.portraitAlt);
+    expect(img.attributes('alt')).toContain('Matovelle');
+  });
+
+  it('sirve el retrato como archivo real dentro de public/', () => {
+    expect(existsSync(resolve(process.cwd(), 'public' + profile.portraitPath))).toBe(true);
+  });
+
+  it('ya no anuncia la fotografia como pendiente en ningun idioma', () => {
+    for (const locale of ['es', 'en']) {
+      const hero = messages[locale].hero;
+      expect(hero.portraitAlt.toLowerCase()).not.toMatch(/pendiente|pending|preparaci|preparation/);
+      expect(hero.portraitCaption.toLowerCase()).not.toMatch(
+        /pendiente|pending|preparaci|preparation/,
+      );
+    }
   });
 });
 

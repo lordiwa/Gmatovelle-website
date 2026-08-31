@@ -1,0 +1,36 @@
+{
+  "key": "TASK-008",
+  "title": "Integrar el enfoque comercial real del Dr. Matovelle y desplegar a produccion",
+  "description": "Actualizar el contenido de la landing bilingue con los datos comerciales confirmados por el cliente el 2026-08-31, que cierran tres de las cuatro preguntas abiertas de TASK-004, y desplegar el sitio a Firebase Hosting (proyecto gmatovelle-site), lo que desbloquea el blocker de TASK-004.\n\nPOSICIONAMIENTO: el Dr. quiere ser identificado como NEUROCIENTIFICO / neuropsiquiatra, no como psiquiatra generalista. Su fortaleza declarada y el eje de su consulta es el manejo y control de la medicacion (medication management). Su experiencia destacada es en ansiedad, depresion y bipolaridad, sobre 40 anios de ejercicio.\n\nEXCLUSIONES DURAS: el Dr. NO ofrece manejo de adicciones ni terapia de pareja. Ninguna de las dos puede aparecer en el sitio, en ningun idioma, ni en copy, ni en FAQ, ni en JSON-LD.\n\nDIRECCION CONFIRMADA: Quito, Av. Eloy Alfaro y Republica. Es la unica direccion del consultorio. Reemplaza el texto actual que dice que la direccion se coordina por telefono al agendar, y debe embeberse un mapa de Google Maps (iframe estandar, sin API key) en la seccion de contacto.\n\nTELEFONO: 099835666, tal como lo entrego el cliente (9 digitos). NO se completa ni se altera ningun digito. WhatsApp sigue deshabilitado por la razon ya documentada en src/data/contact.js.\n\nNO se toca el CV publicado (credenciales, publicaciones, membresias), ni el bilingue ES/EN, ni el blog vacio, ni SITE_ORIGIN (el dominio definitivo sigue pendiente y conserva su placeholder).",
+  "acceptance_criteria": [
+    "El copy en ES y EN identifica al Dr. como neurocientifico / neuropsiquiatra y presenta el manejo y control de la medicacion como el eje de su consulta.",
+    "El sitio nombra explicitamente ansiedad, depresion y bipolaridad como areas de experiencia destacada, en ambos idiomas, y no agrega ninguna otra area o tratamiento no confirmado por el cliente.",
+    "Ni manejo de adicciones / addiction ni terapia de pareja / couple therapy aparecen en ninguna parte del sitio, en ningun idioma, incluido el HTML prerenderizado.",
+    "La seccion de contacto muestra la direccion Av. Eloy Alfaro y Republica, Quito, y embebe un mapa de Google Maps funcional sin API key.",
+    "La FAQ sobre donde atiende da la direccion real en vez de decir que se coordina por telefono.",
+    "El JSON-LD Physician refleja el posicionamiento en neurociencias, incluye streetAddress con la direccion real, el telefono 099835666, y knowsAbout con medicacion, ansiedad, depresion y bipolaridad.",
+    "El telefono publicado sigue siendo exactamente 099835666 y el boton de WhatsApp sigue deshabilitado, sin digitos inventados.",
+    "El build (npm run build) y la suite de tests completa pasan en verde, incluyendo tests de regresion que bloqueen la reaparicion de las exclusiones.",
+    "El sitio queda desplegado en produccion en Firebase Hosting con el proyecto gmatovelle-site y la URL responde 200 con el contenido actualizado."
+  ],
+  "status": "in_progress",
+  "priority": "high",
+  "labels": [
+    "landing",
+    "contenido",
+    "seo",
+    "geo",
+    "deploy"
+  ],
+  "assignee": null,
+  "depends_on": [
+    "TASK-004"
+  ],
+  "linked_commits": [],
+  "linked_prs": [],
+  "comments": [],
+  "created_at": "2026-08-31T19:50:00.000Z",
+  "updated_at": "2026-08-31T19:50:00.000Z",
+  "jira_key": null,
+  "verification_tier": "tests-after"
+}

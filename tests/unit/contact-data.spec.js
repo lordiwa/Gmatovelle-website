@@ -32,9 +32,12 @@ describe('datos de contacto', () => {
 
   it('deja en null todo dato de contacto no confirmado', () => {
     expect(contact.email).toBeNull();
-    expect(contact.address).toBeNull();
     expect(contact.openingHours).toBeNull();
     expect(contact.whatsapp).toBeNull();
+  });
+
+  it('publica la direccion real confirmada por el cliente', () => {
+    expect(contact.address).toBe('Av. Eloy Alfaro y República');
   });
 
   it('no genera enlace de WhatsApp mientras el numero internacional falte', () => {

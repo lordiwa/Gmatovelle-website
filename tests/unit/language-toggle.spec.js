@@ -43,11 +43,11 @@ describe('selector de idioma ES/EN', () => {
   it('traduce tambien la navegacion y el pie', async () => {
     const { wrapper: es } = await mountAt(App, '/');
     expect(es.find('.site-nav').text()).toContain('Contacto');
-    expect(es.find('.site-footer').text()).toContain('Médico Psiquiatra');
+    expect(es.find('.site-footer').text()).toContain('Neurocientífico');
 
     const { wrapper: en } = await mountAt(App, '/en');
     expect(en.find('.site-nav').text()).toContain('Contact');
-    expect(en.find('.site-footer').text()).toContain('Psychiatrist');
+    expect(en.find('.site-footer').text()).toContain('Neuroscientist');
   });
 });
 
@@ -56,7 +56,7 @@ describe('head sincronizado con la ruta', () => {
     const { router } = await mountAt(App, '/');
     await nextTick();
 
-    expect(document.title).toContain('Médico Psiquiatra');
+    expect(document.title).toContain('Neurocientífico');
     expect(document.documentElement.getAttribute('lang')).toBe('es-EC');
 
     const blocks = () => [...document.head.querySelectorAll('script[type="application/ld+json"]')];
@@ -66,7 +66,7 @@ describe('head sincronizado con la ruta', () => {
     await router.push('/en');
     await nextTick();
 
-    expect(document.title).toContain('Psychiatrist');
+    expect(document.title).toContain('Neuroscientist');
     expect(document.documentElement.getAttribute('lang')).toBe('en');
     expect(document.head.querySelectorAll('link[rel="canonical"]').length).toBe(1);
     expect(document.head.querySelector('link[rel="canonical"]').getAttribute('href')).toContain(
