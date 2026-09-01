@@ -70,16 +70,29 @@ export const profile = {
   portraitHeight: 320,
 
   /**
-   * Posicionamiento y areas de experiencia declarados por el cliente el
-   * 2026-08-31. A diferencia del resto de este modulo, NO provienen del CV:
-   * son la forma en que el Dr. quiere presentarse (neurocientifico, con el
-   * manejo y control de la medicacion como eje) y las unicas tres condiciones
-   * que el sitio puede nombrar como experiencia destacada. Claves en ingles
-   * neutro a proposito: cada idioma redacta su propio copy en
-   * src/i18n/{es,en}.js y en src/seo/meta.js a partir de estas mismas claves.
+   * Posicionamiento y areas de experiencia declarados por el cliente. A
+   * diferencia del resto de este modulo, NO provienen del CV: son la forma en
+   * que el Dr. quiere presentarse (medico neuropsiquiatra, con el manejo y
+   * control de la medicacion como eje) y las unicas cinco condiciones que el
+   * sitio puede nombrar como experiencia destacada. El cliente corrigio las dos
+   * cosas el 2026-09-01: fijo la autodescripcion en medico neuropsiquiatra y
+   * amplio la lista de tres a cinco condiciones (agrego el trastorno
+   * obsesivo-compulsivo y el autismo). Claves en ingles neutro a proposito:
+   * cada idioma redacta su propio copy en src/i18n/{es,en}.js y en
+   * src/seo/meta.js a partir de estas mismas claves.
+   *
+   * (La autodescripcion anterior, mas amplia que la de neuropsiquiatra, quedo
+   * retirada por pedido expreso del cliente y no debe volver: hay un test que
+   * barre todo src/ para impedirlo.)
    */
   declaredFocus: 'medication_management',
-  declaredConditions: ['anxiety', 'depression', 'bipolar_disorder'],
+  declaredConditions: [
+    'anxiety',
+    'depression',
+    'bipolar_disorder',
+    'obsessive_compulsive_disorder',
+    'autism',
+  ],
 
   /**
    * Perfiles externos verificables del Dr. (sameAs de schema.org).

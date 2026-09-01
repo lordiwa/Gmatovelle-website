@@ -13,7 +13,7 @@ perfil_proyecto: {score: 3, functionality: 1, beauty: 2, design_heavy: true, fra
 Sitio web de presentacion personal (landing page) del Dr. Gonzalo Patricio Matovelle Mediavilla, medico psiquiatra con consulta privada en Quito (Ecuador), construido en Vue 3 + Vite y optimizado para SEO y para Generative Engine Optimization (GEO).
 
 ## Target users
-Personas que buscan atencion psiquiatrica en Quito y en Ecuador (pacientes y sus familiares); medicos que refieren pacientes a un psiquiatra; instituciones y peritajes de la Funcion Judicial; y — como consumidor de segundo orden pero objetivo explicito del proyecto — los asistentes de IA (ChatGPT, Perplexity, Claude, Gemini) y los motores de busqueda que deben encontrar, citar y recomendar al Dr. Matovelle.
+Personas que buscan atencion psiquiatrica en Quito y en Ecuador (pacientes y sus familiares); medicos que refieren pacientes a un psiquiatra; y — como consumidor de segundo orden pero objetivo explicito del proyecto — los asistentes de IA (ChatGPT, Perplexity, Claude, Gemini) y los motores de busqueda que deben encontrar, citar y recomendar al Dr. Matovelle.
 
 ## Primary use cases
 - other
@@ -38,14 +38,15 @@ El Dr. Gonzalo Patricio Matovelle Mediavilla, medico psiquiatra con 40 anos de e
 - Seccion de ocupacion actual: medico psiquiatra experto en el manejo de medicacion neuropsiquiatrica y psicoeducacion; consulta privada
 - Seccion de experiencia: 40 anos de practica privada como psiquiatra y psicofarmacologo
 - Seccion de representaciones y dignidades: Past Presidente de la Asociacion Ecuatoriana de Psiquiatria; Past Presidente de la Sociedad Ecuatoriana de Psiquiatria Biologica; Past Secretario Tesorero de la Federacion Latinoamericana de Psiquiatria Biologica; Psiquiatra para Ecuador de VES (Veterans Evaluation System) USA
-- Seccion de docencia y peritaje: Profesor invitado de Psicofarmacologia en la Escuela de Postgrado de Psiquiatria de la Universidad Central del Ecuador; Perito Psiquiatra certificado de la Funcion Judicial de Pichincha
+- Seccion de docencia: Profesor invitado de Psicofarmacologia en la Escuela de Postgrado de Psiquiatria de la Universidad Central del Ecuador
 - Seccion de membresias: World Psychiatric Association (WPA); World Federation of Societies of Biological Psychiatry (WFSBP); American Academy of Sleep Disorders; sociedades de psiquiatria biologica de Argentina; Peru y Uruguay
 - Seccion de publicaciones: Manual Latinoamericano para la Enfermedad Depresiva; Enfermedad de Alzheimer (Cangrejal Editores); multiples articulos cientificos
 - Seccion de conferencias: conferencista nacional e internacional e invitado a advisory boards internacionales
-- Seccion de contacto con los datos definitivos del Dr.: telefono fijo del consultorio 022892716, dos correos y la direccion del Centro de Negocios La Esquina; los horarios de atencion quedan pendientes hasta que el Dr. los entregue
+- Seccion de contacto con los datos definitivos del Dr.: un unico numero, el movil 0999835666 (que es tambien el de WhatsApp), dos correos y la direccion del Centro de Negocios La Esquina; los horarios de atencion quedan pendientes hasta que el Dr. los entregue
+- Areas de experiencia declaradas por el cliente: ansiedad, depresion, trastorno bipolar, trastorno obsesivo-compulsivo (TOC) y autismo (ampliadas de tres a cinco por el cliente, 2026-09-01)
 - Sitio bilingue espanol / ingles con selector de idioma y una URL indexable por idioma (decision del cliente, 2026-08-31)
 - Seccion de blog RETIRADA hasta que el Dr. tenga articulos reales (decision del cliente, 2026-08-31). Se publico vacia como marcador y luego se desactivo: ruta, navegacion y sitemap fuera; la vista, el copy y los estilos siguen en el repo y se reactivan descomentando (pasos en src/router/routes.js)
-- Canal de WhatsApp del consultorio (+593 99 983 5666) como via adicional al telefono fijo, con boton en la landing y en contacto (dato confirmado por el cliente, 2026-08-31)
+- Canal de WhatsApp del consultorio (+593 99 983 5666) sobre el mismo y unico numero del Dr., con boton en la landing y en contacto (dato confirmado por el cliente, 2026-08-31)
 - Estrategia y ejecucion SEO tecnica y de contenido: metadatos; datos estructurados schema.org Physician y MedicalBusiness; sitemap; robots.txt; rendimiento y accesibilidad
 - Estrategia y ejecucion GEO: contenido en prosa citable; preguntas frecuentes; entidad medica bien definida y consistente para que los asistentes de IA puedan atribuir y citar al Dr.
 - Despliegue del sitio a un hosting estatico
@@ -59,6 +60,7 @@ El Dr. Gonzalo Patricio Matovelle Mediavilla, medico psiquiatra con 40 anos de e
 - Pasarela de pagos
 - Publicar datos de contacto inventados o no confirmados por el Dr.
 - Publicar areas o tratamientos especificos que el Dr. no haya confirmado
+- AFIRMACIONES RETIRADAS POR EL CLIENTE el 2026-09-01, que no deben volver al sitio por ninguna via: presentarlo como neurocientifico o declarar las neurociencias como su campo ("remove that it is neuroscientific... leave it with at least neuropsiquiatra"); el telefono fijo 022892716 ("remove the conventional phone number"); y el rol pericial, es decir Perito Psiquiatra certificado de la Funcion Judicial de Pichincha ("It is no longer a legal expert either"). Hay un lock en tests/unit/positioning.spec.js que barre src/, los diccionarios y el JSON-LD y rompe la suite si alguna reaparece
 - Testimonios de pacientes
 - Fotografia definitiva del Dr. (se usa un retrato provisional hasta que existan las fotos profesionales)
 

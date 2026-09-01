@@ -23,7 +23,7 @@ describe('cabecera navy con boton de llamada', () => {
 
       expect(call.exists(), 'falta el boton de llamada de la cabecera en ' + locale).toBe(true);
       expect(call.attributes('href')).toBe(contact.phoneHref);
-      expect(call.attributes('href')).toMatch(/^tel:/);
+      expect(call.attributes('href')).toMatch(/^tel:\+/);
       expect(call.text()).toBe(contact.phone);
       // El texto visible es una cifra suelta: sin aria-label el boton se anuncia
       // como un numero y no como la accion de llamar al consultorio.
@@ -50,8 +50,8 @@ describe('hero navy a sangre de la portada', () => {
       const links = wrapper.findAll('.hero__actions a');
       const hrefs = links.map((a) => a.attributes('href'));
 
-      // Llamar primero, WhatsApp despues: el fijo sigue siendo el canal
-      // principal del consultorio.
+      // Llamar primero, WhatsApp despues: es el mismo numero unico del
+      // consultorio, y la llamada sigue siendo la accion principal.
       expect(hrefs).toEqual([contact.phoneHref, 'https://wa.me/593999835666']);
 
       const whatsapp = links[1];
@@ -106,10 +106,10 @@ describe('banda de credenciales', () => {
 });
 
 describe('areas de experiencia sin caja', () => {
-  it('usa las tarjetas con regla y mantiene las tres condiciones confirmadas', async () => {
+  it('usa las tarjetas con regla y mantiene las cinco condiciones confirmadas', async () => {
     const { wrapper } = await mountAt(App, '/');
     const cards = wrapper.findAll('.card-grid--rule .card--rule');
-    expect(cards).toHaveLength(3);
+    expect(cards).toHaveLength(5);
     expect(cards.map((card) => card.find('.card__title').text())).toEqual(
       messages.es.expertise.items.map((item) => item.title),
     );

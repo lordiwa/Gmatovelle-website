@@ -37,7 +37,7 @@ const links = computed(() => [
         <!--
           Boton de llamada del redisenio 1c. El texto es el numero del
           consultorio para que se lea de un vistazo; el aria-label reutiliza
-          contact.callCta ("Llamar al <fijo>") para que un lector de pantalla
+          contact.callCta ("Llamar al <numero>") para que un lector de pantalla
           anuncie la accion y no solo una cifra suelta.
         -->
         <a class="btn btn--brass site-nav__call" :href="contact.phoneHref" :aria-label="t.contact.callCta">{{

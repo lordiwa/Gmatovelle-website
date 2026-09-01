@@ -61,11 +61,13 @@ export function physicianJsonLd(locale) {
     description: t.hero.summary,
     // 'Psychiatric' es el unico valor del enum MedicalSpecialty de schema.org
     // que aplica: no existe un miembro "Neurologic"/"Neuropsychiatric" en ese
-    // enum, asi que no se inventa uno. El posicionamiento en neurociencias se
-    // declara en jobTitle y knowsAbout, que son texto libre.
+    // enum, asi que no se inventa uno. El matiz neuropsiquiatrico se declara en
+    // jobTitle y knowsAbout, que son texto libre.
     medicalSpecialty: 'Psychiatric',
-    jobTitle: locale === 'es' ? 'Neurocientífico · Médico Neuropsiquiatra' : 'Neuroscientist · Neuropsychiatrist',
-    telephone: contact.phone,
+    jobTitle: locale === 'es' ? 'Médico Neuropsiquiatra' : 'Neuropsychiatrist',
+    // Numero unico del consultorio en E.164: el formato que schema.org pide
+    // para telephone y el que permite marcar desde fuera de Ecuador.
+    telephone: contact.phoneE164,
     email: contact.emails,
     address: {
       '@type': 'PostalAddress',
@@ -81,29 +83,29 @@ export function physicianJsonLd(locale) {
     knowsAbout:
       locale === 'es'
         ? [
-            'Neurociencias',
             'Neuropsiquiatría',
             'Manejo y control de la medicación',
             'Ansiedad',
             'Depresión',
             'Trastorno bipolar',
-            'Peritaje psiquiátrico',
+            'Trastorno obsesivo-compulsivo (TOC)',
+            'Autismo',
           ]
         : [
-            'Neuroscience',
             'Neuropsychiatry',
             'Medication management and control',
             'Anxiety',
             'Depression',
             'Bipolar disorder',
-            'Forensic psychiatry',
+            'Obsessive-compulsive disorder (OCD)',
+            'Autism',
           ],
     memberOf: profile.memberships.map((name) => ({ '@type': 'Organization', name })),
     alumniOf: { '@type': 'CollegeOrUniversity', name: profile.university },
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: locale === 'es' ? 'Agendamiento de citas' : 'Appointments',
-      telephone: contact.phone,
+      telephone: contact.phoneE164,
       email: contact.emails,
     },
   };

@@ -13,12 +13,19 @@ function sourceFiles(dir) {
 }
 
 /**
- * Los datos de contacto definitivos entregados por el cliente son el fijo del
- * consultorio, los dos correos y la direccion del Centro de Negocios La
+ * Los datos de contacto definitivos entregados por el cliente son un unico
+ * numero de telefono, los dos correos y la direccion del Centro de Negocios La
  * Esquina. Estas pruebas evitan las tres formas de estropearlos: que se filtren
  * a un lugar del codigo donde no sean el contacto del consultorio, que alguien
  * "complete" los datos que faltan inventandolos, y que reaparezcan los
  * placeholders descartados.
+ *
+ * El 2026-09-01 el cliente pidio retirar el fijo del consultorio ("remove the
+ * conventional phone number. Just leave the 0-999-835-666"): el sitio quedo con
+ * un solo numero, el movil, que es a la vez el de las llamadas y el de
+ * WhatsApp. Los locks de abajo dejaron de tratar fijo y WhatsApp como canales
+ * distintos y ahora fijan lo contrario: que los tres formatos publicados sean
+ * el mismo numero.
  */
 describe('datos de contacto', () => {
   it('mantiene el telefono en un unico modulo fuente', () => {
@@ -28,12 +35,23 @@ describe('datos de contacto', () => {
     expect(withLiteral.map((f) => f.replace(srcDir + '/', ''))).toEqual(['data/contact.js']);
   });
 
-  it('expone el telefono como enlace de llamada', () => {
-    expect(contact.phoneHref).toBe('tel:' + contact.phone);
+  it('expone el telefono como enlace de llamada, en formato internacional', () => {
+    // El href marca en E.164 y no en formato local: el sitio es bilingue y
+    // recibe visitantes fuera de Ecuador, para los que 0999835666 no marca.
+    expect(contact.phoneHref).toBe('tel:' + contact.phoneE164);
+    expect(contact.phoneHref).toBe('tel:+593999835666');
   });
 
-  it('publica el fijo definitivo del consultorio', () => {
-    expect(contact.phone).toBe('022892716');
+  it('publica el numero unico definitivo del consultorio', () => {
+    expect(contact.phone).toBe('0999835666');
+    expect(contact.phoneE164).toBe('+593999835666');
+  });
+
+  it('ya no publica el fijo que el cliente pidio retirar', () => {
+    const sources = sourceFiles(srcDir)
+      .map((file) => readFileSync(file, 'utf8'))
+      .join('\n');
+    expect(sources).not.toContain('022892716');
   });
 
   it('deja en null todo dato de contacto no confirmado', () => {
@@ -99,11 +117,18 @@ describe('datos de contacto', () => {
     expect(whatsappUrl()).toBe('https://wa.me/593999835666');
   });
 
-  it('mantiene WhatsApp y el fijo como canales distintos', () => {
-    // El fijo es el canal de llamada y no sirve para WhatsApp; activar uno no
-    // puede haber pisado al otro.
-    expect(contact.phone).toBe('022892716');
-    expect(whatsappUrl()).not.toContain(contact.phone);
+  it('publica un solo numero: llamada y WhatsApp son el mismo en tres formatos', () => {
+    // 0999835666 (local, el que se muestra) -> +593999835666 (E.164, el del
+    // href y del JSON-LD) -> 593999835666 (wa.me). Las dos conversiones se
+    // derivan del numero local en vez de compararse contra literales sueltos:
+    // asi, si alguien cambia el numero, los tres formatos tienen que moverse
+    // juntos o el lock cae.
+    const local = contact.phone;
+    expect(local).toMatch(/^0\d{9}$/);
+    expect(contact.phoneE164).toBe('+593' + local.slice(1));
+    expect(contact.whatsapp).toBe('593' + local.slice(1));
+    expect(whatsappUrl()).toBe('https://wa.me/593' + local.slice(1));
+    expect(contact.phoneHref).toBe('tel:' + contact.phoneE164);
   });
 
   it('vuelve a ocultar el enlace si algun dia el numero se retira', () => {

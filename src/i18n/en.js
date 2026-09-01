@@ -6,21 +6,21 @@ export default {
 
   meta: {
     home: {
-      title: 'Dr. Gonzalo Matovelle · Neuroscientist and Neuropsychiatrist in Quito, Ecuador',
+      title: 'Dr. Gonzalo Matovelle · Neuropsychiatrist in Quito, Ecuador',
       description:
-        'Dr. Gonzalo Matovelle is a neuroscientist and neuropsychiatrist, with 40 years of private practice in Quito, Ecuador focused on medication management and control for anxiety, depression and bipolar disorder. Past President of the Ecuadorian Psychiatric Association. Appointments by phone at ' +
+        'Dr. Gonzalo Matovelle is a neuropsychiatrist, with 40 years of private practice in Quito, Ecuador focused on medication management and control for anxiety, depression, bipolar disorder, obsessive-compulsive disorder (OCD) and autism. Past President of the Ecuadorian Psychiatric Association. Appointments by phone at ' +
         contact.phone + '.',
     },
     contact: {
-      title: 'Contact · Dr. Gonzalo Matovelle, Neuroscientist and Neuropsychiatrist in Quito',
+      title: 'Contact · Dr. Gonzalo Matovelle, Neuropsychiatrist in Quito',
       description:
-        'Contact Dr. Gonzalo Matovelle, neuroscientist and neuropsychiatrist in Quito, Ecuador. Appointments are arranged by phone at ' +
+        'Contact Dr. Gonzalo Matovelle, neuropsychiatrist in Quito, Ecuador. Appointments are arranged by phone at ' +
         contact.phone + '.',
     },
     blog: {
-      title: 'Articles · Dr. Gonzalo Matovelle, Neuroscientist in Quito',
+      title: 'Articles · Dr. Gonzalo Matovelle, Neuropsychiatrist in Quito',
       description:
-        'Articles on neuroscience, neuropsychiatry and medication management by Dr. Gonzalo Matovelle, neuroscientist and neuropsychiatrist in Quito, Ecuador. Coming soon.',
+        'Articles on psychiatry, neuropsychiatry and medication management by Dr. Gonzalo Matovelle, neuropsychiatrist in Quito, Ecuador. Coming soon.',
     },
     notFound: {
       title: 'Page not found · Dr. Gonzalo Matovelle',
@@ -30,7 +30,7 @@ export default {
 
   nav: {
     brand: 'Dr. Gonzalo Matovelle',
-    brandRole: 'Neuroscientist · Neuropsychiatrist',
+    brandRole: 'Neuropsychiatrist',
     home: 'Home',
     contact: 'Contact',
     blog: 'Articles',
@@ -54,7 +54,7 @@ export default {
     credentialLine:
       'Dr. Gonzalo Matovelle · Doctor of Medicine and Surgery · Specialist in Psychiatry',
     summary:
-      'Dr. Gonzalo Patricio Matovelle Mediavilla is a neuroscientist and neuropsychiatrist, with 40 years of private practice in Quito, Ecuador. His practice centres on expert medication management and control, with particular experience in anxiety, depression and bipolar disorder.',
+      'Dr. Gonzalo Patricio Matovelle Mediavilla is a neuropsychiatrist, with 40 years of private practice in Quito, Ecuador. His practice centres on expert medication management and control, with particular experience in anxiety, depression, bipolar disorder, obsessive-compulsive disorder (OCD) and autism.',
     primaryCta: 'Call the practice',
     portraitAlt:
       'Portrait of Dr. Gonzalo Matovelle, neuropsychiatrist in Quito, Ecuador',
@@ -71,17 +71,17 @@ export default {
 
   about: {
     heading: 'Professional profile',
-    lead: 'Four decades of continuous clinical practice in psychiatry, with a verifiable professional, academic and forensic record.',
+    lead: 'Four decades of continuous clinical practice in psychiatry, with a verifiable professional and academic record.',
     paragraphs: [
-      'Dr. Gonzalo Patricio Matovelle Mediavilla holds a Doctorate in Medicine and Surgery and is a Specialist in Psychiatry. He identifies as a neuroscientist and runs a private practice in Quito, Ecuador, focused on expert management and control of neuropsychiatric medication, with particular experience in anxiety, depression and bipolar disorder.',
-      'Across forty years of private practice as a psychiatrist and psychopharmacologist he has served as a liaison psychiatrist at the leading clinics of Quito, has held the leading professional offices of the speciality in Ecuador and in the region, has been a visiting lecturer in Psychopharmacology at the Postgraduate School of Psychiatry of the Universidad Central del Ecuador, and is a certified forensic psychiatrist of the Judiciary of Pichincha.',
+      'Dr. Gonzalo Patricio Matovelle Mediavilla holds a Doctorate in Medicine and Surgery and is a Specialist in Psychiatry. He is a neuropsychiatrist and runs a private practice in Quito, Ecuador, focused on expert management and control of neuropsychiatric medication, with particular experience in anxiety, depression, bipolar disorder, obsessive-compulsive disorder (OCD) and autism.',
+      'Across forty years of private practice as a psychiatrist and psychopharmacologist he has served as a liaison psychiatrist at the leading clinics of Quito, has held the leading professional offices of the speciality in Ecuador and in the region, and has been a visiting lecturer in Psychopharmacology at the Postgraduate School of Psychiatry of the Universidad Central del Ecuador.',
       'He is also the Psychiatrist for Ecuador of the Veterans Evaluation System (VES) of the United States, where he carries out psychiatric evaluations of veterans, and he has lectured nationally and internationally and been invited to international advisory boards.',
     ],
   },
 
   practice: {
     heading: 'Focus of the practice',
-    lead: 'Medication management and control is the central pillar of Dr. Matovelle’s practice, which also rests on psychoeducation and extends into forensic and evaluative work.',
+    lead: 'Medication management and control is the central pillar of Dr. Matovelle’s practice, which also rests on psychoeducation and extends into evaluative work.',
     items: [
       {
         title: 'Medication management and control',
@@ -92,10 +92,6 @@ export default {
         body: 'Explanatory work with the patient and their family so that they understand the diagnosis, the treatment and its course.',
       },
       {
-        title: 'Forensic psychiatry',
-        body: 'Certified Forensic Psychiatrist of the Judiciary of Pichincha.',
-      },
-      {
         title: 'Veterans evaluation (VES)',
         body: 'Psychiatrist for Ecuador of the Veterans Evaluation System (VES) of the United States.',
       },
@@ -103,14 +99,15 @@ export default {
   },
 
   /**
-   * Clinical areas of expertise confirmed by the client on 2026-08-31 (see
-   * profile.declaredConditions). These are the only three conditions the site
+   * Clinical areas of expertise confirmed by the client (see
+   * profile.declaredConditions). These are the only five conditions the site
    * may name as highlighted expertise: do not add more without new
-   * confirmation.
+   * confirmation. The client widened the list from three to five on
+   * 2026-09-01, adding obsessive-compulsive disorder and autism.
    */
   expertise: {
     heading: 'Areas of expertise',
-    headline: 'Three conditions, one standard of care',
+    headline: 'Five conditions, one standard of care',
     lead: 'The conditions where Dr. Matovelle concentrates his clinical experience and medication management.',
     items: [
       {
@@ -124,6 +121,14 @@ export default {
       {
         title: 'Bipolar disorder',
         body: 'Expert medication management and control for bipolar disorder.',
+      },
+      {
+        title: 'Obsessive-compulsive disorder (OCD)',
+        body: 'Expert medication management and control for obsessive-compulsive disorder.',
+      },
+      {
+        title: 'Autism',
+        body: 'Expert medication management and control in autism, focused on the symptoms that respond to pharmacological treatment.',
       },
     ],
   },
@@ -155,10 +160,9 @@ export default {
         ],
       },
       {
-        title: 'Teaching and forensic work',
+        title: 'Teaching',
         items: [
           'Visiting lecturer in Psychopharmacology at the Postgraduate School of Psychiatry of the Universidad Central del Ecuador',
-          'Certified Forensic Psychiatrist of the Judiciary of Pichincha',
         ],
       },
       {
@@ -226,12 +230,12 @@ export default {
       {
         question: 'What conditions does Dr. Matovelle treat?',
         answer:
-          'His practice focuses on medication management and control for anxiety, depression and bipolar disorder.',
+          'His practice focuses on medication management and control for anxiety, depression, bipolar disorder, obsessive-compulsive disorder (OCD) and autism.',
       },
       {
-        question: 'Does Dr. Matovelle carry out forensic psychiatric evaluations?',
+        question: 'Does Dr. Matovelle carry out psychiatric evaluations of veterans?',
         answer:
-          'Yes. He is a Certified Forensic Psychiatrist of the Judiciary of Pichincha and is also the Psychiatrist for Ecuador of the Veterans Evaluation System (VES) of the United States, where he evaluates veterans.',
+          'Yes. He is the Psychiatrist for Ecuador of the Veterans Evaluation System (VES) of the United States, where he carries out psychiatric evaluations of veterans.',
       },
       {
         question: 'Has Dr. Matovelle published books or articles?',
@@ -289,7 +293,7 @@ export default {
   },
 
   footer: {
-    role: 'Neuroscientist · Neuropsychiatrist · ' + profile.city + ', ' + profile.country,
+    role: 'Neuropsychiatrist · ' + profile.city + ', ' + profile.country,
     disclaimer:
       'This website is for information purposes only; it does not replace an in-person medical consultation and does not constitute a diagnosis.',
     rights: 'All rights reserved.',

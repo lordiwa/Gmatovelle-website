@@ -2,39 +2,56 @@
  * Datos de contacto del Dr. Matovelle.
  *
  * FUENTE UNICA. Solo puede contener datos confirmados explicitamente por el
- * cliente. Los valores actuales son los DEFINITIVOS entregados por el Dr.:
- * telefono fijo del consultorio, dos correos y la direccion completa del
- * Centro de Negocios La Esquina. Sustituyen por completo al celular y a la
- * direccion provisionales que se usaron antes: el cliente los declaro
- * placeholders y quedaron descartados, no deben reaparecer en el sitio (hay un
- * test que lo verifica sobre todo src/).
+ * cliente. Los valores actuales son los DEFINITIVOS entregados por el Dr.: un
+ * unico numero de telefono, dos correos y la direccion completa del Centro de
+ * Negocios La Esquina. Sustituyen por completo al celular y a la direccion
+ * provisionales que se usaron antes: el cliente los declaro placeholders y
+ * quedaron descartados, no deben reaparecer en el sitio (hay un test que lo
+ * verifica sobre todo src/).
+ *
+ * EL CONSULTORIO TIENE UN SOLO NUMERO. El cliente pidio retirar el fijo y
+ * dejar unicamente el movil 0999835666, que es el mismo numero por el que se
+ * llama y por el que se escribe a WhatsApp. Ese numero vive aqui en tres
+ * formatos, y los tres son el MISMO numero:
+ *
+ *   phone      '0999835666'      formato local ecuatoriano, el que se muestra
+ *   phoneE164  '+593999835666'   formato internacional E.164, para el JSON-LD
+ *                                y el href de llamada (el sitio recibe
+ *                                visitantes en ingles, fuera de Ecuador)
+ *   whatsapp   '593999835666'    formato que exige wa.me: solo digitos, sin +
+ *
+ * La conversion es la estandar de Ecuador: codigo de pais 593 + el movil sin
+ * su 0 inicial, o sea 0999835666 -> 593 999835666, que se escribe
+ * +593 99 983 5666 y produce https://wa.me/593999835666.
+ *
+ * Cualquier cambio del numero se hace aqui y en ningun otro sitio: este modulo
+ * es la unica fuente de verdad y hay tests que verifican la coherencia entre
+ * los tres formatos.
  *
  * PENDIENTES (no inventar, dejar en null hasta confirmacion del Dr.):
  *   - horarios de atencion
  */
 export const contact = {
   /**
-   * Telefono fijo del consultorio (Quito, 8 digitos con el codigo provincial
-   * 02). Es el canal principal de contacto confirmado por el cliente.
+   * Numero unico del consultorio, en formato local (movil ecuatoriano, 10
+   * digitos). Es el que se muestra en la interfaz y sirve tanto para llamar
+   * como para escribir por WhatsApp.
    */
-  phone: '022892716',
-
-  /** Version para el atributo href de un enlace tel:. */
-  phoneHref: 'tel:022892716',
+  phone: '0999835666',
 
   /**
-   * WhatsApp del Dr., en el formato internacional que exige wa.me: solo
-   * digitos, sin +, sin espacios y sin el 0 inicial del numero local.
-   *
-   * El celular confirmado por el cliente es 0999835666 (10 digitos, que es el
-   * largo real de un movil ecuatoriano; el dato anterior de 9 digitos era un
-   * recorte y quedo descartado). La conversion es la estandar de Ecuador:
-   * codigo de pais 593 + el celular sin su 0 inicial, o sea
-   * 0999835666 -> 593 999835666, que se escribe +593 99 983 5666 y produce
-   * https://wa.me/593999835666.
-   *
-   * Es un canal adicional, no un reemplazo: el fijo del consultorio sigue
-   * siendo el de las llamadas.
+   * Version E.164 del mismo numero. Se usa como telephone del JSON-LD y como
+   * href de los enlaces de llamada: marcado internacional para que funcione
+   * tambien desde fuera de Ecuador.
+   */
+  phoneE164: '+593999835666',
+
+  /** Version para el atributo href de un enlace tel:, en E.164. */
+  phoneHref: 'tel:+593999835666',
+
+  /**
+   * El mismo numero en el formato que exige wa.me: solo digitos, sin +, sin
+   * espacios y sin el 0 inicial del numero local.
    */
   whatsapp: '593999835666',
 

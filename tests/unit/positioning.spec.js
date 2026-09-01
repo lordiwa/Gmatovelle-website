@@ -81,10 +81,38 @@ describe('exclusiones duras: sin adicciones ni terapia de pareja', () => {
   });
 });
 
-describe('posicionamiento: neurocientifico y manejo de la medicacion', () => {
-  it('el resumen de la portada nombra la neurociencia en ambos idiomas', () => {
-    expect(messages.es.hero.summary.toLowerCase()).toMatch(/neurocientífico|neurociencia/);
-    expect(messages.en.hero.summary.toLowerCase()).toMatch(/neuroscientist|neuroscience/);
+/**
+ * Posicionamiento corregido por el cliente el 2026-09-01. Dos cambios de fondo
+ * respecto de la version anterior de estos locks:
+ *
+ *   1. El Dr. dejo de presentarse como neurocientifico ("remove that it is
+ *      neuroscientific... leave it with at least neuropsiquiatra"). Los locks
+ *      que exigian la palabra neurociencia ahora exigen neuropsiquiatra, y el
+ *      barrido antirretroceso de mas abajo impide que reaparezca la vieja.
+ *   2. Las condiciones destacadas pasaron de tres a cinco: el cliente agrego
+ *      el trastorno obsesivo-compulsivo y el autismo ("Debe tener esas
+ *      especialidades si falta alguna aumenta").
+ */
+const CONDITIONS = {
+  es: ['Ansiedad', 'Depresión', 'Trastorno bipolar', 'Trastorno obsesivo-compulsivo (TOC)', 'Autismo'],
+  en: [
+    'Anxiety',
+    'Depression',
+    'Bipolar disorder',
+    'Obsessive-compulsive disorder (OCD)',
+    'Autism',
+  ],
+};
+
+describe('posicionamiento: neuropsiquiatra y manejo de la medicacion', () => {
+  it('el resumen de la portada lo presenta como neuropsiquiatra en ambos idiomas', () => {
+    expect(messages.es.hero.summary.toLowerCase()).toContain('neuropsiquiatra');
+    expect(messages.en.hero.summary.toLowerCase()).toContain('neuropsychiatrist');
+  });
+
+  it('el resumen ya no lo presenta como neurocientifico en ningun idioma', () => {
+    expect(messages.es.hero.summary.toLowerCase()).not.toMatch(/neurocient|neurocienc/);
+    expect(messages.en.hero.summary.toLowerCase()).not.toMatch(/neuroscien/);
   });
 
   it('el manejo y control de la medicacion aparece como eje de la consulta', () => {
@@ -92,44 +120,193 @@ describe('posicionamiento: neurocientifico y manejo de la medicacion', () => {
     expect(messages.en.hero.summary.toLowerCase()).toContain('medication management');
   });
 
-  it('nombra exactamente las tres condiciones confirmadas, y ninguna otra, como areas de experiencia destacada', () => {
-    const expectedEs = ['Ansiedad', 'Depresión', 'Trastorno bipolar'];
-    const expectedEn = ['Anxiety', 'Depression', 'Bipolar disorder'];
-    expect(messages.es.expertise.items.map((i) => i.title)).toEqual(expectedEs);
-    expect(messages.en.expertise.items.map((i) => i.title)).toEqual(expectedEn);
-    expect(profile.declaredConditions).toEqual(['anxiety', 'depression', 'bipolar_disorder']);
+  it('nombra exactamente las cinco condiciones confirmadas, y ninguna otra, como areas de experiencia destacada', () => {
+    expect(messages.es.expertise.items.map((i) => i.title)).toEqual(CONDITIONS.es);
+    expect(messages.en.expertise.items.map((i) => i.title)).toEqual(CONDITIONS.en);
+    expect(profile.declaredConditions).toEqual([
+      'anxiety',
+      'depression',
+      'bipolar_disorder',
+      'obsessive_compulsive_disorder',
+      'autism',
+    ]);
   });
 
-  it('la FAQ responde que condiciones trata, nombrando las tres', async () => {
+  /**
+   * Las tarjetas de la seccion no son la unica superficie donde el sitio
+   * enumera las condiciones: la meta description es lo que ve el buscador y el
+   * primer parrafo de la bio es la prosa que citan los asistentes generativos.
+   * Sin este lock, revertir cualquiera de las dos a la lista vieja de tres
+   * pasaba la suite en verde y solo se notaba en produccion.
+   */
+  it('enumera las cinco condiciones tambien en la meta description y en la bio', () => {
+    for (const locale of ['es', 'en']) {
+      const superficies = {
+        'meta.home.description': messages[locale].meta.home.description,
+        'about.paragraphs[0]': messages[locale].about.paragraphs[0],
+      };
+      for (const [nombre, texto] of Object.entries(superficies)) {
+        const faltantes = CONDITIONS[locale].filter(
+          (condicion) => !texto.toLowerCase().includes(condicion.toLowerCase()),
+        );
+        expect(faltantes, 'condiciones ausentes en ' + nombre + ' (' + locale + ')').toEqual([]);
+      }
+    }
+  });
+
+  it('anuncia cinco condiciones en el titular de la seccion, no tres', () => {
+    expect(messages.es.expertise.headline).toBe('Cinco condiciones, un mismo estándar de cuidado');
+    expect(messages.en.expertise.headline).toBe('Five conditions, one standard of care');
+  });
+
+  it('la FAQ responde que condiciones trata, nombrando las cinco', async () => {
     for (const locale of ['es', 'en']) {
       const answer = messages[locale].faq.items.find((item) =>
         /condiciones|conditions/i.test(item.question),
       ).answer;
       for (const term of locale === 'es'
-        ? ['ansiedad', 'depresión', 'trastorno bipolar']
-        : ['anxiety', 'depression', 'bipolar disorder']) {
-        expect(answer.toLowerCase()).toContain(term);
+        ? ['ansiedad', 'depresión', 'trastorno bipolar', 'obsesivo-compulsivo', 'autismo']
+        : ['anxiety', 'depression', 'bipolar disorder', 'obsessive-compulsive', 'autism']) {
+        expect(answer.toLowerCase(), term + ' ausente en la FAQ ' + locale).toContain(term);
       }
     }
   });
 
-  it('el JSON-LD Physician declara knowsAbout con neurociencias y las tres condiciones', () => {
+  it('el JSON-LD Physician declara knowsAbout con neuropsiquiatria y las cinco condiciones', () => {
     const es = physicianJsonLd('es').knowsAbout.join(' | ').toLowerCase();
-    expect(es).toContain('neurocienc');
+    expect(es).toContain('neuropsiquiatría');
     expect(es).toContain('ansiedad');
     expect(es).toContain('depresión');
     expect(es).toContain('trastorno bipolar');
+    expect(es).toContain('trastorno obsesivo-compulsivo');
+    expect(es).toContain('autismo');
 
     const en = physicianJsonLd('en').knowsAbout.join(' | ').toLowerCase();
-    expect(en).toContain('neuroscience');
+    expect(en).toContain('neuropsychiatry');
     expect(en).toContain('anxiety');
     expect(en).toContain('depression');
     expect(en).toContain('bipolar disorder');
+    expect(en).toContain('obsessive-compulsive disorder');
+    expect(en).toContain('autism');
+  });
+
+  it('el JSON-LD ya no declara las neurociencias como campo del Dr.', () => {
+    for (const locale of ['es', 'en']) {
+      const knowsAbout = physicianJsonLd(locale).knowsAbout.join(' | ').toLowerCase();
+      expect(knowsAbout, 'neurociencias en knowsAbout ' + locale).not.toMatch(
+        /neurocienc|neuroscien/,
+      );
+    }
+  });
+
+  it('el jobTitle del JSON-LD lo declara neuropsiquiatra y no neurocientifico', () => {
+    expect(physicianJsonLd('es').jobTitle).toBe('Médico Neuropsiquiatra');
+    expect(physicianJsonLd('en').jobTitle).toBe('Neuropsychiatrist');
   });
 });
 
 /**
- * CV completo del Dr. entregado por el cliente el 2026-08-31. Cada entrada es
+ * Barrido antirretroceso de las tres correcciones que el cliente pidio en
+ * persona el 2026-09-01 y que no quiere volver a ver publicadas:
+ *
+ *   - ya NO se presenta como neurocientifico ni las neurociencias son su campo;
+ *   - el fijo 022892716 se retiro del sitio (queda un solo numero, el movil);
+ *   - ya NO es perito psiquiatra de la Funcion Judicial de Pichincha.
+ *
+ * Los locks de arriba fijan la version correcta de cada hecho; este barre todo
+ * el material publicable (el codigo fuente, los dos diccionarios serializados y
+ * el JSON-LD que consumen buscadores y asistentes) para que una reintroduccion
+ * por cualquier via -- copiar copy viejo, restaurar un archivo, rehacer el
+ * JSON-LD -- rompa la suite en vez de llegar al sitio del Dr.
+ */
+const RETIRED_CLAIMS = [
+  { label: 'neurocientifico / neurociencias', pattern: /neurocienc|neurocient|neuroscien/i },
+  { label: 'telefono fijo retirado 022892716', pattern: /022892716/ },
+  {
+    label: 'rol pericial',
+    pattern: /perito|pericial|peritaje|forensic|funci[oó]n judicial|judiciary of pichincha/i,
+  },
+];
+
+function retiredClaimsIn(haystack) {
+  return RETIRED_CLAIMS.filter(({ pattern }) => pattern.test(haystack)).map((c) => c.label);
+}
+
+function srcFiles() {
+  const srcDir = resolve(process.cwd(), 'src');
+  const walk = (dir) =>
+    readdirSync(dir).flatMap((entry) => {
+      const full = join(dir, entry);
+      return statSync(full).isDirectory() ? walk(full) : [full];
+    });
+  return walk(srcDir);
+}
+
+describe('afirmaciones retiradas por el cliente', () => {
+  it('no reaparecen en ningun archivo de src/, ni siquiera en un comentario', () => {
+    const offenders = srcFiles()
+      .map((file) => ({ file, found: retiredClaimsIn(readFileSync(file, 'utf8')) }))
+      .filter(({ found }) => found.length > 0)
+      .map(({ file, found }) => file.replace(resolve(process.cwd()) + '/', '') + ': ' + found.join(', '));
+    expect(offenders, 'afirmaciones retiradas en src/').toEqual([]);
+  });
+
+  it('no reaparecen en los diccionarios ES/EN serializados', () => {
+    for (const locale of ['es', 'en']) {
+      const serialized = JSON.stringify(messages[locale]);
+      expect(retiredClaimsIn(serialized), 'afirmaciones retiradas en ' + locale).toEqual([]);
+    }
+  });
+
+  it('no reaparecen en el JSON-LD Physician ni FAQPage de ningun idioma', () => {
+    for (const locale of ['es', 'en']) {
+      const serialized =
+        JSON.stringify(physicianJsonLd(locale)) + JSON.stringify(faqJsonLd(locale));
+      expect(retiredClaimsIn(serialized), 'afirmaciones retiradas en JSON-LD ' + locale).toEqual(
+        [],
+      );
+    }
+  });
+
+  /**
+   * El modo de fallo propio de este ticket no es escribir mal el copy: es
+   * desplegar un prerender viejo, porque dist/ se genera en un paso aparte de
+   * npm test y conserva el HTML de la version anterior hasta que se rehace el
+   * build. Si el build ya corrio, este barrido lo comprueba; si no, no hay
+   * nada que barrer y la cobertura real la dan los tres tests de arriba.
+   */
+  it('no reaparecen en el HTML prerenderizado (si el build ya se ejecuto)', () => {
+    const files = distFiles();
+    if (files.length === 0) {
+      expect(files).toEqual([]);
+      return;
+    }
+    const offenders = files
+      .map((file) => ({ file, found: retiredClaimsIn(readFileSync(file, 'utf8')) }))
+      .filter(({ found }) => found.length > 0)
+      .map(({ file, found }) => file.replace(resolve(process.cwd()) + '/', '') + ': ' + found.join(', '));
+    expect(offenders, 'afirmaciones retiradas en el prerender').toEqual([]);
+  });
+
+  it('el barrido detecta de verdad cada una de las tres afirmaciones retiradas', () => {
+    // Sin esto el lock podria estar verde por un regex roto en vez de por un
+    // sitio limpio: se le da de comer un ejemplo de cada afirmacion retirada.
+    expect(retiredClaimsIn('El Dr. es neurocientífico')).toEqual(['neurocientifico / neurociencias']);
+    expect(retiredClaimsIn('He is a neuroscientist')).toEqual(['neurocientifico / neurociencias']);
+    expect(retiredClaimsIn('Llame al 022892716')).toEqual(['telefono fijo retirado 022892716']);
+    expect(retiredClaimsIn('Perito Psiquiatra de la Función Judicial de Pichincha')).toEqual([
+      'rol pericial',
+    ]);
+    expect(retiredClaimsIn('Certified Forensic Psychiatrist')).toEqual(['rol pericial']);
+    expect(retiredClaimsIn('Médico Neuropsiquiatra en Quito')).toEqual([]);
+  });
+});
+
+/**
+ * CV completo del Dr. entregado por el cliente el 2026-08-31, con la unica
+ * salvedad del rol pericial: el cliente lo retiro el 2026-09-01 ("It is no
+ * longer a legal expert either"), asi que dejo de ser un hecho publicable y
+ * salio de estas dos listas. Todo lo demas del CV sigue intacto. Cada entrada es
  * un hecho literal del curriculum que el sitio debe exponer en los dos
  * idiomas. Se comparan contra el copy renderizable y no contra los modulos de
  * datos, para que recortar una seccion de credenciales rompa la suite en vez
@@ -147,7 +324,6 @@ const CV_FACTS = {
     'Vocal Científico de la Sociedad Ecuatoriana de Psiquiatría Biológica',
     'Psiquiatra para Ecuador del Veterans Evaluation System (VES), Estados Unidos',
     'Profesor invitado de Psicofarmacología',
-    'Perito Psiquiatra certificado de la Función Judicial de Pichincha',
     'World Psychiatric Association',
     'American Academy of Sleep Disorders',
     'Sociedad Argentina de Psiquiatría Biológica',
@@ -170,7 +346,6 @@ const CV_FACTS = {
     'Scientific Officer of the Ecuadorian Society of Biological Psychiatry',
     'Psychiatrist for Ecuador of the Veterans Evaluation System (VES), United States',
     'Visiting lecturer in Psychopharmacology',
-    'Certified Forensic Psychiatrist of the Judiciary of Pichincha',
     'World Psychiatric Association',
     'American Academy of Sleep Disorders',
     'Argentine Society of Biological Psychiatry',

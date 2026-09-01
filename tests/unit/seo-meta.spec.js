@@ -12,7 +12,12 @@ describe('JSON-LD de la entidad medica', () => {
     expect(node['@type']).toBe('Physician');
     expect(node.name).toContain('Gonzalo Patricio Matovelle Mediavilla');
     expect(node.medicalSpecialty).toBe('Psychiatric');
-    expect(node.telephone).toBe(contact.phone);
+    // schema.org espera el telefono en formato internacional: el JSON-LD
+    // publica la version E.164 del numero unico del consultorio, no la local
+    // (que es la que se muestra en pantalla).
+    expect(node.telephone).toBe(contact.phoneE164);
+    expect(node.telephone).toMatch(/^\+593/);
+    expect(node.contactPoint.telephone).toBe(contact.phoneE164);
     expect(node.address.addressLocality).toBe('Quito');
     expect(node.address.addressCountry).toBe('EC');
   });

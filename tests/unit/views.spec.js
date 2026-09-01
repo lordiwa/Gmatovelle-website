@@ -54,13 +54,18 @@ describe('portada: perfil del Dr. Matovelle', () => {
     expect(rendered).toEqual(expected);
   });
 
-  it('nombra las dignidades gremiales y el rol pericial tal como constan', async () => {
+  /**
+   * El rol pericial salio de esta lista el 2026-09-01: el cliente lo retiro
+   * ("It is no longer a legal expert either"), asi que ya no es una credencial
+   * publicable. El resto de las dignidades sigue igual de fijado que antes.
+   */
+  it('nombra las dignidades gremiales y las representaciones tal como constan', async () => {
     const { wrapper } = await mountAt(App, '/');
     const text = wrapper.text();
     expect(text).toContain('Past Presidente de la Asociación Ecuatoriana de Psiquiatría');
-    expect(text).toContain('Perito Psiquiatra certificado de la Función Judicial de Pichincha');
     expect(text).toContain('Veterans Evaluation System (VES)');
     expect(text).toContain('World Psychiatric Association (WPA)');
+    expect(text).toContain('Profesor invitado de Psicofarmacología');
   });
 
   it('lista las publicaciones del Dr. con su editorial', async () => {
@@ -83,7 +88,7 @@ describe('portada: perfil del Dr. Matovelle', () => {
     const rendered = wrapper.findAll('.credential-list li').map((li) => li.text());
     const expected = messages.en.credentials.groups.flatMap((group) => group.items);
     expect(rendered).toEqual(expected);
-    expect(wrapper.text()).toContain('Certified Forensic Psychiatrist');
+    expect(wrapper.text()).toContain('Psychiatrist for Ecuador of the Veterans Evaluation System');
   });
 
   it('muestra la fotografia profesional del Dr. dentro del marco del retrato', async () => {
@@ -122,7 +127,8 @@ describe('pagina de contacto', () => {
     const { wrapper } = await mountAt(App, '/contacto');
     const link = wrapper.find('.contact-panel__phone');
     expect(link.text()).toBe(contact.phone);
-    expect(link.attributes('href')).toBe('tel:' + contact.phone);
+    // Se muestra el numero local y se marca el internacional: son el mismo.
+    expect(link.attributes('href')).toBe(contact.phoneHref);
   });
 
   it('explica que no hay agendamiento en linea', async () => {
@@ -162,7 +168,7 @@ describe('boton de WhatsApp', () => {
     });
   }
 
-  it('no sustituye el boton de llamada al fijo', async () => {
+  it('no sustituye el boton de llamada', async () => {
     const { wrapper } = await mountAt(App, '/');
     const hrefs = wrapper.findAll('.contact-panel__actions a').map((a) => a.attributes('href'));
     expect(hrefs).toEqual([contact.phoneHref, 'https://wa.me/593999835666']);

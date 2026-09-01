@@ -1,0 +1,44 @@
+{
+  "key": "TASK-011",
+  "title": "Corregir el posicionamiento del Dr.: quitar neurocientifico y perito, unificar el telefono y completar las cinco especialidades",
+  "description": "Cuatro correcciones de contenido pedidas por el cliente sobre el sitio ya publicado. Todas van en la misma direccion: el sitio debe decir solo lo que es cierto hoy.\n\n1. NEUROCIENTIFICO -> NEUROPSIQUIATRA. Palabras del cliente: 'remove that it is neuroscientific... leave it with at least neuropsiquiatra'. El sitio se construyo sobre un posicionamiento de 'neurocientifico y medico neuropsiquiatra' que el Dr. ya no quiere sostener. Cae de meta titles y descriptions (home, contacto, blog), nav.brandRole, hero.summary, about.paragraphs[0], footer.role y jobTitle del JSON-LD, en ES y EN. Cae tambien la mencion al campo neurociencias como posicionamiento (meta.blog.description y knowsAbout).\n\n2. UN SOLO TELEFONO. Palabras del cliente: 'remove the conventional phone number. Just leave the 0-999-835-666'. El fijo 022892716, hasta ahora el canal principal del consultorio, desaparece del sitio. Decision del orquestador: no se elimina el campo phone sino que se repunta al movil 0999835666 (el mismo del WhatsApp), de forma que el CTA de llamada y el telephone del nodo Physician sobreviven y el visitante llama o escribe al mismo numero. Se guarda en tres formatos con una sola fuente de verdad: 0999835666 local, +593999835666 E.164 para el href y el JSON-LD, 593999835666 para wa.me.\n\n3. PERITO. Palabras del cliente: 'It is no longer a legal expert either'. Cae toda mencion a Perito Psiquiatra certificado de la Funcion Judicial de Pichincha / Certified Forensic Psychiatrist of the Judiciary of Pichincha: bio, lead del perfil, item de la seccion de enfoque, grupo de credenciales 'Docencia y peritaje', FAQ de peritajes y knowsAbout. La FAQ no se borra: se reescribe sobre lo que si es cierto, la evaluacion de veteranos del VES. Se mantiene intacto el resto del CV (WPA, WFSBP, AASD, VES, profesor invitado UCE, dignidades gremiales, publicaciones).\n\n4. CINCO ESPECIALIDADES. Palabras del cliente: 'ansiedad depresion, trastorno bipolar, trastorno obsesivo-compulsivo y autismo. Debe tener esas especialidades si falta alguna aumenta'. El sitio declara hoy solo tres condiciones (ansiedad, depresion, trastorno bipolar), fijadas el 2026-08-31 y protegidas por un lock que exige 'exactamente tres y ninguna otra'. Se suman trastorno obsesivo-compulsivo (TOC) y autismo en los dos idiomas y en todos los puntos donde se listan: profile.declaredConditions, meta.home.description, hero.summary, bio, tarjetas de areas de experiencia, FAQ de condiciones y knowsAbout del JSON-LD.\n\nLos locks de contenido existentes afirman hoy lo contrario de tres de estos cuatro cambios (neurociencia en el resumen, 'exactamente las tres condiciones', el perito dentro de CV_FACTS, el fijo como numero definitivo). Se actualizan a la version correcta del hecho, no se borran, y se agrega un lock inverso que barre src/ y falla si reaparece cualquiera de los tres datos retirados.",
+  "acceptance_criteria": [
+    "Cero apariciones de neurocientifico / neurocientifico / neuroscientist / neuroscientific en todo src/, y el sitio se presenta como medico neuropsiquiatra en ES y EN (meta, brandRole, hero, bio, footer y jobTitle del JSON-LD).",
+    "Cero apariciones de 022892716 en todo src/, incluidos JSON-LD, pie e i18n. El unico numero publicado es 0999835666, con enlace de llamada a tel:+593999835666 y el boton de WhatsApp a https://wa.me/593999835666 sobre el mismo numero.",
+    "Cero apariciones de perito / pericial / peritaje / Perito Psiquiatra / Funcion Judicial / forensic / Judiciary of Pichincha en todo src/, en ES y EN, incluido el JSON-LD. La FAQ conserva la evaluacion de veteranos del VES, que si es cierta.",
+    "El CV verdadero sigue publicado y renderizado en la portada en ambos idiomas: WPA, WFSBP, American Academy of Sleep Disorders, VES de Estados Unidos, profesor invitado de Psicofarmacologia en la UCE, las dignidades gremiales, las publicaciones y los cuarenta anios.",
+    "Las areas de experiencia son cinco en ES (ansiedad, depresion, trastorno bipolar, trastorno obsesivo-compulsivo (TOC), autismo) y cinco en EN (anxiety, depression, bipolar disorder, obsessive-compulsive disorder (OCD), autism), coherentes entre profile.declaredConditions, las tarjetas, el hero, la bio, la meta description y la FAQ.",
+    "El JSON-LD Physician declara knowsAbout con las cinco condiciones y sin neurociencias ni peritaje, conserva medicalSpecialty Psychiatric y publica telephone en formato E.164.",
+    "Se mantiene la paridad estructural ES/EN de los diccionarios y ningun texto queda vacio.",
+    "Los locks de contenido que afirmaban los hechos retirados quedan actualizados a la version nueva, y existe un lock inverso que barre src/, los diccionarios serializados y el JSON-LD y falla si reaparece neurocientifico, el fijo 022892716 o cualquier forma de perito.",
+    "npm test en verde y npm run build (con prerender) en verde.",
+    "Verificado en produccion (gmatovelle-site): las paginas ES y EN no contienen neurocientifico, ni 022892716, ni perito; contienen TOC y autismo; y el WhatsApp 0999835666 sigue presente."
+  ],
+  "status": "done",
+  "priority": "high",
+  "labels": [
+    "contenido",
+    "cliente",
+    "seo",
+    "correccion"
+  ],
+  "assignee": null,
+  "depends_on": [
+    "TASK-010"
+  ],
+  "linked_commits": [],
+  "linked_prs": [],
+  "comments": [
+    {
+      "author": "orchestrator",
+      "created_at": "2026-09-01T12:40:00.000Z",
+      "body": "HECHO Y EN PRODUCCION. Los cuatro cambios aplicados, revisados en contexto fresco (veredicto PASS, cero HIGH) y desplegados.\n\n1. El Dr. deja de presentarse como neurocientifico y queda como Medico Neuropsiquiatra en meta titles y descriptions, brandRole, hero, bio, footer y jobTitle del JSON-LD, en ES y EN. Cae tambien la mencion a las neurociencias como su campo (meta del blog y knowsAbout).\n2. El fijo 022892716 desaparece del sitio. Decision del orquestador, tomada sobre una instruccion que admitia dos lecturas: en vez de eliminar el campo phone se repunta al movil, de forma que el CTA de llamada y el telephone del nodo Physician sobreviven. contact.js queda con phone 0999835666 (lo que se muestra), phoneE164 +593999835666 (href y JSON-LD) y whatsapp 593999835666 (wa.me): un solo numero real en tres formatos, con un lock que los deriva unos de otros para que no puedan divergir.\n3. Cae todo el rol pericial (bio, lead del perfil, item de enfoque, grupo de credenciales, FAQ y knowsAbout) en ES y EN. La FAQ no se borro: se reescribio sobre la evaluacion de veteranos del VES, que si es cierta. El resto del CV quedo intacto y sigue renderizado en la portada en ambos idiomas (20 hechos por idioma verificados en el DOM).\n4. Las areas de experiencia pasan de tres a cinco con TOC y autismo, coherentes en declaredConditions, tarjetas, titular (Cinco condiciones), hero, bio, meta description, FAQ y knowsAbout. El copy del autismo se acota al eje del Dr. (manejo de la medicacion, no terapia conductual).\n\nTESTS 114 -> 125 en verde. Los locks que afirmaban los hechos retirados se reapuntaron al hecho nuevo en vez de borrarse, y se sumo un barrido antirretroceso que recorre src/ archivo por archivo (comentarios incluidos), los diccionarios serializados, el JSON-LD y el HTML prerenderizado de dist/, con un meta-test que le da de comer un ejemplo de cada afirmacion retirada para que no pueda quedar verde por un regex roto. Red-green plantado y verificado en los locks nuevos.\n\nDEPLOY VERIFICADO en https://gmatovelle-site.web.app/ (bundle assets/index-Cy1yf4jx.js -> assets/index-C1M8DWSH.js): /, /en, /contacto, /en/contact y /sitemap.xml en 200; cero apariciones de neurocientifico, 022892716 y perito en las cuatro paginas; TOC y autismo presentes en ES y EN; tel:+593999835666 y wa.me/593999835666 presentes; JSON-LD Physician con jobTitle Medico Neuropsiquiatra, telephone en E.164 y knowsAbout con las cinco condiciones.\n\nPENDIENTE MENOR: el reviewer marco como MEDIUM que .claude/agents/project-context.md sigue repitiendo la linea del peritaje. PROJECT.md ya quedo corregido (audiencia, seccion de docencia, contacto de un solo numero, las cinco areas y un bloque nuevo de afirmaciones retiradas en Scope out), pero el archivo del agente no se pudo escribir por falta de permiso en esta sesion. No afecta a lo publicado; hay que corregir esa linea."
+    }
+  ],
+  "created_at": "2026-09-01T12:00:00.000Z",
+  "updated_at": "2026-09-01T12:40:00.000Z",
+  "jira_key": null,
+  "verification_tier": "tests-after",
+  "marker": "[EXPLICIT]",
+  "source_tier": "T1"
+}
