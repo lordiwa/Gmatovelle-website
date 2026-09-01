@@ -13,7 +13,7 @@
     "Las exclusiones duras siguen verificadas por test y todos los hechos del CV se siguen renderizando en la portada en ambos idiomas.",
     "npm test en verde con locks nuevos para la banda de credenciales, el hero navy y la franja de contacto compacta; npm run build (con prerender) en verde."
   ],
-  "status": "in_review",
+  "status": "done",
   "priority": "high",
   "labels": [
     "redisenio",
@@ -26,17 +26,24 @@
     "TASK-009"
   ],
   "linked_commits": [
-    "27d2cb26260f5779baa637d470e98d9f0d602b50"
+    "27d2cb26260f5779baa637d470e98d9f0d602b50",
+    "46741c8",
+    "86030e0"
   ],
   "linked_prs": [],
   "comments": [
     {
       "author": "orchestrator",
       "body": "Implementacion en main (27d2cb2), verificada con el build y la suite completa: npm test 114 en verde (19 de ellos locks nuevos en tests/unit/redesign-navy.spec.js) y npm run build con prerender de 5 paginas y sitemap de 4 URLs. Comprobado sobre el HTML generado: h1 editorial en ES y EN con la linea de entidad (nombre + titulacion) inmediatamente debajo, banda de credenciales con cuatro entradas por idioma, wa.me/593999835666 en las cuatro paginas, fijo 022892716, mapa por CID solo en las dos de contacto, JSON-LD Physician intacto, cero enlaces a /blog y cero menciones de adicciones o terapia de pareja. DESVIACION documentada frente al encargo verbal: la banda no repite '40 anios / Quito / WPA-WFSBP' porque los anios de practica y Quito ya viven en el antetitulo del hero; en su lugar lleva cuatro hechos que la seccion de credenciales publica literalmente (Past Presidente de la Asociacion Ecuatoriana de Psiquiatria, Perito Psiquiatra certificado de la Funcion Judicial de Pichincha, Profesor invitado de la Universidad Central del Ecuador y Psiquiatra para Ecuador del Veterans Evaluation System), que es lo que exige el criterio de aceptacion. Queda EN REVISION a la espera de la UAT visual de Mato; el deploy esta bloqueado hasta su aprobacion."
+    },
+    {
+      "author": "orchestrator",
+      "created_at": "2026-09-01T05:00:00.000Z",
+      "body": "CORRECCION DEL CLIENTE Y DEPLOY. El cliente ratifico su instruccion original sobre la banda de credenciales: dice \"40 anios / Quito / WPA-WFSBP\", no los cuatro hechos del CV que se habian implementado en 27d2cb2. hero.credentialBand pasa de objetos {term, detail} a tres cadenas en ES (\"40 anios de experiencia\", \"Quito\", \"WPA - WFSBP\") y EN (\"40 years of experience\", \"Quito\", \"WPA - WFSBP\"); el lock deja de compararse contra el copy de credentials y pasa a ser literal sobre los tres items y su orden, con un lock aparte que exige que WPA y WFSBP sigan publicadas en las membresias del CV. Salvaguarda SEO intacta: hero.credentialLine con el nombre y la titulacion sigue debajo del h1. 114 tests en verde y build con prerender en verde (commit 46741c8).\n\nDEPLOY A PRODUCCION HECHO, que arrastro tambien TASK-009 (WhatsApp y retirada del blog). Bundle: assets/index-BxFPAj3E.js -> assets/index-Cy1yf4jx.js. Verificado en https://gmatovelle-site.web.app/: la banda nueva aparece en ES y EN, cero rastro de credential-band__detail, wa.me/593999835666 presente, cero href=/blog, y /, /en, /contacto, /en/contact y /sitemap.xml responden 200."
     }
   ],
   "created_at": "2026-08-31T23:00:00.000Z",
-  "updated_at": "2026-08-31T23:00:00.000Z",
+  "updated_at": "2026-09-01T05:00:00.000Z",
   "jira_key": null,
   "verification_tier": "tests-after"
 }
