@@ -26,7 +26,9 @@
   "depends_on": [
     "TASK-010"
   ],
-  "linked_commits": [],
+  "linked_commits": [
+    "e22991de67e8848a90ac15d7c9394f36e7cbd41e"
+  ],
   "linked_prs": [],
   "comments": [
     {
