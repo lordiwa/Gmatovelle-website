@@ -57,13 +57,14 @@ describe('portada: perfil del Dr. Matovelle', () => {
   /**
    * El rol pericial salio de esta lista el 2026-09-01: el cliente lo retiro
    * ("It is no longer a legal expert either"), asi que ya no es una credencial
-   * publicable. El resto de las dignidades sigue igual de fijado que antes.
+   * publicable. La evaluacion de veteranos (VES) salio de la lista ese mismo
+   * dia por el mismo motivo. El resto de las dignidades sigue igual de fijado
+   * que antes.
    */
   it('nombra las dignidades gremiales y las representaciones tal como constan', async () => {
     const { wrapper } = await mountAt(App, '/');
     const text = wrapper.text();
     expect(text).toContain('Past Presidente de la Asociación Ecuatoriana de Psiquiatría');
-    expect(text).toContain('Veterans Evaluation System (VES)');
     expect(text).toContain('World Psychiatric Association (WPA)');
     expect(text).toContain('Profesor invitado de Psicofarmacología');
   });
@@ -88,7 +89,7 @@ describe('portada: perfil del Dr. Matovelle', () => {
     const rendered = wrapper.findAll('.credential-list li').map((li) => li.text());
     const expected = messages.en.credentials.groups.flatMap((group) => group.items);
     expect(rendered).toEqual(expected);
-    expect(wrapper.text()).toContain('Psychiatrist for Ecuador of the Veterans Evaluation System');
+    expect(wrapper.text()).toContain('Past President of the Ecuadorian Psychiatric Association');
   });
 
   it('muestra la fotografia profesional del Dr. dentro del marco del retrato', async () => {

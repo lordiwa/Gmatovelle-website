@@ -30,7 +30,6 @@ export const profile = {
     'Asociación Ecuatoriana de Psiquiatría',
     'Sociedad Ecuatoriana de Psiquiatría Biológica',
     'Federación Latinoamericana de Psiquiatría Biológica',
-    'Veterans Evaluation System (VES), Estados Unidos',
     'Hellenic Psychiatric Congress',
   ],
 

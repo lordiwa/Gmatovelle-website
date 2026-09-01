@@ -75,13 +75,13 @@ export default {
     paragraphs: [
       'Dr. Gonzalo Patricio Matovelle Mediavilla holds a Doctorate in Medicine and Surgery and is a Specialist in Psychiatry. He is a neuropsychiatrist and runs a private practice in Quito, Ecuador, focused on expert management and control of neuropsychiatric medication, with particular experience in anxiety, depression, bipolar disorder, obsessive-compulsive disorder (OCD) and autism.',
       'Across forty years of private practice as a psychiatrist and psychopharmacologist he has served as a liaison psychiatrist at the leading clinics of Quito, has held the leading professional offices of the speciality in Ecuador and in the region, and has been a visiting lecturer in Psychopharmacology at the Postgraduate School of Psychiatry of the Universidad Central del Ecuador.',
-      'He is also the Psychiatrist for Ecuador of the Veterans Evaluation System (VES) of the United States, where he carries out psychiatric evaluations of veterans, and he has lectured nationally and internationally and been invited to international advisory boards.',
+      'He has also lectured nationally and internationally and been invited to international advisory boards.',
     ],
   },
 
   practice: {
     heading: 'Focus of the practice',
-    lead: 'Medication management and control is the central pillar of Dr. Matovelle’s practice, which also rests on psychoeducation and extends into evaluative work.',
+    lead: 'Medication management and control is the central pillar of Dr. Matovelle’s practice, which also rests on psychoeducation.',
     items: [
       {
         title: 'Medication management and control',
@@ -90,10 +90,6 @@ export default {
       {
         title: 'Psychoeducation',
         body: 'Explanatory work with the patient and their family so that they understand the diagnosis, the treatment and its course.',
-      },
-      {
-        title: 'Veterans evaluation (VES)',
-        body: 'Psychiatrist for Ecuador of the Veterans Evaluation System (VES) of the United States.',
       },
     ],
   },
@@ -156,7 +152,6 @@ export default {
           'Past President of the Ecuadorian Society of Biological Psychiatry',
           'Past Secretary Treasurer of the Latin American Federation of Biological Psychiatry',
           'Scientific Officer of the Ecuadorian Society of Biological Psychiatry',
-          'Psychiatrist for Ecuador of the Veterans Evaluation System (VES), United States',
         ],
       },
       {
@@ -231,11 +226,6 @@ export default {
         question: 'What conditions does Dr. Matovelle treat?',
         answer:
           'His practice focuses on medication management and control for anxiety, depression, bipolar disorder, obsessive-compulsive disorder (OCD) and autism.',
-      },
-      {
-        question: 'Does Dr. Matovelle carry out psychiatric evaluations of veterans?',
-        answer:
-          'Yes. He is the Psychiatrist for Ecuador of the Veterans Evaluation System (VES) of the United States, where he carries out psychiatric evaluations of veterans.',
       },
       {
         question: 'Has Dr. Matovelle published books or articles?',

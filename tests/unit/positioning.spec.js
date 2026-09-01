@@ -206,12 +206,14 @@ describe('posicionamiento: neuropsiquiatra y manejo de la medicacion', () => {
 });
 
 /**
- * Barrido antirretroceso de las tres correcciones que el cliente pidio en
+ * Barrido antirretroceso de las cuatro correcciones que el cliente pidio en
  * persona el 2026-09-01 y que no quiere volver a ver publicadas:
  *
  *   - ya NO se presenta como neurocientifico ni las neurociencias son su campo;
  *   - el fijo 022892716 se retiro del sitio (queda un solo numero, el movil);
- *   - ya NO es perito psiquiatra de la Funcion Judicial de Pichincha.
+ *   - ya NO es perito psiquiatra de la Funcion Judicial de Pichincha;
+ *   - ya NO es Psiquiatra para Ecuador del Veterans Evaluation System (VES) ni
+ *     realiza evaluaciones psiquiatricas de veteranos.
  *
  * Los locks de arriba fijan la version correcta de cada hecho; este barre todo
  * el material publicable (el codigo fuente, los dos diccionarios serializados y
@@ -225,6 +227,10 @@ const RETIRED_CLAIMS = [
   {
     label: 'rol pericial',
     pattern: /perito|pericial|peritaje|forensic|funci[oó]n judicial|judiciary of pichincha/i,
+  },
+  {
+    label: 'evaluacion de veteranos (VES)',
+    pattern: /\bVES\b|veterans?\s+evaluation|\bveteranos?\b|\bveterans?\b/i,
   },
 ];
 
@@ -288,7 +294,7 @@ describe('afirmaciones retiradas por el cliente', () => {
     expect(offenders, 'afirmaciones retiradas en el prerender').toEqual([]);
   });
 
-  it('el barrido detecta de verdad cada una de las tres afirmaciones retiradas', () => {
+  it('el barrido detecta de verdad cada una de las cuatro afirmaciones retiradas', () => {
     // Sin esto el lock podria estar verde por un regex roto en vez de por un
     // sitio limpio: se le da de comer un ejemplo de cada afirmacion retirada.
     expect(retiredClaimsIn('El Dr. es neurocientífico')).toEqual(['neurocientifico / neurociencias']);
@@ -298,20 +304,36 @@ describe('afirmaciones retiradas por el cliente', () => {
       'rol pericial',
     ]);
     expect(retiredClaimsIn('Certified Forensic Psychiatrist')).toEqual(['rol pericial']);
+    expect(retiredClaimsIn('Psiquiatra para Ecuador del Veterans Evaluation System (VES)')).toEqual([
+      'evaluacion de veteranos (VES)',
+    ]);
+    expect(retiredClaimsIn('Does he evaluate veterans?')).toEqual(['evaluacion de veteranos (VES)']);
     expect(retiredClaimsIn('Médico Neuropsiquiatra en Quito')).toEqual([]);
+    // Falso positivo evitado a proposito: 'ves' aparece como substring en
+    // palabras normales de espanol e ingles (niveles, breves, moves...); el
+    // patron esta anclado a \bVES\b y no debe cazar esta frase inocente.
+    expect(
+      retiredClaimsIn('Atiende en niveles de complejidad diversos y en visitas breves'),
+    ).toEqual([]);
   });
 });
 
 /**
- * CV completo del Dr. entregado por el cliente el 2026-08-31, con la unica
- * salvedad del rol pericial: el cliente lo retiro el 2026-09-01 ("It is no
- * longer a legal expert either"), asi que dejo de ser un hecho publicable y
- * salio de estas dos listas. Todo lo demas del CV sigue intacto. Cada entrada es
- * un hecho literal del curriculum que el sitio debe exponer en los dos
- * idiomas. Se comparan contra el copy renderizable y no contra los modulos de
- * datos, para que recortar una seccion de credenciales rompa la suite en vez
- * de publicarse: el CV es la razon de ser del sitio y su perdida silenciosa es
- * el fallo mas caro posible aqui.
+ * CV completo del Dr. entregado por el cliente el 2026-08-31, con dos
+ * salvedades que el cliente retiro despues y que ya no son hechos publicables,
+ * asi que salieron de estas dos listas:
+ *
+ *   - el rol pericial, retirado el 2026-09-01 ("It is no longer a legal
+ *     expert either");
+ *   - la evaluacion de veteranos (VES) / Psiquiatra para Ecuador del Veterans
+ *     Evaluation System, retirada el 2026-09-01.
+ *
+ * Todo lo demas del CV sigue intacto. Cada entrada es un hecho literal del
+ * curriculum que el sitio debe exponer en los dos idiomas. Se comparan contra
+ * el copy renderizable y no contra los modulos de datos, para que recortar una
+ * seccion de credenciales rompa la suite en vez de publicarse: el CV es la
+ * razon de ser del sitio y su perdida silenciosa es el fallo mas caro posible
+ * aqui.
  */
 const CV_FACTS = {
   es: [
@@ -322,7 +344,6 @@ const CV_FACTS = {
     'Past Presidente de la Sociedad Ecuatoriana de Psiquiatría Biológica',
     'Past Secretario Tesorero de la Federación Latinoamericana de Psiquiatría Biológica',
     'Vocal Científico de la Sociedad Ecuatoriana de Psiquiatría Biológica',
-    'Psiquiatra para Ecuador del Veterans Evaluation System (VES), Estados Unidos',
     'Profesor invitado de Psicofarmacología',
     'World Psychiatric Association',
     'American Academy of Sleep Disorders',
@@ -344,7 +365,6 @@ const CV_FACTS = {
     'Past President of the Ecuadorian Society of Biological Psychiatry',
     'Past Secretary Treasurer of the Latin American Federation of Biological Psychiatry',
     'Scientific Officer of the Ecuadorian Society of Biological Psychiatry',
-    'Psychiatrist for Ecuador of the Veterans Evaluation System (VES), United States',
     'Visiting lecturer in Psychopharmacology',
     'World Psychiatric Association',
     'American Academy of Sleep Disorders',

@@ -37,7 +37,7 @@ El Dr. Gonzalo Patricio Matovelle Mediavilla, medico psiquiatra con 40 anos de e
 - Seccion de perfil profesional: Dr. en Medicina y Cirugia; Especialista en Psiquiatria
 - Seccion de ocupacion actual: medico psiquiatra experto en el manejo de medicacion neuropsiquiatrica y psicoeducacion; consulta privada
 - Seccion de experiencia: 40 anos de practica privada como psiquiatra y psicofarmacologo
-- Seccion de representaciones y dignidades: Past Presidente de la Asociacion Ecuatoriana de Psiquiatria; Past Presidente de la Sociedad Ecuatoriana de Psiquiatria Biologica; Past Secretario Tesorero de la Federacion Latinoamericana de Psiquiatria Biologica; Psiquiatra para Ecuador de VES (Veterans Evaluation System) USA
+- Seccion de representaciones y dignidades: Past Presidente de la Asociacion Ecuatoriana de Psiquiatria; Past Presidente de la Sociedad Ecuatoriana de Psiquiatria Biologica; Past Secretario Tesorero de la Federacion Latinoamericana de Psiquiatria Biologica; Vocal Cientifico de la Sociedad Ecuatoriana de Psiquiatria Biologica
 - Seccion de docencia: Profesor invitado de Psicofarmacologia en la Escuela de Postgrado de Psiquiatria de la Universidad Central del Ecuador
 - Seccion de membresias: World Psychiatric Association (WPA); World Federation of Societies of Biological Psychiatry (WFSBP); American Academy of Sleep Disorders; sociedades de psiquiatria biologica de Argentina; Peru y Uruguay
 - Seccion de publicaciones: Manual Latinoamericano para la Enfermedad Depresiva; Enfermedad de Alzheimer (Cangrejal Editores); multiples articulos cientificos
@@ -60,7 +60,7 @@ El Dr. Gonzalo Patricio Matovelle Mediavilla, medico psiquiatra con 40 anos de e
 - Pasarela de pagos
 - Publicar datos de contacto inventados o no confirmados por el Dr.
 - Publicar areas o tratamientos especificos que el Dr. no haya confirmado
-- AFIRMACIONES RETIRADAS POR EL CLIENTE el 2026-09-01, que no deben volver al sitio por ninguna via: presentarlo como neurocientifico o declarar las neurociencias como su campo ("remove that it is neuroscientific... leave it with at least neuropsiquiatra"); el telefono fijo 022892716 ("remove the conventional phone number"); y el rol pericial, es decir Perito Psiquiatra certificado de la Funcion Judicial de Pichincha ("It is no longer a legal expert either"). Hay un lock en tests/unit/positioning.spec.js que barre src/, los diccionarios y el JSON-LD y rompe la suite si alguna reaparece
+- AFIRMACIONES RETIRADAS POR EL CLIENTE el 2026-09-01, que no deben volver al sitio por ninguna via: presentarlo como neurocientifico o declarar las neurociencias como su campo ("remove that it is neuroscientific... leave it with at least neuropsiquiatra"); el telefono fijo 022892716 ("remove the conventional phone number"); el rol pericial, es decir Perito Psiquiatra certificado de la Funcion Judicial de Pichincha ("It is no longer a legal expert either"); y la evaluacion de veteranos, es decir Psiquiatra para Ecuador del Veterans Evaluation System (VES) de los Estados Unidos, donde realizaba evaluaciones psiquiatricas de veteranos. Hay un lock en tests/unit/positioning.spec.js que barre src/, los diccionarios y el JSON-LD y rompe la suite si alguna reaparece
 - Testimonios de pacientes
 - Fotografia definitiva del Dr. (se usa un retrato provisional hasta que existan las fotos profesionales)
 
