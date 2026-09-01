@@ -229,13 +229,29 @@ const RETIRED_CLAIMS = [
     pattern: /perito|pericial|peritaje|forensic|funci[oó]n judicial|judiciary of pichincha/i,
   },
   {
+    // El acronimo va sensible a mayusculas y por separado del resto: sin /i,
+    // \bVES\b no caza el verbo espanol "ves" en minuscula ("como ves",
+    // "¿Ves la diferencia?"), que si cazaria con /i puesto que /i es global a
+    // todo el patron. La parte de veterans/veteranos si necesita /i (para
+    // cazar mayusculas iniciales de titular, por ejemplo "Veterans Evaluation
+    // System"), y por eso vive en una entrada aparte con el mismo label.
     label: 'evaluacion de veteranos (VES)',
-    pattern: /\bVES\b|veterans?\s+evaluation|\bveteranos?\b|\bveterans?\b/i,
+    pattern: /\bVES\b/,
+  },
+  {
+    label: 'evaluacion de veteranos (VES)',
+    pattern: /veterans?\s+evaluation|\bveteranos?\b|\bveterans?\b/i,
   },
 ];
 
 function retiredClaimsIn(haystack) {
-  return RETIRED_CLAIMS.filter(({ pattern }) => pattern.test(haystack)).map((c) => c.label);
+  const found = RETIRED_CLAIMS.filter(({ pattern }) => pattern.test(haystack)).map(
+    (c) => c.label,
+  );
+  // Las dos entradas del VES comparten label a proposito (ver comentario de
+  // arriba); una cadena que caza ambas no debe duplicar el label en el
+  // resultado.
+  return [...new Set(found)];
 }
 
 function srcFiles() {
@@ -304,16 +320,33 @@ describe('afirmaciones retiradas por el cliente', () => {
       'rol pericial',
     ]);
     expect(retiredClaimsIn('Certified Forensic Psychiatrist')).toEqual(['rol pericial']);
+    // Positivos: el acronimo en mayusculas dentro de una frase, el nombre
+    // completo de la institucion (incluido un titular todo en mayusculas) y
+    // el sustantivo veteranos/veterans en cualquier caja.
     expect(retiredClaimsIn('Psiquiatra para Ecuador del Veterans Evaluation System (VES)')).toEqual([
+      'evaluacion de veteranos (VES)',
+    ]);
+    expect(retiredClaimsIn('Es Psiquiatra para Ecuador del VES')).toEqual([
+      'evaluacion de veteranos (VES)',
+    ]);
+    expect(retiredClaimsIn('Miembro del VETERANS EVALUATION SYSTEM')).toEqual([
+      'evaluacion de veteranos (VES)',
+    ]);
+    expect(retiredClaimsIn('Realiza evaluaciones de veteranos')).toEqual([
       'evaluacion de veteranos (VES)',
     ]);
     expect(retiredClaimsIn('Does he evaluate veterans?')).toEqual(['evaluacion de veteranos (VES)']);
     expect(retiredClaimsIn('Médico Neuropsiquiatra en Quito')).toEqual([]);
+    // Negativos: el verbo espanol "ves" como palabra suelta, en cualquier
+    // posicion de la frase (con y sin mayuscula inicial), no debe cazar. Esta
+    // es justamente la palabra inocente que \bVES\b sin /i evita atrapar.
+    expect(retiredClaimsIn('Como ves, el consultorio atiende con cita previa')).toEqual([]);
+    expect(retiredClaimsIn('¿Ves la diferencia en el tratamiento?')).toEqual([]);
     // Falso positivo evitado a proposito: 'ves' aparece como substring en
-    // palabras normales de espanol e ingles (niveles, breves, moves...); el
+    // palabras normales de espanol e ingles (niveles, breves, veces...); el
     // patron esta anclado a \bVES\b y no debe cazar esta frase inocente.
     expect(
-      retiredClaimsIn('Atiende en niveles de complejidad diversos y en visitas breves'),
+      retiredClaimsIn('Atiende en niveles de complejidad diversos, en visitas breves y varias veces por semana'),
     ).toEqual([]);
   });
 });

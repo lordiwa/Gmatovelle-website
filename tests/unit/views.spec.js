@@ -89,7 +89,15 @@ describe('portada: perfil del Dr. Matovelle', () => {
     const rendered = wrapper.findAll('.credential-list li').map((li) => li.text());
     const expected = messages.en.credentials.groups.flatMap((group) => group.items);
     expect(rendered).toEqual(expected);
-    expect(wrapper.text()).toContain('Past President of the Ecuadorian Psychiatric Association');
+    // Cadena exclusiva del grupo "Offices held": a diferencia de "Past
+    // President of the Ecuadorian Psychiatric Association" (que tambien
+    // aparece en la bio y en la meta description EN, y por eso seguiria en
+    // verde aunque la entrada del grupo de credenciales desapareciera), esta
+    // solo existe en credentials.groups; se verifico con grep que no se
+    // repite en ninguna otra superficie de en.js.
+    expect(wrapper.text()).toContain(
+      'Past Secretary Treasurer of the Latin American Federation of Biological Psychiatry',
+    );
   });
 
   it('muestra la fotografia profesional del Dr. dentro del marco del retrato', async () => {
