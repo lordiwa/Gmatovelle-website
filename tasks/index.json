@@ -54,6 +54,12 @@
       "title": "Activar el boton de WhatsApp y retirar la seccion de blog hasta que haya articulos",
       "status": "done",
       "priority": "high"
+    },
+    {
+      "key": "TASK-010",
+      "title": "Aplicar el redisenio 'Navy de confianza' (opcion 1c) del design system al sitio Vue",
+      "status": "in_review",
+      "priority": "high"
     }
   ]
 }
