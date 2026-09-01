@@ -60,17 +60,13 @@ export default {
       'Portrait of Dr. Gonzalo Matovelle, neuropsychiatrist in Quito, Ecuador',
     portraitCaption: 'Dr. Gonzalo Patricio Matovelle Mediavilla · Quito, Ecuador',
     /**
-     * Credential band replacing the old hero "facts" row. Every `term` and
-     * `detail` must appear LITERALLY inside `credentials` (there is a lock for
-     * it): the band summarises the CV, it never adds anything the CV does not
-     * already back.
+     * Credential band replacing the old hero "facts" row. The client fixed
+     * these three items and their order ("40 años / Quito / WPA·WFSBP"); a
+     * literal lock verifies it. It is not a free showcase: all three are
+     * backed by the CV (the forty years of practice and the city in the
+     * profile, the two societies in the `credentials` memberships).
      */
-    credentialBand: [
-      { term: 'Past President', detail: 'Ecuadorian Psychiatric Association' },
-      { term: 'Certified Forensic Psychiatrist', detail: 'Judiciary of Pichincha' },
-      { term: 'Visiting lecturer', detail: 'Universidad Central del Ecuador' },
-      { term: 'Psychiatrist for Ecuador', detail: 'Veterans Evaluation System (VES)' },
-    ],
+    credentialBand: ['40 years of experience', 'Quito', 'WPA · WFSBP'],
   },
 
   about: {

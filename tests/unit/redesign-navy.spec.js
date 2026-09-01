@@ -72,34 +72,35 @@ describe('hero navy a sangre de la portada', () => {
 });
 
 describe('banda de credenciales', () => {
+  /**
+   * El cliente fijo el contenido y el orden de la banda ("40 años / Quito /
+   * WPA·WFSBP"), asi que el lock es literal: cualquier reescritura de la banda
+   * tiene que pasar por el, no por el criterio de quien edite el diccionario.
+   */
+  const EXPECTED = {
+    es: ['40 años de experiencia', 'Quito', 'WPA · WFSBP'],
+    en: ['40 years of experience', 'Quito', 'WPA · WFSBP'],
+  };
+
   for (const locale of ['es', 'en']) {
-    it('renderiza exactamente cuatro entradas en ' + locale, async () => {
+    it('renderiza los tres items que pidio el cliente, en orden, en ' + locale, async () => {
       const { wrapper } = await mountAt(App, HOME[locale]);
-      const items = wrapper.findAll('.credential-band__item');
-      expect(items).toHaveLength(4);
-      expect(messages[locale].hero.credentialBand).toHaveLength(4);
+      const rendered = wrapper
+        .findAll('.credential-band__item')
+        .map((item) => item.text().replace(/\s+/gu, ' ').trim());
+
+      expect(rendered).toEqual(EXPECTED[locale]);
+      expect(messages[locale].hero.credentialBand).toEqual(EXPECTED[locale]);
     });
 
     /**
-     * La banda es un resumen del CV, no una vitrina libre: si alguien escribe
-     * ahi una dignidad que la seccion de credenciales no publica, es una
-     * credencial inventada. Se compara contra el copy de `credentials` y no
-     * contra un literal del test para que el lock siga valiendo si el CV crece.
+     * La banda sigue sin ser una vitrina libre: las dos sociedades que cita
+     * tienen que seguir publicadas en la seccion de credenciales.
      */
-    it('cada entrada esta respaldada literalmente por el CV publicado en ' + locale, async () => {
-      const { wrapper } = await mountAt(App, HOME[locale]);
+    it('las siglas de la banda siguen respaldadas por el CV publicado en ' + locale, async () => {
       const cv = JSON.stringify(messages[locale].credentials);
-
-      const rendered = wrapper.findAll('.credential-band__item').map((item) => ({
-        term: item.find('.credential-band__term').text(),
-        detail: item.find('.credential-band__detail').text(),
-      }));
-      expect(rendered).toEqual(messages[locale].hero.credentialBand);
-
-      const unbacked = rendered.flatMap((entry) =>
-        [entry.term, entry.detail].filter((text) => !cv.includes(text)),
-      );
-      expect(unbacked, 'texto de la banda que el CV no respalda en ' + locale).toEqual([]);
+      expect(cv).toContain('(WPA)');
+      expect(cv).toContain('(WFSBP)');
     });
   }
 });

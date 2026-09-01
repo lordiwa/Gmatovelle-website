@@ -54,14 +54,13 @@ const whatsapp = computed(() => whatsappUrl());
     </section>
 
     <!--
-      Banda de credenciales: sustituye a la vieja fila de "facts" del hero. Solo
-      resume hechos que la seccion de credenciales ya publica literalmente.
+      Banda de credenciales: sustituye a la vieja fila de "facts" del hero. Los
+      tres items y su orden los fijo el cliente ("40 años / Quito / WPA·WFSBP").
     -->
     <section class="credential-band">
       <div class="shell credential-band__inner">
-        <p v-for="entry in t.hero.credentialBand" :key="entry.term" class="credential-band__item">
-          <strong class="credential-band__term">{{ entry.term }}</strong>
-          <span class="credential-band__detail">{{ entry.detail }}</span>
+        <p v-for="entry in t.hero.credentialBand" :key="entry" class="credential-band__item">
+          <strong class="credential-band__term">{{ entry }}</strong>
         </p>
       </div>
     </section>

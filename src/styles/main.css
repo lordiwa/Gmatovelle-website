@@ -403,8 +403,8 @@ ul {
 }
 
 /* --- Banda de credenciales ------------------------------------------------
-   Franja horizontal bajo el hero. Sustituye a la fila de "facts" y solo
-   resume hechos que la seccion de credenciales publica literalmente. */
+   Franja horizontal bajo el hero. Sustituye a la fila de "facts" y lleva los
+   tres items que fijo el cliente: anios de experiencia, ciudad y sociedades. */
 
 .credential-band {
   background-color: var(--paper-sunk);
@@ -424,7 +424,6 @@ ul {
 
 .credential-band__term {
   color: var(--navy);
-  margin-right: 0.4rem;
 }
 
 /* --- Retrato profesional --------------------------------------------------

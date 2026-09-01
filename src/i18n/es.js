@@ -62,16 +62,13 @@ export default {
     portraitCaption: 'Dr. Gonzalo Patricio Matovelle Mediavilla · Quito, Ecuador',
     /**
      * Banda de credenciales que sustituye a la vieja fila de "facts" del hero.
-     * Cada `term` y cada `detail` debe aparecer LITERALMENTE dentro de
-     * `credentials` (hay un lock que lo verifica): la banda resume el CV, no
-     * agrega nada que el CV no respalde.
+     * El cliente fijo estos tres items y su orden ("40 años / Quito /
+     * WPA·WFSBP"); hay un lock literal que lo verifica. No es una vitrina
+     * libre: los tres estan respaldados por el CV (los cuarenta años de
+     * practica y la ciudad en el perfil, las dos sociedades en las membresias
+     * de `credentials`).
      */
-    credentialBand: [
-      { term: 'Past Presidente', detail: 'Asociación Ecuatoriana de Psiquiatría' },
-      { term: 'Perito Psiquiatra certificado', detail: 'Función Judicial de Pichincha' },
-      { term: 'Profesor invitado', detail: 'Universidad Central del Ecuador' },
-      { term: 'Psiquiatra para Ecuador', detail: 'Veterans Evaluation System (VES)' },
-    ],
+    credentialBand: ['40 años de experiencia', 'Quito', 'WPA · WFSBP'],
   },
 
   about: {
