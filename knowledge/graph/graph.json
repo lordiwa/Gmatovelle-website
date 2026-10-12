@@ -12,6 +12,12 @@
       "type": "task",
       "ref": "tasks/TASK-013.json",
       "label": "Enriquecer el JSON-LD del Physician con los datos ya confirmados"
+    },
+    {
+      "id": "task-014",
+      "type": "task",
+      "ref": "tasks/TASK-014.json",
+      "label": "Sitemap con lastmod real y script de verificación post-deploy"
     }
   ],
   "edges": []
