@@ -12,7 +12,7 @@
     "scripts/verify-deploy.js comprueba también /perfil, /consulta, /preguntas y sus equivalentes EN; el barrido RETIRED_CLAIMS sobre dist/ cubre las diez páginas prerenderizadas.",
     "npm run build y npx vitest run en verde; los tests que montaban la portada esperando secciones completas se reapuntan a la página correspondiente, no se borran."
   ],
-  "status": "in_review",
+  "status": "done",
   "priority": "high",
   "labels": [
     "arquitectura",
@@ -21,7 +21,9 @@
   ],
   "assignee": null,
   "depends_on": [],
-  "linked_commits": [],
+  "linked_commits": [
+    "4e84365"
+  ],
   "linked_prs": [],
   "comments": [
     {
@@ -38,13 +40,29 @@
       "author": "orchestrator",
       "at": "2026-10-12T19:51:12.199Z",
       "body": "[FINDING-RESOLVED: R-1] UAT conversacional ejecutada por el orquestador y registrada en este ticket con veredicto PASS (comentario uat anterior al cierre): cubre las 8 AC, incluida la cabecera a 390px (sin desbordamiento, estática, tres filas). El reviewer arrancó antes de que el comentario uat quedara registrado."
+    },
+    {
+      "author": "orchestrator",
+      "at": "2026-10-12T19:53:17.974Z",
+      "body": "1. CASOS DE USO APROBADOS\nCU1: un visitante entra en / y ve hero, banda de credenciales, tres placas teaser (Perfil, Consulta, Preguntas) y el contacto compacto, y desde la cabecera o las placas llega a /perfil, /consulta, /preguntas y /contacto (y sus equivalentes EN). CU2: un buscador rastrea 10 URLs con canonical, hreflang, title y description propios, Physician en todas, WebSite + ProfilePage solo en /, Book en /perfil y FAQPage en /preguntas. CU3: en 390px la cabecera no desborda ni tapa el hero. Reparto de páginas aprobado por el humano vía AskUserQuestion (5 páginas, 2026-10-12).\n\n2. RESULTADO\nPAGES con profile/practice/faq; vistas ProfileView, PracticeView, FaqView con las secciones movidas intactas; HomeView con teasers; SectionHeading con prop as; nav y pie con cinco enlaces; meta por página; JSON-LD repartido; verify-deploy con 10 rutas; tests/unit/pages-split.spec.js. Commit 4e84365 en main. Build con 10 rutas prerenderizadas; 156 tests + 2 todo en verde. Reviewer en contexto fresco: PASS de código en los 10 puntos; el HIGH R-1 (UAT pendiente) resuelto con la UAT registrada; MEDIUM de @id de Book y línea de daño corregidos antes del cierre.\n\n3. WARGAMING\nCU2 atacado por el path 'FAQPage vuelve a la home' y 'una ruta EN desaparece de verify-deploy': 12 locks en rojo, verdes al restaurar (red-green del developer). CU2 atacado por el path 'la lista de verify-deploy diverge de PAGES': test de sincronización. CU1 atacado por el path 'un texto del cliente cambia al mover secciones': locks de copy y RETIRED_CLAIMS sobre los 10 HTML en verde.\n\n4. UAT\nUAT PASS registrada por el orquestador en este ticket: las cinco páginas en ES y EN renderizan con el diseño intacto, estado activo correcto en la cabecera, 390px sin desbordamiento con cabecera estática de tres filas."
     }
   ],
   "created_at": "2026-10-12T19:39:10.772Z",
-  "updated_at": "2026-10-12T19:51:12.199Z",
+  "updated_at": "2026-10-12T19:53:17.974Z",
   "jira_key": null,
   "verification_tier": "tests-after",
   "requires_uat": true,
   "marker": "[EXPLICIT]",
-  "source_tier": "T1"
+  "source_tier": "T1",
+  "linked_commits_verification": {
+    "at": "2026-10-12T19:53:17.974Z",
+    "checked": true,
+    "reason": null,
+    "commits": [
+      {
+        "sha": "4e84365",
+        "state": "verified"
+      }
+    ]
+  }
 }

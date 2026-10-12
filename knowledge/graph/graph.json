@@ -18,6 +18,12 @@
       "type": "task",
       "ref": "tasks/TASK-014.json",
       "label": "Sitemap con lastmod real y script de verificación post-deploy"
+    },
+    {
+      "id": "task-015",
+      "type": "task",
+      "ref": "tasks/TASK-015.json",
+      "label": "Dividir el sitio en cinco páginas: Inicio, Perfil, Consulta, Preguntas, Contacto"
     }
   ],
   "edges": []
