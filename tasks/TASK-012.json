@@ -1,0 +1,31 @@
+{
+  "key": "TASK-012",
+  "title": "Head limpio tras hidratar, pulido de meta y robots.txt actualizado",
+  "description": "Origen: knowledge/research/geo-seo-2026-10-12.md, defectos D3, D10, D11, D12, D14, D15 (backlog 3, 10, 12). Tras hidratar, cada página emite dos juegos de description, robots, canonical, hreflang, og/twitter y JSON-LD porque renderHeadTags (src/seo/tags.js:54-61) no marca los nodos con data-head y useHead (src/seo/useHead.js:27-36) solo retira los marcados. Además: twitter:card es summary con imagen 1200x630; la 404 lleva canonical a la home junto a noindex; solo #perfil tiene id de sección; las imágenes no tienen cabecera de caché; robots.txt lista Claude-Web (obsoleto) y omite Claude-SearchBot, Claude-User y Perplexity-User. Sin cambios de copy visible.",
+  "acceptance_criteria": [
+    "Tras montar el cliente sobre el HTML prerenderizado, el DOM tiene exactamente un canonical, un juego de hreflang (es-EC, en, x-default) y un bloque JSON-LD por nodo; test que lo cuenta.",
+    "twitter:card = summary_large_image en todas las páginas.",
+    "La 404 lleva noindex y no emite canonical.",
+    "Todas las secciones de la portada tienen id estable (perfil, consulta, experiencia, credenciales, publicaciones, contacto o equivalentes) sin cambiar el copy.",
+    "firebase.json sirve /images/** con Cache-Control max-age de 7 días.",
+    "robots.txt: User-agent * allow, y lista ClaudeBot, Claude-SearchBot, Claude-User, GPTBot, OAI-SearchBot, ChatGPT-User, PerplexityBot, Perplexity-User, Google-Extended, Applebot-Extended, Bingbot; sin Claude-Web.",
+    "npm run build y npx vitest run en verde; locks antirretroceso existentes intactos."
+  ],
+  "status": "in_review",
+  "priority": "high",
+  "labels": [
+    "geo-seo",
+    "tecnico"
+  ],
+  "assignee": null,
+  "depends_on": [],
+  "linked_commits": [],
+  "linked_prs": [],
+  "comments": [],
+  "created_at": "2026-10-12T19:16:29.966Z",
+  "updated_at": "2026-10-12T19:19:14.988Z",
+  "jira_key": null,
+  "verification_tier": "tests-after",
+  "marker": "[EXPLICIT]",
+  "source_tier": "T1"
+}

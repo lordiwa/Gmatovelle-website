@@ -82,7 +82,7 @@ describe('head por pagina e idioma', () => {
     // Ya no esta en PAGES: no debe emitir canonical propio, ni hreflang, ni
     // JSON-LD que la anuncie como pagina existente.
     const head = buildHead('blog', 'en');
-    expect(head.canonical).toBe(SITE_ORIGIN + '/');
+    expect(head.canonical).toBeNull();
     expect(head.robots).toContain('noindex');
     expect(head.alternates).toEqual([]);
     expect(head.jsonLd).toEqual([]);
@@ -115,7 +115,7 @@ describe('head por pagina e idioma', () => {
     expect(head.og['og:url']).toBe(head.canonical);
     expect(head.og['og:locale']).toBe('en_US');
     expect(head.og['og:locale:alternate']).toBe('es_EC');
-    expect(head.twitter['twitter:card']).toBe('summary');
+    expect(head.twitter['twitter:card']).toBe('summary_large_image');
   });
 
   it('indexa las paginas reales y excluye la 404', () => {
@@ -137,7 +137,7 @@ describe('head por pagina e idioma', () => {
 describe('serializacion del head', () => {
   it('emite JSON-LD parseable y sin romper el bloque script', () => {
     const html = renderHeadTags(buildHead('home', 'es'));
-    const blocks = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)];
+    const blocks = [...html.matchAll(/<script type="application\/ld\+json"[^>]*>(.*?)<\/script>/gs)];
 
     expect(blocks.length).toBe(4);
     for (const [, json] of blocks) {

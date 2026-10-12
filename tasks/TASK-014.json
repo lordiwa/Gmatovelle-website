@@ -1,0 +1,28 @@
+{
+  "key": "TASK-014",
+  "title": "Sitemap con lastmod real y script de verificación post-deploy",
+  "description": "Origen: knowledge/research/geo-seo-2026-10-12.md, defecto D4 (backlog 6 y 13). El sitemap pone la fecha de build como lastmod en cada deploy y lleva priority, que Google ignora (https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap). Falta un script que verifique la producción tras cada deploy.",
+  "acceptance_criteria": [
+    "sitemap.xml usa como lastmod la constante manual CONTENT_UPDATED (compartida con el ticket del JSON-LD) y no la fecha de build; se elimina priority y changefreq.",
+    "Existe scripts/verify-deploy.js (npm run verify:deploy) que, dado un origen (por defecto https://gmatovelle-site.web.app), comprueba: /, /en, /contacto, /en/contact responden 200 sin redirección; una ruta inexistente responde 404; robots.txt y sitemap.xml responden 200; cada página HTML contiene exactamente un link rel=canonical y un bloque JSON-LD con @type Physician; y sale con código distinto de 0 si algo falla.",
+    "Build y suite en verde; test unitario del sitemap actualizado."
+  ],
+  "status": "todo",
+  "priority": "medium",
+  "labels": [
+    "geo-seo",
+    "tecnico"
+  ],
+  "assignee": null,
+  "depends_on": [],
+  "linked_commits": [],
+  "linked_prs": [],
+  "comments": [],
+  "created_at": "2026-10-12T19:16:30.119Z",
+  "updated_at": "2026-10-12T19:16:30.119Z",
+  "jira_key": null,
+  "verification_tier": "tests-after",
+  "requires_uat": false,
+  "marker": "[EXPLICIT]",
+  "source_tier": "T1"
+}

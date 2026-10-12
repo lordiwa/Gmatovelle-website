@@ -84,7 +84,7 @@ const whatsapp = computed(() => whatsappUrl());
     </section>
 
     <!-- Enfoque de la consulta: la foto ancha colgada arriba, dos tarjetas debajo. -->
-    <section class="section section--sunk">
+    <section id="consulta" class="section section--sunk">
       <div class="shell">
         <SectionHeading :title="t.practice.heading" :lead="t.practice.lead" />
         <FramedPhoto
@@ -107,7 +107,7 @@ const whatsapp = computed(() => whatsappUrl());
       profile.declaredConditions): cinco placas en fila. Esta seccion lleva
       antetitulo; es, con el del hero, uno de los dos del sitio.
     -->
-    <section class="section">
+    <section id="experiencia" class="section">
       <div class="shell">
         <SectionHeading
           :eyebrow="t.expertise.heading"
@@ -128,7 +128,7 @@ const whatsapp = computed(() => whatsappUrl());
       largas de CV. Variante compacta; la ficha completa (mapa, correos,
       emergencias) sigue viviendo en /contacto.
     -->
-    <section class="section section--sunk">
+    <section id="contacto" class="section section--sunk">
       <div class="shell">
         <SectionHeading :title="t.contact.heading" :lead="t.contact.lead" />
         <ContactPanel variant="compact" />
@@ -137,7 +137,7 @@ const whatsapp = computed(() => whatsappUrl());
 
     <!-- Credenciales: los titulos enmarcados a la izquierda, fijos mientras se
          recorre la lista; cada grupo del CV a la derecha. -->
-    <section class="section">
+    <section id="credenciales" class="section">
       <div class="shell">
         <SectionHeading :title="t.credentials.heading" :lead="t.credentials.lead" />
         <div class="room room--frame-first">
@@ -167,7 +167,7 @@ const whatsapp = computed(() => whatsappUrl());
     </section>
 
     <!-- Publicaciones: dos libros sobre una repisa. -->
-    <section class="section section--sunk">
+    <section id="publicaciones" class="section section--sunk">
       <div class="shell">
         <SectionHeading :title="t.publications.heading" :lead="t.publications.lead" />
         <ul class="publications-shelf">
@@ -180,7 +180,7 @@ const whatsapp = computed(() => whatsappUrl());
       </div>
     </section>
 
-    <section class="section">
+    <section id="preguntas" class="section">
       <div class="shell">
         <SectionHeading :title="t.faq.heading" :lead="t.faq.lead" />
         <FaqList :items="t.faq.items" />

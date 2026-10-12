@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-01T12:00:00.000Z",
+  "generated_at": "2026-10-12T19:19:14.988Z",
   "tasks": [
     {
       "key": "TASK-001",
@@ -66,6 +66,24 @@
       "title": "Corregir el posicionamiento del Dr.: quitar neurocientifico y perito, unificar el telefono y completar las cinco especialidades",
       "status": "done",
       "priority": "high"
+    },
+    {
+      "key": "TASK-012",
+      "title": "Head limpio tras hidratar, pulido de meta y robots.txt actualizado",
+      "status": "in_review",
+      "priority": "high"
+    },
+    {
+      "key": "TASK-013",
+      "title": "Enriquecer el JSON-LD del Physician con los datos ya confirmados",
+      "status": "todo",
+      "priority": "high"
+    },
+    {
+      "key": "TASK-014",
+      "title": "Sitemap con lastmod real y script de verificación post-deploy",
+      "status": "todo",
+      "priority": "medium"
     }
   ]
 }

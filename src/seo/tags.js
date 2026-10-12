@@ -9,7 +9,9 @@ export function headTags(head) {
 
   tags.push({ tag: 'meta', attrs: { name: 'description', content: head.description } });
   tags.push({ tag: 'meta', attrs: { name: 'robots', content: head.robots } });
-  tags.push({ tag: 'link', attrs: { rel: 'canonical', href: head.canonical } });
+  if (head.canonical) {
+    tags.push({ tag: 'link', attrs: { rel: 'canonical', href: head.canonical } });
+  }
 
   for (const alt of head.alternates) {
     tags.push({ tag: 'link', attrs: { rel: 'alternate', hreflang: alt.hreflang, href: alt.href } });
@@ -52,7 +54,9 @@ export function renderHeadTags(head) {
   const lines = ['<title>' + escapeAttr(head.title) + '</title>'];
 
   for (const { tag, attrs, children } of headTags(head)) {
-    const attrString = Object.entries(attrs)
+    // data-head marca los nodos gestionados: useHead los retira antes de
+    // volver a emitirlos al hidratar, para no duplicar el head prerenderizado.
+    const attrString = [...Object.entries(attrs), ['data-head', '']]
       .map(([key, value]) => key + '="' + escapeAttr(value) + '"')
       .join(' ');
     if (children === undefined) {

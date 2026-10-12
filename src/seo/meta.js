@@ -177,7 +177,7 @@ export function alternatesFor(page) {
  *
  * Solo las paginas presentes en PAGES se tratan como reales; cualquier otra
  * clave (hoy 'notFound' y 'blog', que quedo desactivada) cae al head generico
- * con canonical a la portada, robots noindex y sin JSON-LD.
+ * sin canonical, robots noindex y sin JSON-LD.
  *
  * @param {'home'|'contact'|'blog'|'notFound'} page
  * @param {'es'|'en'} locale
@@ -205,7 +205,9 @@ export function buildHead(page, locale) {
     lang: LOCALE_TAGS[locale],
     title: meta.title,
     description: meta.description,
-    canonical: url,
+    // La 404 y demas rutas no reales no declaran canonical: combinarlo con
+    // noindex enviaria senales contradictorias.
+    canonical: isRealPage ? url : null,
     robots: isRealPage ? 'index,follow,max-snippet:-1,max-image-preview:large' : 'noindex,follow',
     alternates: alternatesFor(page),
     og: {
@@ -213,7 +215,7 @@ export function buildHead(page, locale) {
       'og:site_name': t.nav.brand,
       'og:title': meta.title,
       'og:description': meta.description,
-      'og:url': url,
+      ...(isRealPage ? { 'og:url': url } : {}),
       'og:locale': OG_LOCALE_TAGS[locale],
       'og:locale:alternate': OG_LOCALE_TAGS[locale === 'es' ? 'en' : 'es'],
       // Tarjeta de 1200x630 con el retrato del Dr.: la misma sesion que el
@@ -224,7 +226,7 @@ export function buildHead(page, locale) {
       'og:image:alt': t.hero.portraitAlt,
     },
     twitter: {
-      'twitter:card': 'summary',
+      'twitter:card': 'summary_large_image',
       'twitter:title': meta.title,
       'twitter:description': meta.description,
       'twitter:image': absoluteUrl(profile.ogImagePath),
