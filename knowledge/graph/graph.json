@@ -6,6 +6,12 @@
       "type": "task",
       "ref": "tasks/TASK-012.json",
       "label": "Head limpio tras hidratar, pulido de meta y robots.txt actualizado"
+    },
+    {
+      "id": "task-013",
+      "type": "task",
+      "ref": "tasks/TASK-013.json",
+      "label": "Enriquecer el JSON-LD del Physician con los datos ya confirmados"
     }
   ],
   "edges": []

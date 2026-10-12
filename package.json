@@ -9,6 +9,7 @@
     "build": "vite build && vite build --ssr src/entry-server.js --outDir dist-ssr && node scripts/prerender.js",
     "build:spa": "vite build",
     "preview": "vite preview",
+    "verify:deploy": "node scripts/verify-deploy.js",
     "test": "vitest run",
     "test:watch": "vitest"
   },

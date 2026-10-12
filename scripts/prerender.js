@@ -61,6 +61,5 @@ await writeFile(
 );
 console.log('prerender  404            -> dist/404.html');
 
-const lastmod = new Date().toISOString().slice(0, 10);
-await writeFile(join(distDir, 'sitemap.xml'), buildSitemap({ lastmod }), 'utf8');
+await writeFile(join(distDir, 'sitemap.xml'), buildSitemap(), 'utf8');
 console.log('sitemap    ' + routes.length + ' URLs -> dist/sitemap.xml');

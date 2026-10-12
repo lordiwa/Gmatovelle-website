@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-12T19:26:08.331Z",
+  "generated_at": "2026-10-12T19:28:09.414Z",
   "tasks": [
     {
       "key": "TASK-001",
@@ -76,13 +76,13 @@
     {
       "key": "TASK-013",
       "title": "Enriquecer el JSON-LD del Physician con los datos ya confirmados",
-      "status": "in_review",
+      "status": "done",
       "priority": "high"
     },
     {
       "key": "TASK-014",
       "title": "Sitemap con lastmod real y script de verificación post-deploy",
-      "status": "todo",
+      "status": "in_review",
       "priority": "medium"
     }
   ]

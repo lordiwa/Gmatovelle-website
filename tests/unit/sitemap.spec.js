@@ -2,9 +2,10 @@ import { describe, it, expect } from 'vitest';
 import { buildSitemap } from '@/seo/sitemap.js';
 import { allRoutePaths } from '@/router/routes.js';
 import { absoluteUrl } from '@/seo/meta.js';
+import { CONTENT_UPDATED } from '@/site.config.js';
 
 describe('sitemap.xml', () => {
-  const xml = buildSitemap({ lastmod: '2026-08-31' });
+  const xml = buildSitemap();
 
   it('incluye todas las rutas del sitio en los dos idiomas', () => {
     const routes = allRoutePaths();
@@ -26,14 +27,13 @@ describe('sitemap.xml', () => {
     expect(xml).toContain('hreflang="en"');
   });
 
-  it('da la prioridad mas alta a la portada', () => {
-    const home = xml.split('<url>')[1];
-    expect(home).toContain('<priority>1.0</priority>');
-  });
-
-  it('propaga la fecha de ultima modificacion cuando se entrega', () => {
-    expect(xml).toContain('<lastmod>2026-08-31</lastmod>');
-    expect(buildSitemap()).not.toContain('<lastmod>');
+  // Daño que evita: que cada deploy cambie lastmod sin que el contenido cambie.
+  it('usa CONTENT_UPDATED como lastmod y omite priority y changefreq', () => {
+    const dates = xml.match(/<lastmod>([^<]+)<\/lastmod>/g) || [];
+    expect(dates.length).toBe(4);
+    for (const d of dates) expect(d).toBe('<lastmod>' + CONTENT_UPDATED + '</lastmod>');
+    expect(xml).not.toContain('<priority>');
+    expect(xml).not.toContain('<changefreq>');
   });
 
   it('produce XML bien formado con una apertura por cada cierre', () => {

@@ -1,4 +1,4 @@
-import { LOCALE_TAGS, DEFAULT_LOCALE } from '@/site.config.js';
+import { LOCALE_TAGS, DEFAULT_LOCALE, CONTENT_UPDATED } from '@/site.config.js';
 import { allRoutePaths, pathFor } from '@/router/routes.js';
 import { absoluteUrl } from './meta.js';
 
@@ -9,7 +9,7 @@ import { absoluteUrl } from './meta.js';
  * la senal que necesitan los buscadores para tratar ES y EN como la misma
  * pagina en dos idiomas y no como contenido duplicado.
  */
-export function buildSitemap({ lastmod = null } = {}) {
+export function buildSitemap({ lastmod = CONTENT_UPDATED } = {}) {
   const entries = allRoutePaths().map(({ page, locale, path }) => {
     const alternates = allRoutePaths()
       .filter((r) => r.page === page)
@@ -28,11 +28,11 @@ export function buildSitemap({ lastmod = null } = {}) {
         '" />',
     );
 
-    // El esquema de sitemaps exige este orden: loc, lastmod, changefreq, priority.
+    // lastmod es la fecha manual de revision del contenido, no la del build.
+    // priority y changefreq se omiten: Google los ignora.
     const lines = ['  <url>', '    <loc>' + absoluteUrl(path) + '</loc>', ...alternates];
 
     if (lastmod) lines.push('    <lastmod>' + lastmod + '</lastmod>');
-    lines.push('    <priority>' + (page === 'home' ? '1.0' : '0.7') + '</priority>');
     lines.push('  </url>');
     return lines.join('\n');
   });

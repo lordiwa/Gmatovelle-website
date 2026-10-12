@@ -12,7 +12,7 @@
     "Physician.name no duplica el prefijo Dr. cuando honorificPrefix ya lo declara.",
     "El JSON-LD prerenderizado valida sin errores (comprobar con un parseo y un test de forma); build y suite en verde; lock antirretroceso intacto."
   ],
-  "status": "in_review",
+  "status": "done",
   "priority": "high",
   "labels": [
     "geo-seo",
@@ -20,20 +20,38 @@
   ],
   "assignee": null,
   "depends_on": [],
-  "linked_commits": [],
+  "linked_commits": [
+    "18002a693978cb1595d95c72b17304ed9830df50"
+  ],
   "linked_prs": [],
   "comments": [
     {
       "author": "reviewer",
       "at": "2026-10-12T19:26:08.331Z",
       "body": "Review en contexto fresco (rev-task-013): PASS, cero HIGH. Verificado: 135 tests + 2 todo en verde; build en verde; JSON-LD de las cuatro páginas parsea sin @id duplicados (6 bloques en home, 2 en contacto); barrido de afirmaciones retiradas sobre el JSON-LD de dist/ sin coincidencias; hasMap derivado del mismo CID que el embed; knowsAbout solo con términos ya presentes en los diccionarios; Book sin ISBN/año/URL inventados y con author @id resuelto al Physician. MEDIUM: hasCredential derivado por posición de credentials.groups[0]; lock de hasMap tautológico (compara contra mapsUrl()); hand-off sin desglose del checklist. LOW: el parseo de dist solo cubría index.html; 'American Academy of Sleep Disorders' no es un nombre verificable (el organismo real es la American Academy of Sleep Medicine), correctamente sin url; comentario obsoleto en seo-meta.spec.js:39. Los dos MEDIUM de código y el primer LOW se corrigen antes del cierre."
+    },
+    {
+      "author": "orchestrator",
+      "at": "2026-10-12T19:27:08.780Z",
+      "body": "1. CASOS DE USO APROBADOS\nCU1: un buscador o asistente lee el JSON-LD de la portada y encuentra al Physician con hasMap y sameAs apuntando a la ficha oficial de Google Maps (misma CID que el embed), dos credenciales académicas reconocidas por la Universidad Central del Ecuador, conocimientos (Psiquiatría, Psicofarmacología), membresías con url oficial cuando se conoce y dos libros con author = Physician. CU2: WebSite.name es la marca corta y ProfilePage declara dateModified manual. CU3: ninguna afirmación retirada por el cliente reaparece en el JSON-LD. Aprobados por el humano al autorizar el bloque técnico GEO/SEO (2026-10-12).\n\n2. RESULTADO\nImplementado en src/seo/meta.js, src/data/profile.js (degrees, membershipUrls), src/data/contact.js (mapsUrl), src/site.config.js (CONTENT_UPDATED). Commit 18002a6 en main. Build en verde; 135 tests + 2 todo en verde. Reviewer en contexto fresco: PASS, cero HIGH; dos MEDIUM de calidad de lock corregidos antes del cierre (credenciales por clave estable y con nombres asertados; lock de hasMap contra la URL literal).\n\n3. WARGAMING\nCU1 atacado por el path 'reordenar los grupos de credenciales del diccionario': antes emitía items no académicos como credencial; ahora las dos titulaciones viven en profile.degrees y el lock exige sus nombres y su presencia en el copy. CU1 atacado por el path 'mapsUrl cambia de host o pierde ?cid=': lock contra la URL literal. CU3 atacado por el barrido RETIRED_CLAIMS sobre dist/, que cubre el JSON-LD prerenderizado de las cuatro páginas; sin coincidencias.\n\n4. UAT\nUAT no solicitado: tier tests-after, cambio de datos estructurados sin flujo de usuario visible; verificación automática por locks y parseo del JSON-LD de las cuatro páginas de dist/."
     }
   ],
   "created_at": "2026-10-12T19:16:30.066Z",
-  "updated_at": "2026-10-12T19:26:08.331Z",
+  "updated_at": "2026-10-12T19:27:08.780Z",
   "jira_key": null,
   "verification_tier": "tests-after",
   "requires_uat": false,
   "marker": "[EXPLICIT]",
-  "source_tier": "T1"
+  "source_tier": "T1",
+  "linked_commits_verification": {
+    "at": "2026-10-12T19:27:08.780Z",
+    "checked": true,
+    "reason": null,
+    "commits": [
+      {
+        "sha": "18002a693978cb1595d95c72b17304ed9830df50",
+        "state": "verified"
+      }
+    ]
+  }
 }
