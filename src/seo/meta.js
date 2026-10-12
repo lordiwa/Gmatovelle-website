@@ -133,11 +133,11 @@ export function physicianJsonLd(locale) {
 }
 
 /** Un nodo Book por publicacion, con el Physician como autor. Sin ISBN. */
-export function bookJsonLds() {
+export function bookJsonLds(locale) {
   return profile.publications.map((pub, i) => ({
     '@context': 'https://schema.org',
     '@type': 'Book',
-    '@id': SITE_ORIGIN + '/#book-' + (i + 1),
+    '@id': absoluteUrl(pathFor('profile', locale)) + '#book-' + (i + 1),
     name: pub.title,
     author: { '@id': PHYSICIAN_ID },
     ...(pub.publisher ? { publisher: { '@type': 'Organization', name: pub.publisher } } : {}),
@@ -165,7 +165,7 @@ export function faqJsonLd(locale) {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    '@id': absoluteUrl(pathFor('home', locale)) + '#faq',
+    '@id': absoluteUrl(pathFor('faq', locale)) + '#faq',
     inLanguage: LOCALE_TAGS[locale],
     mainEntity: t.faq.items.map((item) => ({
       '@type': 'Question',
@@ -211,7 +211,7 @@ export function alternatesFor(page) {
  * clave (hoy 'notFound' y 'blog', que quedo desactivada) cae al head generico
  * sin canonical, robots noindex y sin JSON-LD.
  *
- * @param {'home'|'contact'|'blog'|'notFound'} page
+ * @param {'home'|'profile'|'practice'|'faq'|'contact'|'blog'|'notFound'} page
  * @param {'es'|'en'} locale
  */
 export function buildHead(page, locale) {
@@ -223,15 +223,13 @@ export function buildHead(page, locale) {
   const jsonLd = [];
   if (isRealPage) {
     jsonLd.push(pageJsonLd(page, locale, meta.title, meta.description));
-    if (page === 'home') {
-      jsonLd.push(physicianJsonLd(locale));
-      jsonLd.push(webSiteJsonLd(locale));
-      jsonLd.push(faqJsonLd(locale));
-      jsonLd.push(...bookJsonLds());
-    }
-    if (page === 'contact') {
-      jsonLd.push(physicianJsonLd(locale));
-    }
+    // El Physician va en todas las paginas; el resto depende de lo que la
+    // pagina muestra: WebSite en la portada, libros en el perfil, FAQPage en
+    // las preguntas (el marcado debe coincidir con el contenido visible).
+    jsonLd.push(physicianJsonLd(locale));
+    if (page === 'home') jsonLd.push(webSiteJsonLd(locale));
+    if (page === 'profile') jsonLd.push(...bookJsonLds(locale));
+    if (page === 'faq') jsonLd.push(faqJsonLd(locale));
   }
 
   return {

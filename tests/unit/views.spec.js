@@ -32,23 +32,28 @@ describe('portada: perfil del Dr. Matovelle', () => {
     expect(wrapper.text()).toContain('40 años');
   });
 
-  it('renderiza las secciones del perfil exigidas por el ticket', async () => {
-    const { wrapper } = await mountAt(App, '/');
-    const text = wrapper.text();
-    for (const heading of [
-      messages.es.about.heading,
-      messages.es.practice.heading,
-      messages.es.credentials.heading,
-      messages.es.publications.heading,
-      messages.es.faq.heading,
-      messages.es.contact.heading,
-    ]) {
-      expect(text, 'falta la seccion ' + heading).toContain(heading);
+  // Las secciones largas ya no viven en la portada: cada una esta en su pagina
+  // (TASK-015) y la portada solo la anuncia con un teaser.
+  it('renderiza cada seccion del perfil en la pagina que le corresponde', async () => {
+    const SECTIONS_BY_PATH = {
+      '/': [messages.es.contact.heading],
+      '/perfil': [
+        messages.es.about.heading,
+        messages.es.credentials.heading,
+        messages.es.publications.heading,
+      ],
+      '/consulta': [messages.es.practice.heading, messages.es.expertise.headline],
+      '/preguntas': [messages.es.faq.heading],
+    };
+    for (const [path, headings] of Object.entries(SECTIONS_BY_PATH)) {
+      const { wrapper } = await mountAt(App, path);
+      const titles = wrapper.findAll('.section__title').map((n) => n.text());
+      expect(titles, path).toEqual(headings);
     }
   });
 
   it('publica cada credencial del CV, sin perder ninguna', async () => {
-    const { wrapper } = await mountAt(App, '/');
+    const { wrapper } = await mountAt(App, '/perfil');
     const rendered = wrapper.findAll('.credential-list li').map((li) => li.text());
     const expected = messages.es.credentials.groups.flatMap((group) => group.items);
     expect(rendered).toEqual(expected);
@@ -62,7 +67,7 @@ describe('portada: perfil del Dr. Matovelle', () => {
    * que antes.
    */
   it('nombra las dignidades gremiales y las representaciones tal como constan', async () => {
-    const { wrapper } = await mountAt(App, '/');
+    const { wrapper } = await mountAt(App, '/perfil');
     const text = wrapper.text();
     expect(text).toContain('Past Presidente de la Asociación Ecuatoriana de Psiquiatría');
     expect(text).toContain('World Psychiatric Association (WPA)');
@@ -70,7 +75,7 @@ describe('portada: perfil del Dr. Matovelle', () => {
   });
 
   it('lista las publicaciones del Dr. con su editorial', async () => {
-    const { wrapper } = await mountAt(App, '/');
+    const { wrapper } = await mountAt(App, '/perfil');
     const text = wrapper.text();
     expect(text).toContain('Manual Latinoamericano para la Enfermedad Depresiva');
     expect(text).toContain('Enfermedad de Alzheimer');
@@ -78,14 +83,14 @@ describe('portada: perfil del Dr. Matovelle', () => {
   });
 
   it('deja las respuestas de la FAQ en el HTML aunque el acordeon este cerrado', async () => {
-    const { wrapper } = await mountAt(App, '/');
+    const { wrapper } = await mountAt(App, '/preguntas');
     const answers = wrapper.findAll('.faq__answer').map((node) => node.text());
     expect(answers.length).toBe(messages.es.faq.items.length);
     expect(answers).toEqual(messages.es.faq.items.map((item) => item.answer));
   });
 
   it('muestra el mismo perfil completo en la version en ingles', async () => {
-    const { wrapper } = await mountAt(App, '/en');
+    const { wrapper } = await mountAt(App, '/en/profile');
     const rendered = wrapper.findAll('.credential-list li').map((li) => li.text());
     const expected = messages.en.credentials.groups.flatMap((group) => group.items);
     expect(rendered).toEqual(expected);
@@ -210,7 +215,7 @@ describe('numero visible abre WhatsApp', () => {
 
 describe('seccion de articulos desactivada', () => {
   it('no registra /blog ni /en/blog como paginas del sitio', () => {
-    expect(PAGES.map((p) => p.name)).toEqual(['home', 'contact']);
+    expect(PAGES.map((p) => p.name)).toEqual(['home', 'profile', 'practice', 'faq', 'contact']);
     expect(() => pathFor('blog', 'es')).toThrow();
   });
 

@@ -9,8 +9,9 @@ describe('sitemap.xml', () => {
 
   it('incluye todas las rutas del sitio en los dos idiomas', () => {
     const routes = allRoutePaths();
-    // 2 paginas (portada y contacto) x 2 idiomas. El blog quedo desactivado.
-    expect(routes.length).toBe(4);
+    // 5 paginas (inicio, perfil, consulta, preguntas, contacto) x 2 idiomas.
+    // El blog quedo desactivado.
+    expect(routes.length).toBe(10);
     for (const route of routes) {
       expect(xml).toContain('<loc>' + absoluteUrl(route.path) + '</loc>');
     }
@@ -30,7 +31,7 @@ describe('sitemap.xml', () => {
   // Daño que evita: que cada deploy cambie lastmod sin que el contenido cambie.
   it('usa CONTENT_UPDATED como lastmod y omite priority y changefreq', () => {
     const dates = xml.match(/<lastmod>([^<]+)<\/lastmod>/g) || [];
-    expect(dates.length).toBe(4);
+    expect(dates.length).toBe(10);
     for (const d of dates) expect(d).toBe('<lastmod>' + CONTENT_UPDATED + '</lastmod>');
     expect(xml).not.toContain('<priority>');
     expect(xml).not.toContain('<changefreq>');

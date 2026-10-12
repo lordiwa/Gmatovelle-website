@@ -10,6 +10,8 @@ defineProps({
   title: { type: String, required: true },
   lead: { type: String, default: null },
   id: { type: String, default: null },
+  /** Nivel del titulo: las paginas interiores abren con un h1. */
+  as: { type: String, default: 'h2' },
 });
 </script>
 
@@ -17,7 +19,7 @@ defineProps({
   <div class="section__head">
     <span v-if="eyebrow" class="section__index">{{ eyebrow }}</span>
     <span v-else-if="index" class="section__index">{{ index }}</span>
-    <h2 class="section__title" :id="id">{{ title }}</h2>
+    <component :is="as" class="section__title" :id="id">{{ title }}</component>
     <p v-if="lead" class="section__lead">{{ lead }}</p>
   </div>
 </template>

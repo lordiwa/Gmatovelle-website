@@ -7,6 +7,7 @@ import { renderHeadTags } from '@/seo/tags.js';
 import { contact, mapsUrl } from '@/data/contact.js';
 import { profile } from '@/data/profile.js';
 import { SITE_ORIGIN, CONTENT_UPDATED } from '@/site.config.js';
+import { allRoutePaths } from '@/router/routes.js';
 
 describe('JSON-LD de la entidad medica', () => {
   it('describe al Dr. como Physician con especialidad, ciudad y telefono', () => {
@@ -100,17 +101,47 @@ describe('head por pagina e idioma', () => {
     );
   });
 
-  it('adjunta Physician, WebSite y FAQPage en la portada', () => {
+  it('adjunta ProfilePage, Physician y WebSite en la portada, sin FAQPage ni Book', () => {
     const types = buildHead('home', 'es').jsonLd.map((node) => node['@type']);
-    expect(types).toContain('ProfilePage');
-    expect(types).toContain('Physician');
-    expect(types).toContain('WebSite');
-    expect(types).toContain('FAQPage');
+    expect(types).toEqual(['ProfilePage', 'Physician', 'WebSite']);
   });
 
-  it('repite la ficha del medico en contacto, que es la pagina de la accion', () => {
-    const types = buildHead('contact', 'es').jsonLd.map((node) => node['@type']);
-    expect(types).toContain('Physician');
+  it('repite la ficha del medico en todas las paginas reales', () => {
+    for (const { page, locale } of allRoutePaths()) {
+      const types = buildHead(page, locale).jsonLd.map((node) => node['@type']);
+      expect(types, page + ' ' + locale).toContain('Physician');
+    }
+  });
+
+  // Dano que previene: marcado FAQPage o Book sobre una pagina que no muestra
+  // ese contenido, o que se pierda de la pagina donde si esta.
+  it('emite FAQPage solo en preguntas y los Book solo en el perfil', () => {
+    for (const locale of ['es', 'en']) {
+      for (const { page } of allRoutePaths().filter((r) => r.locale === locale)) {
+        const types = buildHead(page, locale).jsonLd.map((node) => node['@type']);
+        expect(types.includes('FAQPage'), 'FAQPage en ' + page).toBe(page === 'faq');
+        expect(types.filter((x) => x === 'Book').length, 'Book en ' + page).toBe(
+          page === 'profile' ? 2 : 0,
+        );
+      }
+    }
+  });
+
+  // Dano que previene: dos paginas con el mismo title, description o canonical, que los buscadores tratan como contenido duplicado.
+  it('cada pagina nueva tiene title, description, canonical y og:url propios en ambos idiomas', () => {
+    const seen = new Set();
+    for (const { page, locale, path } of allRoutePaths()) {
+      const head = buildHead(page, locale);
+      expect(head.canonical).toBe(SITE_ORIGIN + (path === '/' ? '/' : path));
+      expect(head.og['og:url']).toBe(head.canonical);
+      expect(head.alternates.map((a) => a.hreflang)).toEqual(['es-EC', 'en', 'x-default']);
+      const page_node = head.jsonLd.find((n) => ['WebPage', 'ProfilePage'].includes(n['@type']));
+      expect(page_node['@id']).toBe(head.canonical + '#page');
+      for (const field of [head.title, head.description]) {
+        expect(seen.has(locale + field), 'duplicado ' + page + ' ' + locale).toBe(false);
+        seen.add(locale + field);
+      }
+    }
   });
 
   it('publica Open Graph completo y con el idioma alterno declarado', () => {
@@ -143,7 +174,7 @@ describe('serializacion del head', () => {
     const html = renderHeadTags(buildHead('home', 'es'));
     const blocks = [...html.matchAll(/<script type="application\/ld\+json"[^>]*>(.*?)<\/script>/gs)];
 
-    expect(blocks.length).toBe(6);
+    expect(blocks.length).toBe(3);
     for (const [, json] of blocks) {
       expect(json).not.toContain('<');
       expect(() => JSON.parse(json)).not.toThrow();
@@ -168,7 +199,8 @@ describe('serializacion del head', () => {
 });
 
 describe('JSON-LD enriquecido (TASK-013)', () => {
-  const graph = buildHead('home', 'es').jsonLd;
+  const homeGraph = buildHead('home', 'es').jsonLd;
+  const graph = [...homeGraph, ...buildHead('profile', 'es').jsonLd];
   const physician = graph.find((n) => n['@type'] === 'Physician');
 
   // Evita: mapa y sameAs desalineados, titulos sin declarar, libros huerfanos
@@ -193,15 +225,18 @@ describe('JSON-LD enriquecido (TASK-013)', () => {
     const books = graph.filter((n) => n['@type'] === 'Book');
     expect(books).toHaveLength(2);
     for (const book of books) expect(book.author['@id']).toBe(physician['@id']);
+    // Los @id viven bajo la URL de la pagina que los emite (/perfil), no bajo la portada.
+    for (const book of books) expect(book['@id']).toMatch(/\/perfil#book-\d$/);
   });
 
   it('WebSite.name es la marca corta y ProfilePage.dateModified es CONTENT_UPDATED', () => {
-    expect(graph.find((n) => n['@type'] === 'WebSite').name).toBe(profile.displayName);
-    expect(graph.find((n) => n['@type'] === 'ProfilePage').dateModified).toBe(CONTENT_UPDATED);
+    expect(homeGraph.find((n) => n['@type'] === 'WebSite').name).toBe(profile.displayName);
+    expect(homeGraph.find((n) => n['@type'] === 'ProfilePage').dateModified).toBe(CONTENT_UPDATED);
   });
 
-  it('el JSON-LD prerenderizado de las cuatro paginas parsea (si el build ya se ejecuto)', () => {
-    for (const rel of ['index.html', 'en/index.html', 'contacto/index.html', 'en/contact/index.html']) {
+  it('el JSON-LD prerenderizado de las diez paginas parsea (si el build ya se ejecuto)', () => {
+    for (const { path } of allRoutePaths()) {
+      const rel = path === '/' ? 'index.html' : path.slice(1) + '/index.html';
       const file = resolve(process.cwd(), 'dist', rel);
       if (!existsSync(file)) continue;
       const html = readFileSync(file, 'utf8');

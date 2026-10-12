@@ -68,7 +68,8 @@ describe('head sincronizado con la ruta', () => {
     expect(document.documentElement.getAttribute('lang')).toBe('es-EC');
 
     const blocks = () => [...document.head.querySelectorAll('script[type="application/ld+json"]')];
-    expect(blocks().length).toBe(6);
+    // Portada: ProfilePage + Physician + WebSite (FAQPage y Book viven en sus paginas).
+    expect(blocks().length).toBe(3);
     expect(blocks().some((node) => node.textContent.includes('Physician'))).toBe(true);
 
     await router.push('/en');

@@ -16,7 +16,21 @@ async function get(path) {
   return fetch(origin + path, { redirect: 'manual' });
 }
 
-const pages = ['/', '/en', '/contacto', '/en/contact'];
+// Espejo de los paths de PAGES (src/router/routes.js): este script corre con
+// node plano y no resuelve el alias '@/'. tests/unit/sitemap.spec.js comprueba
+// que esta lista siga igual que el registro.
+const pages = [
+  '/',
+  '/en',
+  '/perfil',
+  '/en/profile',
+  '/consulta',
+  '/en/practice',
+  '/preguntas',
+  '/en/faq',
+  '/contacto',
+  '/en/contact',
+];
 
 for (const path of pages) {
   try {

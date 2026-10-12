@@ -6,6 +6,7 @@ import { physicianJsonLd, faqJsonLd } from '@/seo/meta.js';
 import { contact } from '@/data/contact.js';
 import { profile } from '@/data/profile.js';
 import { SITE_ORIGIN } from '@/site.config.js';
+import { allRoutePaths } from '@/router/routes.js';
 import { mountAt } from '../helpers/mount.js';
 import App from '@/App.vue';
 
@@ -303,6 +304,13 @@ describe('afirmaciones retiradas por el cliente', () => {
       expect(files).toEqual([]);
       return;
     }
+    // El barrido debe leer las diez paginas prerenderizadas: si una faltara en
+    // dist/, pasaria en verde sin haberla leido.
+    const swept = files.map((f) => relative(distDir, f).split(sep).join('/'));
+    for (const { path } of allRoutePaths()) {
+      const rel = path === '/' ? 'index.html' : path.slice(1) + '/index.html';
+      expect(swept, 'falta en el barrido ' + rel).toContain(rel);
+    }
     const offenders = files
       .map((file) => ({ file, found: retiredClaimsIn(readFileSync(file, 'utf8')) }))
       .filter(({ found }) => found.length > 0)
@@ -421,9 +429,13 @@ describe('CV completo del Dr. en ambos idiomas', () => {
       expect(missing, 'hechos del CV ausentes en ' + locale).toEqual([]);
     });
 
-    it('los renderiza de verdad en la portada ' + locale, async () => {
-      const { wrapper } = await mountAt(App, locale === 'es' ? '/' : '/en');
-      const text = wrapper.text();
+    // El CV ya no vive solo en la portada: se reparte entre las paginas del
+    // sitio (TASK-015), asi que se barre el texto de todas ellas.
+    it('los renderiza de verdad en las paginas del sitio ' + locale, async () => {
+      let text = '';
+      for (const { path } of allRoutePaths().filter((r) => r.locale === locale)) {
+        text += (await mountAt(App, path)).wrapper.text() + '\n';
+      }
       const missing = CV_FACTS[locale].filter((fact) => !text.includes(fact));
       expect(missing, 'hechos del CV no renderizados en ' + locale).toEqual([]);
     });

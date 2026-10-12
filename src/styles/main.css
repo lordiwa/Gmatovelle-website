@@ -375,8 +375,9 @@ img {
 
 .site-nav {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: clamp(1rem, 2.6vw, 2rem);
+  gap: 0.5rem clamp(1rem, 2.6vw, 2rem);
 }
 
 .site-nav__link {
@@ -739,6 +740,22 @@ img {
   .card__body {
     color: #44474d;
   }
+}
+
+/* Placa-teaser de la portada: titulo, parrafo y el enlace a la pagina, que
+   queda al pie para que las tres placas alineen sus botones. */
+.card--teaser {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.card--teaser .card__body {
+  margin-bottom: 1.75rem;
+}
+
+.card--teaser .btn {
+  margin-top: auto;
 }
 
 /* Las cinco areas de experiencia cuelgan como cinco placas en fila. */

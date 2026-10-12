@@ -1,7 +1,7 @@
 import { profile } from '@/data/profile.js';
 import { contact } from '@/data/contact.js';
 
-export default {
+const en = {
   htmlLang: 'en',
 
   meta: {
@@ -32,6 +32,9 @@ export default {
     brand: 'Dr. Gonzalo Matovelle',
     brandRole: 'Neuropsychiatrist',
     home: 'Home',
+    profile: 'Profile',
+    practice: 'Practice',
+    faq: 'FAQ',
     contact: 'Contact',
     blog: 'Articles',
     skipToContent: 'Skip to main content',
@@ -310,3 +313,20 @@ export default {
     rights: 'All rights reserved.',
   },
 };
+
+/**
+ * Head de las paginas interiores: el heading y el lead que ya tiene cada
+ * seccion, mas la marca. Sin hechos nuevos; mismo patron que meta.contact.
+ */
+for (const [page, section] of [
+  ['profile', en.about],
+  ['practice', en.practice],
+  ['faq', en.faq],
+]) {
+  en.meta[page] = {
+    title: section.heading + ' · ' + en.nav.brand + ', ' + en.nav.brandRole + ' in Quito',
+    description: section.lead + ' ' + en.nav.brand + ', neuropsychiatrist in Quito, Ecuador.',
+  };
+}
+
+export default en;

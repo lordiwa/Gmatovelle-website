@@ -1,0 +1,50 @@
+{
+  "key": "TASK-015",
+  "title": "Dividir el sitio en cinco páginas: Inicio, Perfil, Consulta, Preguntas, Contacto",
+  "description": "Petición del cliente (2026-10-12): el sitio deja de ser una sola página larga. Reparto aprobado: / Inicio (hero, banda de credenciales, teasers hacia cada página con heading + lead ya existentes, y el ContactPanel compacto); /perfil (Perfil profesional + Credenciales + Publicaciones); /consulta (Enfoque de la consulta + Áreas de experiencia); /preguntas (Preguntas frecuentes); /contacto (sin cambios). EN: /en, /en/profile, /en/practice, /en/faq, /en/contact. Nav: Inicio · Perfil · Consulta · Preguntas · Contacto. El copy del cliente está bloqueado: las secciones se mueven intactas (mismos headings, leads, textos, fotos y placas). Únicos textos nuevos permitidos: etiquetas cortas de navegación, y title/meta description de cada página compuestos a partir del heading y el lead ya existentes de la sección más la marca; nada que afirme hechos nuevos. El diseño \"Pared de títulos\" (DESIGN.md) se mantiene: cada página abre con su heading como h1 y conserva las fotos enmarcadas y placas que tenía la sección en la portada.",
+  "acceptance_criteria": [
+    "PAGES en src/router/routes.js registra profile, practice y faq con paths ES/EN (/perfil|/en/profile, /consulta|/en/practice, /preguntas|/en/faq); rutas, prerender, sitemap (10 URLs), hreflang y canonical salen del registro sin casos especiales.",
+    "/ conserva hero, banda de credenciales y ContactPanel compacto, y muestra un teaser por página (perfil, consulta, preguntas) con el heading y el lead existentes y un enlace a la página; ya no contiene las secciones completas.",
+    "/perfil contiene íntegras las secciones de perfil (con su foto enmarcada), credenciales (con la foto de diplomas) y publicaciones; /consulta contiene íntegras enfoque de la consulta (con la foto ancha y las dos placas) y las cinco áreas de experiencia; /preguntas contiene la FAQ completa. Ningún texto del cliente cambia (los locks de copy y RETIRED_CLAIMS siguen en verde).",
+    "Cada página nueva tiene title y meta description propios en ES y EN derivados del heading/lead existentes, og:url y canonical propios, y hreflang recíproco; la cabecera marca el enlace activo.",
+    "JSON-LD: Physician en todas las páginas; ProfilePage y WebSite siguen en /; FAQPage se mueve a /preguntas (y deja de emitirse en /); los nodos Book se emiten en /perfil; cada página tiene @id de WebPage propio; sin @id duplicados; el lock de hidratación cuenta uno por @id en cada página.",
+    "La navegación muestra Inicio, Perfil, Consulta, Preguntas y Contacto en ES y EN, con el teléfono de WhatsApp y el toggle de idioma intactos; en 390px la cabecera no desborda ni tapa el hero.",
+    "scripts/verify-deploy.js comprueba también /perfil, /consulta, /preguntas y sus equivalentes EN; el barrido RETIRED_CLAIMS sobre dist/ cubre las diez páginas prerenderizadas.",
+    "npm run build y npx vitest run en verde; los tests que montaban la portada esperando secciones completas se reapuntan a la página correspondiente, no se borran."
+  ],
+  "status": "in_review",
+  "priority": "high",
+  "labels": [
+    "arquitectura",
+    "seo",
+    "diseno"
+  ],
+  "assignee": null,
+  "depends_on": [],
+  "linked_commits": [],
+  "linked_prs": [],
+  "comments": [
+    {
+      "author": "uat",
+      "at": "2026-10-12T19:50:51.196Z",
+      "body": "UAT conversacional (orquestador en Chrome contra dist/ servido con clean URLs en 127.0.0.1:4173, modo oscuro del sistema, 1568px y harness iframe de 390px). Veredicto: PASS. Verificado: / muestra hero, banda de credenciales, tres placas teaser (Perfil profesional, Enfoque de la consulta, Preguntas frecuentes) con su heading y lead originales y botón a la página, y el panel de contacto compacto; /perfil abre con h1 \"Perfil profesional\", bio y foto enmarcada del consultorio; /consulta abre con h1 \"Enfoque de la consulta\", foto ancha y las cinco placas de áreas; /en/faq abre con h1 \"Frequently asked questions\" y las siete preguntas; la cabecera marca la página activa (Inicio, Perfil, Consulta, Preguntas, Contacto) y en EN (Home, Profile, Practice, FAQ, Contact). En 390px: scrollWidth = clientWidth (sin desbordamiento), cabecera estática de 142px en tres filas; el botón de llamada del hero queda a 802px, bajo el primer pliegue en pantallas de 744px de alto (aceptable, el número de WhatsApp sigue en la primera fila de la cabecera). Observación menor sin bloquear: el renderer de Chrome tardó en capturar algunas pantallas, sin relación con el sitio."
+    },
+    {
+      "author": "reviewer",
+      "at": "2026-10-12T19:51:07.443Z",
+      "body": "Review en contexto fresco (rev-task-015). Código: PASS en los 10 puntos verificados: 156 tests + 2 todo en verde; build con 10 rutas prerenderizadas y sitemap de 10 URLs; en dist/ un canonical por página, hreflang recíproco, og:url = canonical, sin @id duplicados; Physician en las 10 páginas, WebSite + ProfilePage solo en home, Book x2 solo en /perfil y /en/profile, FAQPage solo en /preguntas y /en/faq; mainEntity resuelve; lock de copy intacto (los diccionarios solo añaden etiquetas de nav y meta derivadas); secciones movidas intactas; jerarquía de encabezados correcta; nav, footer y LanguageToggle resuelven las páginas nuevas; barrido RETIRED_CLAIMS sobre los 10 HTML. [FINDING-HIGH: R-1] requires_uat sin comentario uat en el momento del review. MEDIUM: hand-off sin desglose del checklist; spec nueva en seo-meta.spec.js sin línea de daño; @id de los Book anclados en la home aunque se emiten en /perfil. LOW: isPartOf apunta a #website en páginas interiores sin nodo WebSite (patrón preexistente); h3→h2 y resecuenciado de fondos en las secciones movidas; indentación cosmética en head-hydration.spec.js."
+    },
+    {
+      "author": "orchestrator",
+      "at": "2026-10-12T19:51:12.199Z",
+      "body": "[FINDING-RESOLVED: R-1] UAT conversacional ejecutada por el orquestador y registrada en este ticket con veredicto PASS (comentario uat anterior al cierre): cubre las 8 AC, incluida la cabecera a 390px (sin desbordamiento, estática, tres filas). El reviewer arrancó antes de que el comentario uat quedara registrado."
+    }
+  ],
+  "created_at": "2026-10-12T19:39:10.772Z",
+  "updated_at": "2026-10-12T19:51:12.199Z",
+  "jira_key": null,
+  "verification_tier": "tests-after",
+  "requires_uat": true,
+  "marker": "[EXPLICIT]",
+  "source_tier": "T1"
+}

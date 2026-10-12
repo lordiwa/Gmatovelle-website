@@ -1,21 +1,34 @@
 <script setup>
 import { computed } from 'vue';
+import { pathFor } from '@/router/routes.js';
 import { useI18n } from '@/i18n/index.js';
 import { contact, whatsappUrl } from '@/data/contact.js';
-import { profile } from '@/data/profile.js';
 import SectionHeading from '@/components/SectionHeading.vue';
 import ProfilePortrait from '@/components/ProfilePortrait.vue';
-import FramedPhoto from '@/components/FramedPhoto.vue';
-import FaqList from '@/components/FaqList.vue';
 import ContactPanel from '@/components/ContactPanel.vue';
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 /**
  * WhatsApp del consultorio como CTA secundario del hero. Va detras de un v-if
  * porque el campo puede volver a null: la fuente unica es src/data/contact.js.
  */
 const whatsapp = computed(() => whatsappUrl());
+
+/** Teasers hacia las tres paginas interiores: heading y lead ya existentes. */
+const teasers = computed(() =>
+  [
+    { page: 'profile', section: t.value.about },
+    { page: 'practice', section: t.value.practice },
+    { page: 'faq', section: t.value.faq },
+  ].map(({ page, section }) => ({
+    page,
+    heading: section.heading,
+    lead: section.lead,
+    label: t.value.nav[page],
+    to: pathFor(page, locale.value),
+  })),
+);
 </script>
 
 <template>
@@ -66,58 +79,19 @@ const whatsapp = computed(() => whatsappUrl());
       </div>
     </section>
 
-    <!-- Perfil: la prosa y, colgado al lado, el sillon del consultorio. -->
-    <section id="perfil" class="section section--plain">
-      <div class="shell">
-        <SectionHeading :title="t.about.heading" :lead="t.about.lead" />
-        <div class="room">
-          <div class="prose">
-            <p v-for="(paragraph, index) in t.about.paragraphs" :key="index">{{ paragraph }}</p>
-          </div>
-          <FramedPhoto
-            :photo="profile.photos.consultorio"
-            :alt="t.photos.consultorio"
-            :caption="t.photos.consultorioCaption"
-          />
-        </div>
-      </div>
-    </section>
-
-    <!-- Enfoque de la consulta: la foto ancha colgada arriba, dos tarjetas debajo. -->
-    <section id="consulta" class="section section--sunk">
-      <div class="shell">
-        <SectionHeading :title="t.practice.heading" :lead="t.practice.lead" />
-        <FramedPhoto
-          :photo="profile.photos.paredAzul"
-          :alt="t.photos.paredAzul"
-          sizes="(max-width: 1200px) 92vw, 1120px"
-          wide
-        />
-        <div class="card-grid">
-          <article v-for="item in t.practice.items" :key="item.title" class="card">
-            <h3 class="card__title">{{ item.title }}</h3>
-            <p class="card__body">{{ item.body }}</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <!--
-      Areas de experiencia confirmadas por el cliente (ver
-      profile.declaredConditions): cinco placas en fila. Esta seccion lleva
-      antetitulo; es, con el del hero, uno de los dos del sitio.
+      Una placa por pagina interior: el titulo y el parrafo de apertura que ya
+      tiene cada seccion, y un enlace con la etiqueta de la navegacion. Sin
+      texto nuevo: el contenido completo vive en /perfil, /consulta y
+      /preguntas.
     -->
-    <section id="experiencia" class="section">
+    <section class="section section--plain">
       <div class="shell">
-        <SectionHeading
-          :eyebrow="t.expertise.heading"
-          :title="t.expertise.headline"
-          :lead="t.expertise.lead"
-        />
-        <div class="card-grid card-grid--rule">
-          <article v-for="item in t.expertise.items" :key="item.title" class="card card--rule">
-            <h3 class="card__title">{{ item.title }}</h3>
-            <p class="card__body">{{ item.body }}</p>
+        <div class="card-grid">
+          <article v-for="teaser in teasers" :key="teaser.page" class="card card--teaser">
+            <h2 class="card__title">{{ teaser.heading }}</h2>
+            <p class="card__body">{{ teaser.lead }}</p>
+            <RouterLink class="btn btn--ghost" :to="teaser.to">{{ teaser.label }}</RouterLink>
           </article>
         </div>
       </div>
@@ -132,58 +106,6 @@ const whatsapp = computed(() => whatsappUrl());
       <div class="shell">
         <SectionHeading :title="t.contact.heading" :lead="t.contact.lead" />
         <ContactPanel variant="compact" />
-      </div>
-    </section>
-
-    <!-- Credenciales: los titulos enmarcados a la izquierda, fijos mientras se
-         recorre la lista; cada grupo del CV a la derecha. -->
-    <section id="credenciales" class="section">
-      <div class="shell">
-        <SectionHeading :title="t.credentials.heading" :lead="t.credentials.lead" />
-        <div class="room room--frame-first">
-          <FramedPhoto
-            :photo="profile.photos.diplomas"
-            :alt="t.photos.diplomas"
-            :caption="t.photos.diplomasCaption"
-            sticky
-          />
-          <div>
-            <section
-              v-for="group in t.credentials.groups"
-              :key="group.title"
-              class="credential-group"
-            >
-              <h3 class="credential-group__title">{{ group.title }}</h3>
-              <ul
-                class="credential-list"
-                :class="{ 'credential-list--columns': group.items.length > 5 }"
-              >
-                <li v-for="item in group.items" :key="item">{{ item }}</li>
-              </ul>
-            </section>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Publicaciones: dos libros sobre una repisa. -->
-    <section id="publicaciones" class="section section--sunk">
-      <div class="shell">
-        <SectionHeading :title="t.publications.heading" :lead="t.publications.lead" />
-        <ul class="publications-shelf">
-          <li v-for="item in t.publications.items" :key="item.title" class="publication">
-            <span class="publication__title">{{ item.title }}</span>
-            <span v-if="item.note" class="publication__note">{{ item.note }}</span>
-          </li>
-        </ul>
-        <p class="publication-note">{{ t.publications.articlesNote }}</p>
-      </div>
-    </section>
-
-    <section id="preguntas" class="section">
-      <div class="shell">
-        <SectionHeading :title="t.faq.heading" :lead="t.faq.lead" />
-        <FaqList :items="t.faq.items" />
       </div>
     </section>
   </div>

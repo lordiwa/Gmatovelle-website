@@ -109,7 +109,7 @@ describe('banda de credenciales', () => {
 
 describe('areas de experiencia sin caja', () => {
   it('usa las tarjetas con regla y mantiene las cinco condiciones confirmadas', async () => {
-    const { wrapper } = await mountAt(App, '/');
+    const { wrapper } = await mountAt(App, '/consulta');
     const cards = wrapper.findAll('.card-grid--rule .card--rule');
     expect(cards).toHaveLength(5);
     expect(cards.map((card) => card.find('.card__title').text())).toEqual(
@@ -118,13 +118,13 @@ describe('areas de experiencia sin caja', () => {
   });
 
   it('no arrastra al enfoque de la consulta: esas tarjetas conservan la caja', async () => {
-    const { wrapper } = await mountAt(App, '/');
+    const { wrapper } = await mountAt(App, '/consulta');
     const boxed = wrapper.findAll('.card').filter((card) => !card.classes('card--rule'));
     expect(boxed).toHaveLength(messages.es.practice.items.length);
   });
 
   it('encabeza la seccion con antetitulo en vez de indice numerico', async () => {
-    const { wrapper } = await mountAt(App, '/');
+    const { wrapper } = await mountAt(App, '/consulta');
     const head = wrapper.find('.card-grid--rule').element.parentElement.querySelector(
       '.section__head',
     );
@@ -160,18 +160,15 @@ describe('contacto primero en la portada', () => {
 });
 
 describe('orden de las secciones de la portada', () => {
-  it('pone el contacto por delante de las secciones largas de CV', async () => {
+  // Las secciones largas de CV salieron de la portada (TASK-015): quedan los
+  // teasers y, detras, el contacto compacto.
+  it('pone los teasers por delante del contacto, sin secciones largas de CV', async () => {
     const { wrapper } = await mountAt(App, '/');
     const titles = wrapper.findAll('.section__title').map((node) => node.text());
-    expect(titles).toEqual([
-      messages.es.about.heading,
-      messages.es.practice.heading,
-      messages.es.expertise.headline,
-      messages.es.contact.heading,
-      messages.es.credentials.heading,
-      messages.es.publications.heading,
-      messages.es.faq.heading,
-    ]);
+    expect(titles).toEqual([messages.es.contact.heading]);
+    const html = wrapper.html();
+    expect(html.indexOf('card--teaser')).toBeGreaterThan(-1);
+    expect(html.indexOf('card--teaser')).toBeLessThan(html.indexOf('contact-panel--compact'));
   });
 
   it('coloca la banda de credenciales entre el hero y la primera seccion', async () => {
@@ -179,7 +176,7 @@ describe('orden de las secciones de la portada', () => {
     const html = wrapper.html();
     const hero = html.indexOf('hero--navy');
     const band = html.indexOf('credential-band');
-    const firstSection = html.indexOf('section__head');
+    const firstSection = html.indexOf('card--teaser');
 
     expect(hero).toBeGreaterThan(-1);
     expect(band).toBeGreaterThan(hero);

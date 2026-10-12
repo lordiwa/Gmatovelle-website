@@ -2,6 +2,9 @@ import { createRouter, createMemoryHistory, createWebHistory } from 'vue-router'
 import { LOCALES, DEFAULT_LOCALE } from '@/site.config.js';
 import { PAGES, routeNameFor } from './routes.js';
 import HomeView from '@/views/HomeView.vue';
+import ProfileView from '@/views/ProfileView.vue';
+import PracticeView from '@/views/PracticeView.vue';
+import FaqView from '@/views/FaqView.vue';
 import ContactView from '@/views/ContactView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
 // BLOG DESACTIVADO: ver la nota con los pasos de reactivacion en
@@ -11,6 +14,9 @@ import NotFoundView from '@/views/NotFoundView.vue';
 
 const VIEWS = {
   home: HomeView,
+  profile: ProfileView,
+  practice: PracticeView,
+  faq: FaqView,
   contact: ContactView,
   // blog: BlogView,
 };

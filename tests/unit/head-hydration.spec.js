@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import App from '@/App.vue';
 import { buildHead } from '@/seo/meta.js';
 import { renderHeadTags } from '@/seo/tags.js';
+import { allRoutePaths } from '@/router/routes.js';
 import { mountAt } from '../helpers/mount.js';
 
 const count = (selector) => document.head.querySelectorAll(selector).length;
@@ -14,11 +15,16 @@ describe('head tras hidratar sobre el HTML prerenderizado', () => {
   });
 
   // Previene que buscadores vean dos canonical, dos juegos de hreflang o JSON-LD duplicado.
-  it('deja un canonical, un juego de hreflang y un JSON-LD por @id', async () => {
-    document.head.innerHTML = renderHeadTags(buildHead('home', 'es'));
+  // Bloques JSON-LD por pagina: Physician en todas; ProfilePage + WebSite en la
+  // portada, Book x2 en el perfil, FAQPage en preguntas.
+  const EXPECTED_BLOCKS = { home: 3, profile: 4, practice: 2, faq: 3, contact: 2 };
+
+  for (const { page, locale, path } of allRoutePaths()) {
+  it('deja un canonical, un juego de hreflang y un JSON-LD por @id en ' + path, async () => {
+    document.head.innerHTML = renderHeadTags(buildHead(page, locale));
     expect(count('link[rel="canonical"]')).toBe(1);
 
-    await mountAt(App, '/');
+    await mountAt(App, path);
     await nextTick();
 
     expect(count('link[rel="canonical"]')).toBe(1);
@@ -30,17 +36,18 @@ describe('head tras hidratar sobre el HTML prerenderizado', () => {
     const ids = [...document.head.querySelectorAll('script[type="application/ld+json"]')].map(
       (n) => JSON.parse(n.textContent)['@id'],
     );
-    expect(ids.length).toBe(6);
+    expect(ids.length).toBe(EXPECTED_BLOCKS[page]);
     expect(new Set(ids).size).toBe(ids.length);
     expect(count('meta[name="description"]')).toBe(1);
     expect(count('meta[name="robots"]')).toBe(1);
   });
+  }
 });
 
 describe('twitter:card y 404', () => {
   // Previene que la tarjeta 1200x630 se muestre recortada como miniatura.
   it('usa summary_large_image en todas las paginas', () => {
-    for (const page of ['home', 'contact', 'notFound']) {
+    for (const page of ['home', 'profile', 'practice', 'faq', 'contact', 'notFound']) {
       expect(buildHead(page, 'es').twitter['twitter:card']).toBe('summary_large_image');
     }
   });

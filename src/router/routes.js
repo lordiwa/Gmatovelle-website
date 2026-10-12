@@ -10,6 +10,9 @@ import { DEFAULT_LOCALE, LOCALES } from '@/site.config.js';
  */
 export const PAGES = [
   { name: 'home', paths: { es: '/', en: '/en' } },
+  { name: 'profile', paths: { es: '/perfil', en: '/en/profile' } },
+  { name: 'practice', paths: { es: '/consulta', en: '/en/practice' } },
+  { name: 'faq', paths: { es: '/preguntas', en: '/en/faq' } },
   { name: 'contact', paths: { es: '/contacto', en: '/en/contact' } },
   // BLOG DESACTIVADO (peticion del cliente, 2026-08-31): la seccion se retira
   // hasta que existan articulos reales. Se publicaba vacia y una pagina sin
