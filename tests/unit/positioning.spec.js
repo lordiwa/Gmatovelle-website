@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { join, relative, resolve, sep } from 'node:path';
 import { messages } from '@/i18n/index.js';
 import { physicianJsonLd, faqJsonLd } from '@/seo/meta.js';
 import { contact } from '@/data/contact.js';
@@ -269,7 +269,7 @@ describe('afirmaciones retiradas por el cliente', () => {
     const offenders = srcFiles()
       .map((file) => ({ file, found: retiredClaimsIn(readFileSync(file, 'utf8')) }))
       .filter(({ found }) => found.length > 0)
-      .map(({ file, found }) => file.replace(resolve(process.cwd()) + '/', '') + ': ' + found.join(', '));
+      .map(({ file, found }) => relative(process.cwd(), file).split(sep).join('/') + ': ' + found.join(', '));
     expect(offenders, 'afirmaciones retiradas en src/').toEqual([]);
   });
 
@@ -306,7 +306,7 @@ describe('afirmaciones retiradas por el cliente', () => {
     const offenders = files
       .map((file) => ({ file, found: retiredClaimsIn(readFileSync(file, 'utf8')) }))
       .filter(({ found }) => found.length > 0)
-      .map(({ file, found }) => file.replace(resolve(process.cwd()) + '/', '') + ': ' + found.join(', '));
+      .map(({ file, found }) => relative(process.cwd(), file).split(sep).join('/') + ': ' + found.join(', '));
     expect(offenders, 'afirmaciones retiradas en el prerender').toEqual([]);
   });
 
@@ -482,7 +482,7 @@ describe('direccion real del consultorio', () => {
     const withLiteral = walk(srcDir).filter((file) =>
       readFileSync(file, 'utf8').includes(CONFIRMED_ADDRESS),
     );
-    expect(withLiteral.map((f) => f.replace(srcDir + '/', ''))).toEqual(['data/contact.js']);
+    expect(withLiteral.map((f) => relative(srcDir, f).split(sep).join('/'))).toEqual(['data/contact.js']);
   });
 
   it('aparece en el JSON-LD Physician como streetAddress', () => {

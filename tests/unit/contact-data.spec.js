@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { join, relative, resolve, sep } from 'node:path';
 import { contact, whatsappUrl, mailtoHref, mapEmbedUrl } from '@/data/contact.js';
 
 const srcDir = resolve(process.cwd(), 'src');
@@ -32,7 +32,7 @@ describe('datos de contacto', () => {
     const withLiteral = sourceFiles(srcDir).filter((file) =>
       readFileSync(file, 'utf8').includes(contact.phone),
     );
-    expect(withLiteral.map((f) => f.replace(srcDir + '/', ''))).toEqual(['data/contact.js']);
+    expect(withLiteral.map((f) => relative(srcDir, f).split(sep).join('/'))).toEqual(['data/contact.js']);
   });
 
   it('expone el telefono como enlace de llamada, en formato internacional', () => {
