@@ -1224,10 +1224,6 @@ img {
   color: var(--muted);
 }
 
-.site-footer__disclaimer {
-  max-width: 46rem;
-}
-
 /* --- Responsive ----------------------------------------------------------- */
 
 @media (max-width: 1100px) {

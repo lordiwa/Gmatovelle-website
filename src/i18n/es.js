@@ -310,9 +310,7 @@ const es = {
 
   footer: {
     role: 'Médico Neuropsiquiatra · ' + profile.city + ', ' + profile.country,
-    disclaimer:
-      'Este sitio tiene fines informativos y no sustituye una consulta médica presencial ni constituye un diagnóstico.',
-    rights: 'Todos los derechos reservados.',
+    madeBy: 'Made with love by',
   },
 };
 

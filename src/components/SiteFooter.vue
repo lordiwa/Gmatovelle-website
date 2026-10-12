@@ -2,7 +2,6 @@
 import { computed } from 'vue';
 import { pathFor } from '@/router/routes.js';
 import { useI18n } from '@/i18n/index.js';
-import { profile } from '@/data/profile.js';
 import { contact, mailtoHref, phoneDisplayHref } from '@/data/contact.js';
 import SealMark from './SealMark.vue';
 
@@ -51,8 +50,10 @@ const links = computed(() => [
       </div>
 
       <div class="site-footer__bottom">
-        <p class="site-footer__disclaimer">{{ t.footer.disclaimer }}</p>
-        <p>{{ profile.honorificPrefix }} {{ profile.fullName }}. {{ t.footer.rights }}</p>
+        <p>
+          {{ t.footer.madeBy }}
+          <a href="https://m4to.com" rel="noopener" target="_blank">m4to.com</a>
+        </p>
       </div>
     </div>
   </footer>

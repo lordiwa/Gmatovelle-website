@@ -308,9 +308,7 @@ const en = {
 
   footer: {
     role: 'Neuropsychiatrist · ' + profile.city + ', ' + profile.country,
-    disclaimer:
-      'This website is for information purposes only; it does not replace an in-person medical consultation and does not constitute a diagnosis.',
-    rights: 'All rights reserved.',
+    madeBy: 'Made with love by',
   },
 };
 

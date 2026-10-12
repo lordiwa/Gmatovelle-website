@@ -57,6 +57,17 @@ describe('selector de idioma ES/EN', () => {
     expect(en.find('.site-nav').text()).toContain('Contact');
     expect(en.find('.site-footer').text()).toContain('Neuropsychiatrist');
   });
+
+  // Daño que previene: que vuelvan el disclaimer y los derechos o que se pierda el crédito enlazado.
+  it('el pie muestra solo el crédito enlazado a m4to.com en ambos idiomas', async () => {
+    for (const path of ['/', '/en']) {
+      const { wrapper } = await mountAt(App, path);
+      const footer = wrapper.find('.site-footer');
+      expect(footer.find('.site-footer__bottom').text()).toContain('Made with love by');
+      expect(footer.find('a[href="https://m4to.com"]').text()).toBe('m4to.com');
+      expect(footer.text()).not.toMatch(/fines informativos|derechos reservados|rights reserved|information purposes/i);
+    }
+  });
 });
 
 describe('head sincronizado con la ruta', () => {
