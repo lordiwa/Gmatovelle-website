@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { pathFor } from '@/router/routes.js';
 import { useI18n } from '@/i18n/index.js';
-import { contact, whatsappUrl, mailtoHref, mapEmbedUrl } from '@/data/contact.js';
+import { contact, whatsappUrl, phoneDisplayHref, mailtoHref, mapEmbedUrl } from '@/data/contact.js';
 
 const { locale, t } = useI18n();
 
@@ -39,7 +39,9 @@ const mapSrc = computed(() => mapEmbedUrl());
   <div v-if="variant === 'compact'" class="contact-panel contact-panel--compact">
     <div>
       <p class="contact-panel__label">{{ t.contact.enquiriesLabel }}</p>
-      <a class="contact-panel__phone" :href="contact.phoneHref">{{ contact.phone }}</a>
+      <a class="contact-panel__phone" :href="phoneDisplayHref()" rel="noopener" target="_blank">{{
+        contact.phone
+      }}</a>
     </div>
 
     <div>
@@ -65,7 +67,9 @@ const mapSrc = computed(() => mapEmbedUrl());
   <div v-else class="contact-panel">
     <div>
       <p class="contact-panel__label">{{ t.contact.phoneLabel }}</p>
-      <a class="contact-panel__phone" :href="contact.phoneHref">{{ contact.phone }}</a>
+      <a class="contact-panel__phone" :href="phoneDisplayHref()" rel="noopener" target="_blank">{{
+        contact.phone
+      }}</a>
       <p class="contact-panel__note">{{ t.contact.noBookingNote }}</p>
 
       <div class="contact-panel__emails">

@@ -112,6 +112,15 @@ export function whatsappUrl() {
   return contact.whatsapp ? 'https://wa.me/' + contact.whatsapp : null;
 }
 
+/**
+ * href de los enlaces que MUESTRAN el numero: abren el chat de WhatsApp. Si el
+ * numero de WhatsApp no esta confirmado cae a tel: para que el enlace no se
+ * rompa. Los botones explicitos de "Llamar" no usan esto: siguen en phoneHref.
+ */
+export function phoneDisplayHref() {
+  return whatsappUrl() || contact.phoneHref;
+}
+
 /** Version para el atributo href de un enlace mailto:. */
 export function mailtoHref(email) {
   return 'mailto:' + email;

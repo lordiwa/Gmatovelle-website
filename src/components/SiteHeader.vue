@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { pathFor } from '@/router/routes.js';
 import { useI18n } from '@/i18n/index.js';
-import { contact } from '@/data/contact.js';
+import { contact, phoneDisplayHref } from '@/data/contact.js';
 import LanguageToggle from './LanguageToggle.vue';
 
 const { locale, t } = useI18n();
@@ -36,13 +36,19 @@ const links = computed(() => [
 
         <!--
           Boton de llamada del redisenio 1c. El texto es el numero del
-          consultorio para que se lea de un vistazo; el aria-label reutiliza
-          contact.callCta ("Llamar al <numero>") para que un lector de pantalla
-          anuncie la accion y no solo una cifra suelta.
+          consultorio para que se lea de un vistazo; el aria-label usa
+          contact.whatsappNumberLabel ("Escribir por WhatsApp al <numero>") para
+          que un lector de pantalla anuncie la accion real (abre WhatsApp) y no
+          solo una cifra suelta.
         -->
-        <a class="btn btn--brass site-nav__call" :href="contact.phoneHref" :aria-label="t.contact.callCta">{{
-          contact.phone
-        }}</a>
+        <a
+          class="btn btn--brass site-nav__call"
+          :href="phoneDisplayHref()"
+          rel="noopener"
+          target="_blank"
+          :aria-label="t.contact.whatsappNumberLabel"
+          >{{ contact.phone }}</a
+        >
       </nav>
     </div>
   </header>

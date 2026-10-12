@@ -268,6 +268,7 @@ export default {
     phoneLabel: 'Teléfono del consultorio',
     emailLabel: 'Correos del consultorio',
     callCta: 'Llamar al ' + contact.phone,
+    whatsappNumberLabel: 'Escribir por WhatsApp al ' + contact.phone,
     callNowCta: 'Llamar ahora',
     whatsappCta: 'Escribir por WhatsApp',
     // Cadenas de la franja compacta de contacto de la portada (variante

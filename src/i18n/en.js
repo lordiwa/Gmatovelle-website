@@ -266,6 +266,7 @@ export default {
     phoneLabel: 'Practice phone number',
     emailLabel: 'Practice email',
     callCta: 'Call ' + contact.phone,
+    whatsappNumberLabel: 'Message ' + contact.phone + ' on WhatsApp',
     callNowCta: 'Call now',
     whatsappCta: 'Message on WhatsApp',
     // Strings for the home page's compact contact strip (ContactPanel variant

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import App from '@/App.vue';
 import { messages } from '@/i18n/index.js';
-import { contact } from '@/data/contact.js';
+import { contact, whatsappUrl } from '@/data/contact.js';
 import { mountAt } from '../helpers/mount.js';
 
 /**
@@ -22,12 +22,14 @@ describe('cabecera navy con boton de llamada', () => {
       const call = wrapper.find('.site-header .btn--brass');
 
       expect(call.exists(), 'falta el boton de llamada de la cabecera en ' + locale).toBe(true);
-      expect(call.attributes('href')).toBe(contact.phoneHref);
-      expect(call.attributes('href')).toMatch(/^tel:\+/);
+      // El numero visible abre el chat de WhatsApp, no marca.
+      expect(call.attributes('href')).toBe(whatsappUrl());
+      expect(call.attributes('href')).toMatch(/^https:\/\/wa\.me\//);
       expect(call.text()).toBe(contact.phone);
       // El texto visible es una cifra suelta: sin aria-label el boton se anuncia
       // como un numero y no como la accion de llamar al consultorio.
-      expect(call.attributes('aria-label')).toBe(messages[locale].contact.callCta);
+      expect(call.attributes('aria-label')).toBe(messages[locale].contact.whatsappNumberLabel);
+      expect(call.attributes('aria-label')).toContain('WhatsApp');
     });
   }
 

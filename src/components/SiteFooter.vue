@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import { pathFor } from '@/router/routes.js';
 import { useI18n } from '@/i18n/index.js';
 import { profile } from '@/data/profile.js';
-import { contact, mailtoHref } from '@/data/contact.js';
+import { contact, mailtoHref, phoneDisplayHref } from '@/data/contact.js';
 import SealMark from './SealMark.vue';
 
 const { locale, t } = useI18n();
@@ -34,7 +34,7 @@ const links = computed(() => [
         <div>
           <p class="contact-panel__label">{{ t.contact.phoneLabel }}</p>
           <p class="contact-aside__value">
-            <a :href="contact.phoneHref">{{ contact.phone }}</a>
+            <a :href="phoneDisplayHref()" rel="noopener" target="_blank">{{ contact.phone }}</a>
           </p>
           <p class="contact-panel__label">{{ t.contact.emailLabel }}</p>
           <p v-for="email in contact.emails" :key="email" class="contact-aside__value">

@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import App from '@/App.vue';
 import { messages } from '@/i18n/index.js';
-import { contact } from '@/data/contact.js';
+import { contact, whatsappUrl } from '@/data/contact.js';
 import { profile } from '@/data/profile.js';
 import { PAGES, pathFor } from '@/router/routes.js';
 import { mountAt } from '../helpers/mount.js';
@@ -132,12 +132,12 @@ describe('portada: perfil del Dr. Matovelle', () => {
 });
 
 describe('pagina de contacto', () => {
-  it('ofrece el telefono del consultorio como enlace de llamada', async () => {
+  it('ofrece el telefono del consultorio como enlace al chat de WhatsApp', async () => {
     const { wrapper } = await mountAt(App, '/contacto');
     const link = wrapper.find('.contact-panel__phone');
     expect(link.text()).toBe(contact.phone);
-    // Se muestra el numero local y se marca el internacional: son el mismo.
-    expect(link.attributes('href')).toBe(contact.phoneHref);
+    // Se muestra el numero local y se abre wa.me con el internacional: son el mismo.
+    expect(link.attributes('href')).toBe(whatsappUrl());
   });
 
   it('explica que no hay agendamiento en linea', async () => {
@@ -181,6 +181,30 @@ describe('boton de WhatsApp', () => {
     const { wrapper } = await mountAt(App, '/');
     const hrefs = wrapper.findAll('.contact-panel__actions a').map((a) => a.attributes('href'));
     expect(hrefs).toEqual([contact.phoneHref, 'https://wa.me/593999835666']);
+  });
+});
+
+describe('numero visible abre WhatsApp', () => {
+  // Dano que previene: que un numero visible vuelva a marcar (tel:) en vez de
+  // abrir el chat que el cliente pidio, o que un boton "Llamar" deje de marcar.
+  it('cabecera, paneles y pie apuntan a wa.me; los botones de llamar siguen en tel:', async () => {
+    const wa = whatsappUrl();
+    for (const path of ['/', '/contacto']) {
+      const { wrapper } = await mountAt(App, path);
+      const phoneLinks = [
+        ...wrapper.findAll('.site-nav__call'),
+        ...wrapper.findAll('.contact-panel__phone'),
+        ...wrapper.findAll('.site-footer a').filter((a) => a.text() === contact.phone),
+      ];
+      expect(phoneLinks.length, 'enlaces de telefono en ' + path).toBeGreaterThanOrEqual(3);
+      for (const a of phoneLinks) expect(a.attributes('href')).toBe(wa);
+
+      const callButtons = wrapper
+        .findAll('.contact-panel__actions a, .hero__actions a')
+        .filter((a) => !(a.attributes('href') || '').includes('wa.me'));
+      expect(callButtons.length).toBeGreaterThan(0);
+      for (const a of callButtons) expect(a.attributes('href')).toBe(contact.phoneHref);
+    }
   });
 });
 
