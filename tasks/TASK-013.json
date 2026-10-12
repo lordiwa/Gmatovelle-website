@@ -12,7 +12,7 @@
     "Physician.name no duplica el prefijo Dr. cuando honorificPrefix ya lo declara.",
     "El JSON-LD prerenderizado valida sin errores (comprobar con un parseo y un test de forma); build y suite en verde; lock antirretroceso intacto."
   ],
-  "status": "todo",
+  "status": "in_review",
   "priority": "high",
   "labels": [
     "geo-seo",
@@ -22,9 +22,15 @@
   "depends_on": [],
   "linked_commits": [],
   "linked_prs": [],
-  "comments": [],
+  "comments": [
+    {
+      "author": "reviewer",
+      "at": "2026-10-12T19:26:08.331Z",
+      "body": "Review en contexto fresco (rev-task-013): PASS, cero HIGH. Verificado: 135 tests + 2 todo en verde; build en verde; JSON-LD de las cuatro páginas parsea sin @id duplicados (6 bloques en home, 2 en contacto); barrido de afirmaciones retiradas sobre el JSON-LD de dist/ sin coincidencias; hasMap derivado del mismo CID que el embed; knowsAbout solo con términos ya presentes en los diccionarios; Book sin ISBN/año/URL inventados y con author @id resuelto al Physician. MEDIUM: hasCredential derivado por posición de credentials.groups[0]; lock de hasMap tautológico (compara contra mapsUrl()); hand-off sin desglose del checklist. LOW: el parseo de dist solo cubría index.html; 'American Academy of Sleep Disorders' no es un nombre verificable (el organismo real es la American Academy of Sleep Medicine), correctamente sin url; comentario obsoleto en seo-meta.spec.js:39. Los dos MEDIUM de código y el primer LOW se corrigen antes del cierre."
+    }
+  ],
   "created_at": "2026-10-12T19:16:30.066Z",
-  "updated_at": "2026-10-12T19:16:30.066Z",
+  "updated_at": "2026-10-12T19:26:08.331Z",
   "jira_key": null,
   "verification_tier": "tests-after",
   "requires_uat": false,

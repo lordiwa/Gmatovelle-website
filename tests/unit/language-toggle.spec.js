@@ -68,7 +68,7 @@ describe('head sincronizado con la ruta', () => {
     expect(document.documentElement.getAttribute('lang')).toBe('es-EC');
 
     const blocks = () => [...document.head.querySelectorAll('script[type="application/ld+json"]')];
-    expect(blocks().length).toBe(4);
+    expect(blocks().length).toBe(6);
     expect(blocks().some((node) => node.textContent.includes('Physician'))).toBe(true);
 
     await router.push('/en');

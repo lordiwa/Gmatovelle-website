@@ -30,7 +30,7 @@ describe('head tras hidratar sobre el HTML prerenderizado', () => {
     const ids = [...document.head.querySelectorAll('script[type="application/ld+json"]')].map(
       (n) => JSON.parse(n.textContent)['@id'],
     );
-    expect(ids.length).toBe(4);
+    expect(ids.length).toBe(6);
     expect(new Set(ids).size).toBe(ids.length);
     expect(count('meta[name="description"]')).toBe(1);
     expect(count('meta[name="robots"]')).toBe(1);

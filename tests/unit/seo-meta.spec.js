@@ -1,9 +1,12 @@
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { describe, it, expect } from 'vitest';
 import { buildHead, physicianJsonLd, faqJsonLd } from '@/seo/meta.js';
+import { messagesFor } from '@/i18n/index.js';
 import { renderHeadTags } from '@/seo/tags.js';
-import { contact } from '@/data/contact.js';
+import { contact, mapsUrl } from '@/data/contact.js';
 import { profile } from '@/data/profile.js';
-import { SITE_ORIGIN } from '@/site.config.js';
+import { SITE_ORIGIN, CONTENT_UPDATED } from '@/site.config.js';
 
 describe('JSON-LD de la entidad medica', () => {
   it('describe al Dr. como Physician con especialidad, ciudad y telefono', () => {
@@ -34,8 +37,9 @@ describe('JSON-LD de la entidad medica', () => {
     expect(node.email).toEqual(contact.emails);
     expect(node.contactPoint.email).toEqual(contact.emails);
     expect(node.openingHours).toBeUndefined();
-    expect(node.sameAs).toBeUndefined();
+    // Sin perfiles externos confirmados: sameAs solo lleva la ficha de Maps.
     expect(profile.sameAs).toEqual([]);
+    expect(node.sameAs).toEqual([mapsUrl()]);
   });
 
   it('lista las membresias cientificas tal como constan en el CV', () => {
@@ -139,7 +143,7 @@ describe('serializacion del head', () => {
     const html = renderHeadTags(buildHead('home', 'es'));
     const blocks = [...html.matchAll(/<script type="application\/ld\+json"[^>]*>(.*?)<\/script>/gs)];
 
-    expect(blocks.length).toBe(4);
+    expect(blocks.length).toBe(6);
     for (const [, json] of blocks) {
       expect(json).not.toContain('<');
       expect(() => JSON.parse(json)).not.toThrow();
@@ -160,5 +164,50 @@ describe('serializacion del head', () => {
     expect(html).toContain('name="description"');
     expect(html).toContain('rel="canonical"');
     expect(html).toContain('hreflang="en"');
+  });
+});
+
+describe('JSON-LD enriquecido (TASK-013)', () => {
+  const graph = buildHead('home', 'es').jsonLd;
+  const physician = graph.find((n) => n['@type'] === 'Physician');
+
+  // Evita: mapa y sameAs desalineados, titulos sin declarar, libros huerfanos
+  // del autor, marca larga como nombre y fecha de modificacion que deriva.
+  it('hasMap coincide con la entrada de Maps en sameAs', () => {
+    expect(physician.hasMap).toBe('https://maps.google.com/?cid=' + contact.mapCid);
+    expect(physician.sameAs).toContain(physician.hasMap);
+  });
+
+  it('hasCredential declara los dos titulos, alineados con el copy', () => {
+    expect(physician.hasCredential.map((c) => c.name)).toEqual([
+      'Doctor en Medicina y Cirugía',
+      'Especialista en Psiquiatría',
+    ]);
+    for (const locale of ['es', 'en']) {
+      const copy = messagesFor(locale).credentials.groups.flatMap((g) => g.items);
+      for (const name of profile.degrees[locale]) expect(copy).toContain(name);
+    }
+  });
+
+  it('los Book apuntan al Physician como autor', () => {
+    const books = graph.filter((n) => n['@type'] === 'Book');
+    expect(books).toHaveLength(2);
+    for (const book of books) expect(book.author['@id']).toBe(physician['@id']);
+  });
+
+  it('WebSite.name es la marca corta y ProfilePage.dateModified es CONTENT_UPDATED', () => {
+    expect(graph.find((n) => n['@type'] === 'WebSite').name).toBe(profile.displayName);
+    expect(graph.find((n) => n['@type'] === 'ProfilePage').dateModified).toBe(CONTENT_UPDATED);
+  });
+
+  it('el JSON-LD prerenderizado de las cuatro paginas parsea (si el build ya se ejecuto)', () => {
+    for (const rel of ['index.html', 'en/index.html', 'contacto/index.html', 'en/contact/index.html']) {
+      const file = resolve(process.cwd(), 'dist', rel);
+      if (!existsSync(file)) continue;
+      const html = readFileSync(file, 'utf8');
+      const blocks = [...html.matchAll(/<script type="application\/ld\+json"[^>]*>(.*?)<\/script>/gs)];
+      expect(blocks.length, rel).toBeGreaterThan(0);
+      for (const [, json] of blocks) expect(() => JSON.parse(json), rel).not.toThrow();
+    }
   });
 });

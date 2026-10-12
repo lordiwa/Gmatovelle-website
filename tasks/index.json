@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-12T19:19:14.988Z",
+  "generated_at": "2026-10-12T19:26:08.331Z",
   "tasks": [
     {
       "key": "TASK-001",
@@ -70,13 +70,13 @@
     {
       "key": "TASK-012",
       "title": "Head limpio tras hidratar, pulido de meta y robots.txt actualizado",
-      "status": "in_review",
+      "status": "done",
       "priority": "high"
     },
     {
       "key": "TASK-013",
       "title": "Enriquecer el JSON-LD del Physician con los datos ya confirmados",
-      "status": "todo",
+      "status": "in_review",
       "priority": "high"
     },
     {

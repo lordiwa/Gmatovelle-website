@@ -21,3 +21,10 @@ export const OG_LOCALE_TAGS = {
   es: 'es_EC',
   en: 'en_US',
 };
+
+/**
+ * Fecha (ISO) de la ultima revision manual del contenido del sitio. Alimenta
+ * dateModified del ProfilePage y, mas adelante, lastmod del sitemap. Se edita a
+ * mano cuando cambia el contenido; NO es la fecha del build.
+ */
+export const CONTENT_UPDATED = '2026-10-12';

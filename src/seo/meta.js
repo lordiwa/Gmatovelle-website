@@ -13,11 +13,12 @@ import {
   DEFAULT_LOCALE,
   LOCALE_TAGS,
   OG_LOCALE_TAGS,
+  CONTENT_UPDATED,
 } from '@/site.config.js';
 import { PAGES, pathFor } from '@/router/routes.js';
 import { messagesFor } from '@/i18n/index.js';
 import { profile } from '@/data/profile.js';
-import { contact } from '@/data/contact.js';
+import { contact, mapsUrl } from '@/data/contact.js';
 
 /** URL absoluta a partir de una ruta interna. */
 export function absoluteUrl(path) {
@@ -41,7 +42,8 @@ export function physicianJsonLd(locale) {
     '@context': 'https://schema.org',
     '@type': 'Physician',
     '@id': PHYSICIAN_ID,
-    name: profile.honorificPrefix + ' ' + profile.fullName,
+    // honorificPrefix ya declara 'Dr.': el name va sin prefijo para no duplicarlo.
+    name: profile.fullName,
     alternateName: profile.displayName,
     honorificPrefix: profile.honorificPrefix,
     givenName: profile.givenName,
@@ -84,6 +86,8 @@ export function physicianJsonLd(locale) {
       locale === 'es'
         ? [
             'Neuropsiquiatría',
+            'Psiquiatría',
+            'Psicofarmacología',
             'Manejo y control de la medicación',
             'Ansiedad',
             'Depresión',
@@ -93,6 +97,8 @@ export function physicianJsonLd(locale) {
           ]
         : [
             'Neuropsychiatry',
+            'Psychiatry',
+            'Psychopharmacology',
             'Medication management and control',
             'Anxiety',
             'Depression',
@@ -100,7 +106,18 @@ export function physicianJsonLd(locale) {
             'Obsessive-compulsive disorder (OCD)',
             'Autism',
           ],
-    memberOf: profile.memberships.map((name) => ({ '@type': 'Organization', name })),
+    memberOf: profile.memberships.map((name) => ({
+      '@type': 'Organization',
+      name,
+      ...(profile.membershipUrls[name] ? { url: profile.membershipUrls[name] } : {}),
+    })),
+    hasCredential: profile.degrees[locale].map((name) => ({
+      '@type': 'EducationalOccupationalCredential',
+      name,
+      credentialCategory: 'degree',
+      recognizedBy: { '@type': 'CollegeOrUniversity', name: profile.university },
+    })),
+    hasMap: mapsUrl(),
     alumniOf: { '@type': 'CollegeOrUniversity', name: profile.university },
     contactPoint: {
       '@type': 'ContactPoint',
@@ -110,8 +127,21 @@ export function physicianJsonLd(locale) {
     },
   };
 
-  if (profile.sameAs.length > 0) node.sameAs = profile.sameAs;
+  // La ficha de Google Maps es un perfil externo verificado (CID del cliente).
+  node.sameAs = [...profile.sameAs, mapsUrl()];
   return node;
+}
+
+/** Un nodo Book por publicacion, con el Physician como autor. Sin ISBN. */
+export function bookJsonLds() {
+  return profile.publications.map((pub, i) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Book',
+    '@id': SITE_ORIGIN + '/#book-' + (i + 1),
+    name: pub.title,
+    author: { '@id': PHYSICIAN_ID },
+    ...(pub.publisher ? { publisher: { '@type': 'Organization', name: pub.publisher } } : {}),
+  }));
 }
 
 /** Nodo WebSite, con las dos versiones idiomaticas declaradas. */
@@ -122,7 +152,8 @@ export function webSiteJsonLd(locale) {
     '@type': 'WebSite',
     '@id': WEBSITE_ID,
     url: SITE_ORIGIN + '/',
-    name: t.meta.home.title,
+    name: profile.displayName,
+    alternateName: t.meta.home.title,
     inLanguage: LOCALES.map((l) => LOCALE_TAGS[l]),
     publisher: { '@id': PHYSICIAN_ID },
   };
@@ -154,6 +185,7 @@ function pageJsonLd(page, locale, title, description) {
     name: title,
     description,
     inLanguage: LOCALE_TAGS[locale],
+    ...(page === 'home' ? { dateModified: CONTENT_UPDATED } : {}),
     isPartOf: { '@id': WEBSITE_ID },
     about: { '@id': PHYSICIAN_ID },
     ...(page === 'home' ? { mainEntity: { '@id': PHYSICIAN_ID } } : {}),
@@ -195,6 +227,7 @@ export function buildHead(page, locale) {
       jsonLd.push(physicianJsonLd(locale));
       jsonLd.push(webSiteJsonLd(locale));
       jsonLd.push(faqJsonLd(locale));
+      jsonLd.push(...bookJsonLds());
     }
     if (page === 'contact') {
       jsonLd.push(physicianJsonLd(locale));

@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "nodes": [
+    {
+      "id": "task-012",
+      "type": "task",
+      "ref": "tasks/TASK-012.json",
+      "label": "Head limpio tras hidratar, pulido de meta y robots.txt actualizado"
+    }
+  ],
+  "edges": []
+}

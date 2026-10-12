@@ -431,7 +431,9 @@ describe('CV completo del Dr. en ambos idiomas', () => {
 
   it('el nombre completo del Dr. es el del CV y llega al JSON-LD', () => {
     expect(profile.fullName).toBe('Gonzalo Patricio Matovelle Mediavilla');
-    expect(physicianJsonLd('es').name).toBe('Dr. Gonzalo Patricio Matovelle Mediavilla');
+    // El prefijo 'Dr.' vive solo en honorificPrefix: name no lo duplica.
+    expect(physicianJsonLd('es').name).toBe('Gonzalo Patricio Matovelle Mediavilla');
+    expect(physicianJsonLd('es').honorificPrefix).toBe('Dr.');
   });
 
   it('declara como memberOf las diez sociedades cientificas del CV', () => {

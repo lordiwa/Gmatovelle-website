@@ -126,6 +126,11 @@ export function mailtoHref(email) {
   return 'mailto:' + email;
 }
 
+/** Enlace publico a la ficha de Google Maps del consultorio, derivado del CID. */
+export function mapsUrl() {
+  return 'https://maps.google.com/?cid=' + contact.mapCid;
+}
+
 /**
  * Embed de la ficha oficial del consultorio, sin API key: el endpoint publico
  * ?cid=...&output=embed acepta el CID de una ficha de Google Maps y no exige

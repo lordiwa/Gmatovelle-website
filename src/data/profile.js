@@ -66,12 +66,31 @@ export const profile = {
     'Sociedad Ecuatoriana de Escritores Médicos',
   ],
 
+  /**
+   * Sitio oficial de las organizaciones de memberships cuyo dominio se conoce
+   * con certeza. Las demas se omiten a proposito: no se inventan URLs.
+   */
+  membershipUrls: {
+    'World Psychiatric Association (WPA)': 'https://www.wpanet.org/',
+    'World Federation of Societies of Biological Psychiatry (WFSBP)': 'https://www.wfsbp.org/',
+  },
+
   publications: [
     { title: 'Manual Latinoamericano para la Enfermedad Depresiva', publisher: null },
     { title: 'Enfermedad de Alzheimer', publisher: 'Cangrejal Editores L.A.' },
   ],
 
   university: 'Universidad Central del Ecuador',
+
+  /**
+   * Titulos de grado por idioma (hasCredential del JSON-LD). Copia literal de
+   * credentials.groups[0].items de los diccionarios; un test los mantiene
+   * alineados, para que reordenar los grupos del copy no cambie el JSON-LD.
+   */
+  degrees: {
+    es: ['Doctor en Medicina y Cirugía', 'Especialista en Psiquiatría'],
+    en: ['Doctor of Medicine and Surgery', 'Specialist in Psychiatry'],
+  },
 
   /**
    * Retrato profesional del Dr., servido desde public/ (ver
