@@ -71,6 +71,26 @@ export default {
     credentialBand: ['40 años de experiencia', 'Quito', 'WPA · WFSBP'],
   },
 
+  /**
+   * Fotografias del Dr. en su consultorio (sesion de octubre de 2026), colgadas
+   * en la portada y en contacto. Los alt describen la escena; los pies de foto
+   * son las placas grabadas bajo cada marco y solo afirman lo que se ve.
+   */
+  photos: {
+    consultorio: 'El Dr. Gonzalo Matovelle, sentado en el sillón de su consultorio en Quito',
+    consultorioCaption: 'Consultorio privado · Quito',
+    paredAzul:
+      'El Dr. Gonzalo Matovelle, de pie con los brazos cruzados junto a una pared azul de su consultorio',
+    diplomas:
+      'El Dr. Gonzalo Matovelle frente a sus dos títulos enmarcados de la Universidad Central del Ecuador',
+    diplomasCaption: 'Títulos · Universidad Central del Ecuador',
+    balcon: 'El Dr. Gonzalo Matovelle en el balcón del edificio de su consultorio en Quito',
+    balconCaption: 'Centro de Negocios La Esquina · Quito',
+  },
+
+  /** Texto del anillo del sello que cierra la pagina. */
+  seal: 'Cuarenta años de práctica · Quito · Ecuador ·',
+
   about: {
     heading: 'Perfil profesional',
     lead: 'Cuarenta años de ejercicio clínico continuo en psiquiatría, con una trayectoria gremial y académica verificable.',

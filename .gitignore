@@ -6,3 +6,5 @@ dist-ssr/
 .vite/
 coverage/
 state/sessions/*/subagent-log.jsonl
+# Marcadores de sesion del context-monitor de hivemind (estado local, no del proyecto)
+.claude/context-monitor/

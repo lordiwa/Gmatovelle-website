@@ -6,6 +6,20 @@
  * Este modulo alimenta el JSON-LD y las partes no traducibles de la interfaz
  * (nombres propios de instituciones, titulos de publicaciones, siglas).
  */
+/** Rutas y dimensiones de una fotografia de public/images/ en sus cuatro archivos. */
+function photo(base, width, height, smallWidth) {
+  const dir = '/images/';
+  return {
+    src: dir + base + '.jpg',
+    webp: dir + base + '.webp',
+    small: dir + base + '-' + smallWidth + '.jpg',
+    smallWebp: dir + base + '-' + smallWidth + '.webp',
+    width,
+    height,
+    smallWidth,
+  };
+}
+
 export const profile = {
   honorificPrefix: 'Dr.',
   givenName: 'Gonzalo Patricio',
@@ -63,10 +77,32 @@ export const profile = {
    * Retrato profesional del Dr., servido desde public/ (ver
    * ProfilePortrait.vue). Se declara aqui para que la interfaz y el nodo
    * Physician de schema.org apunten al mismo archivo sin duplicar la ruta.
+   * Es el JPEG de photos.retrato: la sesion fotografica de octubre de 2026,
+   * sentado en su escritorio a contraluz de la ventana.
    */
-  portraitPath: '/dr-gonzalo-matovelle.jpg',
-  portraitWidth: 252,
-  portraitHeight: 320,
+  portraitPath: '/images/dr-matovelle-retrato.jpg',
+  portraitWidth: 1200,
+  portraitHeight: 1500,
+
+  /** Imagen de Open Graph (1200x630), de la misma sesion. */
+  ogImagePath: '/images/dr-matovelle-og.jpg',
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
+
+  /**
+   * Fotografias profesionales del Dr. en su consultorio (sesion de octubre de
+   * 2026), derivadas de los originales de pics/ por scripts del proyecto y
+   * servidas desde public/images/ en JPEG (src) y WebP (<source>), cada una
+   * con una version chica para el srcset. Los textos alternativos y los pies
+   * de foto viven en src/i18n/{es,en}.js bajo `photos`.
+   */
+  photos: {
+    retrato: photo('dr-matovelle-retrato', 1200, 1500, 800),
+    diplomas: photo('dr-matovelle-diplomas', 1400, 934, 800),
+    consultorio: photo('dr-matovelle-consultorio', 1000, 1250, 700),
+    paredAzul: photo('dr-matovelle-pared-azul', 1600, 1000, 900),
+    balcon: photo('dr-matovelle-balcon', 1000, 1333, 700),
+  },
 
   /**
    * Posicionamiento y areas de experiencia declarados por el cliente. A

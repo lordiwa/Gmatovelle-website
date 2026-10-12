@@ -1,35 +1,91 @@
 /* ===========================================================================
-   Sistema visual del sitio del Dr. Matovelle.
+   Sistema visual del sitio del Dr. Matovelle: "La pared de títulos".
 
-   Registro deliberadamente sobrio: marfil cálido, azul de tinta y un latón
-   apagado como único acento. Serif editorial para la voz del Dr., sans neutra
-   para la lectura. La contención es intencional: la señal de confianza médica
-   viene del espacio en blanco y de la tipografía, no del color.
+   THESIS: el sitio es la pared del consultorio (foto 4): yeso blanco y, colgado
+   en ella, lo que cuarenta años de carrera cuelgan. Se niega la pagina de
+   clinica de plantilla (hero con foto, tres tarjetas, mapa) y la banda navy
+   con laton que la precedio.
+   OWN-WORLD: pared de yeso (#eeede8), paspartu blanco, marco negro fino con
+   sombra real, un solo acento (el azul de la cinta del titulo, #1273c2),
+   Bodoni para la voz del Dr., una grotesca neutra para leer, y el nombre en
+   la misma letra gotica de su diploma. Esquinas cuadradas en todo.
+   STORY: quien llega, ansioso, entiende en segundos quien es, que lo respalda
+   y a que numero llamar; las credenciales se leen como objetos colgados,
+   verificables, no como un listado.
+   FIRST VIEWPORT: dos columnas sobre la pared: a la izquierda antetitulo,
+   titular en Bodoni, nombre y titulacion bajo una regla azul, resumen y dos
+   acciones (llamar en azul, WhatsApp en placa); a la derecha el retrato en
+   marco de 2px con paspartu ancho y una placa negra debajo; bajo todo, la
+   banda de credenciales como tira grabada.
+   FORM: direccion propia n.4 (la pared de titulos enmarcados), semilla
+   1094a18a; sin escenificacion dealt: la pared manda la composicion.
    =========================================================================== */
 
 :root {
-  --ink: #14202c;
-  --ink-soft: #34455a;
-  --muted: #64748b;
-  --paper: #fbf8f3;
-  --paper-raised: #ffffff;
-  --paper-sunk: #f3eee5;
-  --navy: #16283c;
-  --navy-deep: #0e1b28;
-  --brass: #a8874c;
-  --brass-soft: #c9ae7b;
-  --line: rgba(20, 32, 44, 0.12);
-  --line-strong: rgba(20, 32, 44, 0.24);
+  color-scheme: light dark;
 
-  --font-display: 'Source Serif 4', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --wall: #eeede8;
+  --wall-deep: #e4e3dc;
+  --mat: #ffffff;
+  --frame: #161616;
+  --sill: #161616;
+  --ink: #17181a;
+  --ink-soft: #44474d;
+  --muted: #64686f;
+  --ribbon: #1273c2;
+  --ribbon-deep: #0a5a9c;
+  --ribbon-tint: #dcedf9;
+  --seal-gold: #b8922e;
+  --line: rgba(22, 22, 22, 0.14);
+  --line-strong: rgba(22, 22, 22, 0.32);
+  --plaque: #161616;
+  --plaque-ink: #ffffff;
+  --plaque-ink-soft: rgba(255, 255, 255, 0.76);
+  --plaque-line: rgba(255, 255, 255, 0.4);
+  --shadow-ink: 23, 24, 26;
 
-  --shell: 1160px;
+  --font-wordmark: 'Grenze Gotisch Variable', 'UnifrakturMaguntia', 'Old English Text MT', serif;
+  --font-display: 'Bodoni Moda Variable', 'Bodoni 72', 'Didot', 'Bodoni MT', Georgia, serif;
+  --font-sans: 'Schibsted Grotesk Variable', 'Helvetica Neue', Arial, sans-serif;
+
+  --shell: 1200px;
   --gutter: clamp(1.25rem, 5vw, 4rem);
-  --section-y: clamp(4rem, 9vw, 7.5rem);
-  --radius: 4px;
+  --section-y: clamp(4.5rem, 9vw, 8rem);
+  --mat-pad: clamp(0.75rem, 2vw, 1.5rem);
 
-  --shadow-soft: 0 1px 2px rgba(20, 32, 44, 0.04), 0 12px 32px rgba(20, 32, 44, 0.06);
+  --shadow-frame: 0 1px 2px rgba(var(--shadow-ink), 0.18),
+    0 10px 20px -8px rgba(var(--shadow-ink), 0.30),
+    0 28px 48px -18px rgba(var(--shadow-ink), 0.42);
+  --shadow-frame-lift: 0 2px 4px rgba(var(--shadow-ink), 0.20),
+    0 14px 26px -8px rgba(var(--shadow-ink), 0.34),
+    0 36px 60px -18px rgba(var(--shadow-ink), 0.50);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Galeria nocturna: la pared se apaga, los paspartus siguen blancos para que
+   las fotografias queden iluminadas sobre ella. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --wall: #1b1c1f;
+    --wall-deep: #141518;
+    --mat: #f5f5f2;
+    --frame: #050505;
+    --sill: rgba(255, 255, 255, 0.32);
+    --ink: #ececea;
+    --ink-soft: #c2c4c8;
+    --muted: #9a9ea6;
+    --ribbon: #6cb6f2;
+    --ribbon-deep: #8ccbf7;
+    --ribbon-tint: rgba(108, 182, 242, 0.14);
+    --line: rgba(255, 255, 255, 0.14);
+    --line-strong: rgba(255, 255, 255, 0.32);
+    --plaque: #0d0d0e;
+    --plaque-ink: #f5f5f2;
+    --plaque-ink-soft: rgba(245, 245, 242, 0.74);
+    --plaque-line: rgba(245, 245, 242, 0.38);
+    --shadow-ink: 0, 0, 0;
+  }
 }
 
 *,
@@ -45,11 +101,11 @@ html {
 
 body {
   margin: 0;
-  background-color: var(--paper);
+  background-color: var(--wall);
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: 1.0625rem;
-  line-height: 1.7;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -59,9 +115,9 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.015em;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.005em;
   margin: 0;
   text-wrap: balance;
 }
@@ -81,10 +137,13 @@ ul {
   list-style: none;
 }
 
+img {
+  max-width: 100%;
+}
+
 :focus-visible {
-  outline: 2px solid var(--brass);
+  outline: 2px solid var(--ribbon);
   outline-offset: 3px;
-  border-radius: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -96,6 +155,7 @@ ul {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
   }
 }
@@ -119,7 +179,7 @@ ul {
 }
 
 .section--sunk {
-  background-color: var(--paper-sunk);
+  background-color: var(--wall-deep);
 }
 
 .section__head {
@@ -127,26 +187,37 @@ ul {
   margin-bottom: clamp(2.5rem, 5vw, 4rem);
 }
 
+/* Letra grabada: la unica etiqueta en versalitas del sistema. Vive en el
+   antetitulo del hero, en el de las areas de experiencia, en la banda de
+   credenciales y en las placas. */
+.label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
 .section__index {
   display: block;
   font-family: var(--font-sans);
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--brass);
+  color: var(--ink-soft);
   margin-bottom: 1.25rem;
 }
 
 .section__title {
-  font-size: clamp(1.9rem, 4vw, 2.85rem);
+  font-size: clamp(1.9rem, 3.6vw, 2.75rem);
 }
 
 .section__lead {
   margin-top: 1.25rem;
   font-size: 1.125rem;
   color: var(--ink-soft);
-  max-width: 42rem;
+  max-width: 40rem;
 }
 
 .skip-link {
@@ -154,10 +225,10 @@ ul {
   left: -9999px;
   top: 0;
   z-index: 100;
-  background: var(--navy);
-  color: #fff;
+  background: var(--plaque);
+  color: var(--plaque-ink);
   padding: 0.75rem 1.25rem;
-  font-size: 0.9rem;
+  font-size: 0.938rem;
 }
 
 .skip-link:focus {
@@ -165,84 +236,107 @@ ul {
   top: 1rem;
 }
 
-/* --- Botones ------------------------------------------------------------- */
+/* Dos columnas sobre la misma pared: texto y un objeto enmarcado. */
+.room {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
+  gap: clamp(2.5rem, 6vw, 5.5rem);
+  align-items: start;
+}
+
+.room--frame-first {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+/* --- Botones: placas grabadas -------------------------------------------- */
 
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  padding: 0.9rem 1.6rem;
+  padding: 1rem 1.6rem;
   font-family: var(--font-sans);
-  font-size: 0.95rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   text-decoration: none;
   border: 1px solid transparent;
-  border-radius: var(--radius);
+  border-radius: 0;
   cursor: pointer;
-  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease,
-    transform 160ms ease;
+  transition: background-color 180ms var(--ease-out), color 180ms var(--ease-out),
+    border-color 180ms var(--ease-out), transform 120ms var(--ease-out);
 }
 
-.btn:hover {
-  transform: translateY(-1px);
+.btn:active {
+  transform: translateY(1px);
 }
 
+/* Placa azul: la accion principal. (.btn--brass es el nombre historico que
+   fijan los locks de la cabecera; hoy es la placa de cinta azul.) */
+.btn--brass,
 .btn--primary {
-  background-color: var(--navy);
-  color: #fff;
+  background-color: var(--ribbon);
+  border-color: var(--ribbon);
+  color: #ffffff;
 }
 
+.btn--brass:hover,
 .btn--primary:hover {
-  background-color: var(--navy-deep);
+  background-color: var(--ribbon-deep);
+  border-color: var(--ribbon-deep);
 }
 
+/* Placa blanca: la accion secundaria sobre la pared. */
 .btn--ghost {
-  background-color: transparent;
+  background-color: var(--mat);
   color: var(--ink);
-  border-color: var(--line-strong);
+  border-color: var(--frame);
 }
 
 .btn--ghost:hover {
-  border-color: var(--ink);
+  background-color: var(--frame);
+  color: var(--mat);
 }
 
+/* Placa sobre fondo negro (la placa de contacto). */
 .btn--on-dark {
   background-color: transparent;
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--plaque-ink);
+  border-color: var(--plaque-line);
 }
 
 .btn--on-dark:hover {
-  border-color: var(--brass-soft);
-  color: var(--brass-soft);
+  background-color: var(--plaque-ink);
+  color: var(--plaque);
+  border-color: var(--plaque-ink);
 }
 
-/* Boton solido de laton sobre fondo oscuro (redisenio 1c). El texto va en
-   navy profundo y no en blanco: sobre el laton #a8874c, el navy da 5.2:1 y el
-   blanco apenas 2.4:1, o sea que solo esta combinacion cumple AA. */
-.btn--brass {
-  background-color: var(--brass);
-  color: var(--navy-deep);
-  font-weight: 600;
+@media (prefers-color-scheme: dark) {
+  .btn--brass,
+  .btn--primary {
+    color: #0b1320;
+  }
+
+  .btn--ghost {
+    color: #0b1320;
+  }
+
+  .btn--ghost:hover {
+    background-color: var(--ink);
+    border-color: var(--ink);
+  }
 }
 
-.btn--brass:hover {
-  background-color: var(--brass-soft);
-  color: var(--navy-deep);
-}
-
-/* --- Cabecera -------------------------------------------------------------
-   Cabecera navy del redisenio 1c. Es opaca, asi que ya no hace falta el
-   backdrop-filter que difuminaba el marfil translucido anterior. */
+/* --- Cabecera -------------------------------------------------------------- */
 
 .site-header {
   position: sticky;
   top: 0;
   z-index: 40;
-  background-color: var(--navy-deep);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  background-color: var(--wall);
+  border-bottom: 1px solid var(--line);
 }
 
 .site-header__inner {
@@ -250,149 +344,167 @@ ul {
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  min-height: 76px;
+  min-height: 74px;
 }
 
 .brand {
   display: flex;
   flex-direction: column;
   text-decoration: none;
-  line-height: 1.25;
+  line-height: 1.15;
 }
 
+/* El nombre del Dr. en la letra de su diploma: es la unica marca del sitio y
+   el unico lugar donde la gotica aparece. */
 .brand__name {
-  font-family: var(--font-display);
-  font-size: 1.125rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: #fff;
+  font-family: var(--font-wordmark);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  color: var(--ink);
 }
 
 .brand__role {
+  margin-top: 0.15rem;
   font-size: 0.656rem;
+  font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--brass-soft);
+  color: var(--muted);
 }
 
 .site-nav {
   display: flex;
   align-items: center;
-  gap: clamp(1rem, 3vw, 2.25rem);
+  gap: clamp(1rem, 2.6vw, 2rem);
 }
 
 .site-nav__link {
-  font-size: 0.906rem;
+  font-size: 0.938rem;
+  font-weight: 500;
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--ink-soft);
   padding-block: 0.35rem;
   border-bottom: 1px solid transparent;
-  transition: color 160ms ease, border-color 160ms ease;
+  transition: color 160ms var(--ease-out), border-color 160ms var(--ease-out);
 }
 
 .site-nav__link:hover {
-  color: #fff;
+  color: var(--ink);
+  border-bottom-color: var(--line-strong);
 }
 
 .site-nav__link.is-active {
-  color: #fff;
-  border-bottom-color: var(--brass);
+  color: var(--ink);
+  border-bottom-color: var(--ribbon);
 }
 
-/* Boton de llamada de la cabecera: mismo laton solido de los CTA, en la
-   proporcion compacta que pide la 1c para la barra de navegacion. */
 .site-nav__call {
-  padding: 0.688rem 1.25rem;
-  font-size: 0.875rem;
+  padding: 0.75rem 1.1rem;
+  font-size: 0.75rem;
 }
 
-/* El selector de idioma vive ahora sobre navy: contorno claro, opcion inactiva
-   en blanco atenuado y opcion activa en laton con texto navy. */
+/* Selector de idioma: dos celdas cuadradas dentro de un marco fino. */
 .lang-toggle {
   display: inline-flex;
-  align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: 999px;
-  padding: 2px;
-  background-color: transparent;
+  align-items: stretch;
+  border: 1px solid var(--line-strong);
 }
 
 .lang-toggle__option {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.6);
-  padding: 0.3rem 0.7rem;
-  border-radius: 999px;
-  transition: background-color 160ms ease, color 160ms ease;
+  color: var(--ink-soft);
+  padding: 0.45rem 0.7rem;
+  transition: background-color 160ms var(--ease-out), color 160ms var(--ease-out);
+}
+
+.lang-toggle__option + .lang-toggle__option {
+  border-left: 1px solid var(--line-strong);
 }
 
 .lang-toggle__option:hover {
-  color: #fff;
+  color: var(--ink);
 }
 
 .lang-toggle__option.is-active {
-  background-color: var(--brass);
-  color: var(--navy-deep);
+  background-color: var(--ribbon);
+  color: #ffffff;
 }
 
-/* --- Hero navy a sangre (redisenio 1c) ------------------------------------
-   La banda ocupa todo el ancho de la ventana y el .shell vive dentro de ella.
-   align-items:end y la ausencia de padding inferior son lo que hace que el
-   retrato se apoye en el borde de la banda: la columna de texto compensa con
-   su propio padding-bottom. */
+@media (prefers-color-scheme: dark) {
+  .lang-toggle__option.is-active {
+    color: #0b1320;
+  }
+}
+
+/* --- Hero: la pared --------------------------------------------------------
+   (.hero--navy es el nombre historico que fijan los locks; la banda navy se
+   retiro: ahora es la pared de yeso.) */
 
 .hero--navy {
-  background-color: var(--navy-deep);
-  color: #fff;
-  padding-top: clamp(3rem, 7vw, 4.5rem);
+  background-color: var(--wall);
+  padding-block: clamp(3rem, 6vw, 5rem) clamp(3.5rem, 7vw, 6rem);
   overflow: hidden;
 }
 
 .hero__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
   gap: clamp(2.5rem, 5vw, 4rem);
-  align-items: end;
+  align-items: center;
 }
 
 .hero__copy {
-  padding-bottom: clamp(3rem, 6vw, 4.5rem);
+  max-width: 38rem;
 }
 
 .hero__eyebrow {
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--brass-soft);
+  color: var(--ink-soft);
 }
 
 .hero__headline {
   margin-top: 1.5rem;
-  font-size: clamp(2.4rem, 5.6vw, 3.875rem);
-  line-height: 1.06;
-  letter-spacing: -0.03em;
-  color: #fff;
+  font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  color: var(--ink);
 }
 
-/* Nombre y titulacion del Dr. inmediatamente bajo el titular: es la senal de
-   entidad que el h1 dejo de llevar al volverse editorial. */
+/* Nombre y titulacion bajo una regla azul: la unica regla de color del sitio,
+   la cinta del titulo. */
 .hero__credential {
-  margin-top: 1.25rem;
-  font-family: var(--font-display);
-  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
-  font-style: italic;
-  color: rgba(255, 255, 255, 0.88);
+  position: relative;
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.hero__credential::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3.5rem;
+  height: 2px;
+  background-color: var(--ribbon);
 }
 
 .hero__summary {
-  margin-top: 1.5rem;
-  max-width: 32rem;
-  font-size: 1.094rem;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.75);
+  margin-top: 1.25rem;
+  max-width: 33rem;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
 }
 
 .hero__actions {
@@ -402,117 +514,185 @@ ul {
   margin-top: 2.25rem;
 }
 
-/* --- Banda de credenciales ------------------------------------------------
-   Franja horizontal bajo el hero. Sustituye a la fila de "facts" y lleva los
-   tres items que fijo el cliente: anios de experiencia, ciudad y sociedades. */
+/* El unico movimiento autorizado de la pagina: al llegar, el texto y el marco
+   se asientan en la pared una vez. */
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero__copy > * {
+  animation: settle 720ms var(--ease-out) both;
+}
+
+.hero__copy > :nth-child(2) {
+  animation-delay: 60ms;
+}
+
+.hero__copy > :nth-child(3) {
+  animation-delay: 120ms;
+}
+
+.hero__copy > :nth-child(4) {
+  animation-delay: 180ms;
+}
+
+.hero__copy > :nth-child(5) {
+  animation-delay: 240ms;
+}
+
+.portrait--hero-navy {
+  animation: settle 900ms var(--ease-out) 160ms both;
+}
+
+/* --- Marcos ----------------------------------------------------------------
+   Todo objeto colgado: paspartu blanco, marco negro fino y la sombra que un
+   marco deja en una pared. Es la unica sombra del sistema. */
+
+.frame {
+  margin: 0;
+}
+
+.frame__mat,
+.portrait__frame {
+  display: block;
+  background-color: var(--mat);
+  padding: var(--mat-pad);
+  border: 1px solid var(--frame);
+  box-shadow: var(--shadow-frame);
+  transition: transform 260ms var(--ease-out), box-shadow 260ms var(--ease-out);
+}
+
+.frame:hover .frame__mat,
+.portrait:hover .portrait__frame {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-frame-lift);
+}
+
+.frame__image,
+.portrait__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.frame__picture {
+  display: block;
+}
+
+/* Placa negra bajo el marco: letra grabada en blanco. */
+.frame__caption,
+.portrait__caption {
+  display: inline-block;
+  margin: 1rem auto 0;
+  padding: 0.6rem 1rem;
+  background-color: var(--plaque);
+  color: var(--plaque-ink);
+  font-family: var(--font-sans);
+  font-size: 0.656rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.4;
+  text-wrap: balance;
+  max-width: 100%;
+}
+
+.portrait__caption {
+  letter-spacing: 0.12em;
+}
+
+.frame--captioned,
+.portrait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.frame--captioned .frame__mat {
+  width: 100%;
+}
+
+/* Marco que se queda a la vista mientras se recorre una columna larga. */
+.frame--sticky {
+  position: sticky;
+  top: calc(74px + 2rem);
+}
+
+/* Retrato del hero: marco de 2px y paspartu mas ancho. */
+.portrait {
+  position: relative;
+  width: 100%;
+  max-width: 470px;
+  justify-self: end;
+}
+
+.portrait__frame {
+  width: 100%;
+  border-width: 2px;
+  padding: clamp(0.9rem, 2.4vw, 1.5rem);
+}
+
+.portrait__image {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+/* --- Banda de credenciales: tira grabada ---------------------------------- */
 
 .credential-band {
-  background-color: var(--paper-sunk);
-  border-bottom: 1px solid var(--line);
+  background-color: var(--mat);
+  border-top: 1px solid var(--frame);
+  border-bottom: 1px solid var(--frame);
+}
+
+@media (prefers-color-scheme: dark) {
+  .credential-band {
+    background-color: var(--wall-deep);
+    border-color: var(--line-strong);
+  }
 }
 
 .credential-band__inner {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 2rem;
-  padding-block: 1.625rem;
-  font-size: 0.813rem;
-  line-height: 1.5;
-  color: var(--ink-soft);
+  justify-content: center;
+  gap: 1rem 0;
+  padding-block: 1.25rem;
 }
 
-.credential-band__term {
-  color: var(--navy);
-}
-
-/* --- Retrato profesional --------------------------------------------------
-   Fotografia del Dr. montada en el mismo marco que ocupaba el medallon
-   provisional: proporcion 4/5, borde de papel y anillo interior de laton. El
-   fondo del marco sigue declarado porque se ve mientras la imagen carga.
-   ------------------------------------------------------------------------- */
-
-.portrait {
-  position: relative;
-  margin: 0;
-}
-
-.portrait__frame {
-  position: relative;
-  aspect-ratio: 4 / 5;
-  border-radius: 2px;
-  background: linear-gradient(160deg, #ffffff 0%, var(--paper-sunk) 60%, #e9e1d4 100%);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-soft);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-
-.portrait__frame::after {
-  content: '';
-  position: absolute;
-  inset: 12px;
-  border: 1px solid rgba(168, 135, 76, 0.35);
-  pointer-events: none;
-}
-
-/* La foto llena el marco. object-position sube el encuadre un punto porque el
-   original deja aire sobre la cabeza y el recorte 4/5 se lo come por abajo. */
-.portrait__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 40%;
-  display: block;
-}
-
-.portrait__caption {
-  margin-top: 1rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.04em;
-  color: var(--muted);
+.credential-band__item {
+  padding-inline: clamp(1.25rem, 3vw, 2.75rem);
   text-align: center;
 }
 
-/* Variante del hero navy: encuadre mas alto (4/4.6), apoyado en el borde
-   inferior de la banda, con las esquinas superiores redondeadas y un anillo de
-   laton al filo en lugar del marco de papel. El pie de foto se mantiene en el
-   DOM pero oculto a la vista: el diseno no lo lleva y el alt de la imagen ya
-   describe al Dr., asi que quitarlo del HTML solo restaria contexto a quien
-   navega con lector de pantalla. */
-
-.portrait--hero-navy {
-  align-self: end;
+.credential-band__item + .credential-band__item {
+  border-left: 1px solid var(--line-strong);
 }
 
-.portrait--hero-navy .portrait__frame {
-  aspect-ratio: 4 / 4.6;
-  border: 0;
-  border-radius: 4px 4px 0 0;
-  background: rgba(255, 255, 255, 0.04);
-  box-shadow: inset 0 0 0 1px rgba(201, 174, 123, 0.35);
+.credential-band__term {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
 }
 
-.portrait--hero-navy .portrait__frame::after {
-  content: none;
+@media (prefers-color-scheme: dark) {
+  .credential-band__term {
+    color: var(--ink);
+  }
 }
 
-.portrait--hero-navy .portrait__image {
-  object-position: center 20%;
-}
-
-.portrait--hero-navy .portrait__caption {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  clip-path: inset(50%);
-}
-
-/* --- Prosa y tarjetas ---------------------------------------------------- */
+/* --- Prosa, tarjetas y placas ------------------------------------------- */
 
 .prose > p + p {
   margin-top: 1.35rem;
@@ -521,79 +701,101 @@ ul {
 .prose p {
   font-size: 1.0625rem;
   color: var(--ink-soft);
-  max-width: 60ch;
+  max-width: 62ch;
+}
+
+.prose p:first-child {
+  color: var(--ink);
 }
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
 }
 
 .card {
-  background-color: var(--paper-raised);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: clamp(1.5rem, 3vw, 2rem);
+  background-color: var(--mat);
+  border: 1px solid var(--frame);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
 }
 
 .card__title {
-  font-size: 1.15rem;
+  font-size: 1.375rem;
+  font-weight: 600;
 }
 
 .card__body {
-  margin-top: 0.75rem;
-  font-size: 0.98rem;
+  margin-top: 0.85rem;
+  font-size: 0.938rem;
   color: var(--ink-soft);
 }
 
-/* Tarjetas sin caja de la 1c: solo una regla superior en azul tinta. Se aplica
-   unicamente a las areas de experiencia; el enfoque de la consulta conserva la
-   caja para que las dos rejillas no se confundan entre si. */
+@media (prefers-color-scheme: dark) {
+  .card {
+    color: #17181a;
+  }
 
+  .card__body {
+    color: #44474d;
+  }
+}
+
+/* Las cinco areas de experiencia cuelgan como cinco placas en fila. */
 .card-grid--rule {
-  gap: clamp(1.75rem, 4vw, 2.75rem);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
 }
 
 .card--rule {
-  background: none;
-  border: 0;
-  border-top: 2px solid var(--navy);
-  border-radius: 0;
-  padding: 1.375rem 0 0;
+  padding: 1.375rem 1.125rem 1.5rem;
+  border-top-width: 1px;
+  outline: 1px solid var(--frame);
+  outline-offset: -7px;
 }
 
 .card--rule .card__title {
-  font-size: 1.375rem;
+  font-size: 1.125rem;
+  line-height: 1.15;
 }
 
 .card--rule .card__body {
+  margin-top: 0.75rem;
   font-size: 0.938rem;
-  line-height: 1.65;
+  line-height: 1.55;
 }
 
-/* --- Credenciales -------------------------------------------------------- */
+/* Foto ancha colgada sobre la seccion del enfoque. */
+.frame--wide {
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.frame--wide .frame__mat {
+  border-width: 2px;
+}
+
+.frame--wide .frame__image {
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+/* --- Credenciales --------------------------------------------------------- */
 
 .credential-group + .credential-group {
-  margin-top: 2.75rem;
-  padding-top: 2.75rem;
+  margin-top: 2.5rem;
+  padding-top: 2.5rem;
   border-top: 1px solid var(--line);
 }
 
-.credential-group__layout {
-  display: grid;
-  grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
-  gap: clamp(1rem, 4vw, 3rem);
-}
-
 .credential-group__title {
-  font-size: 1.15rem;
-  color: var(--navy);
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
 .credential-list li {
   position: relative;
-  padding-left: 1.5rem;
+  padding-left: 1.25rem;
   color: var(--ink-soft);
 }
 
@@ -605,44 +807,75 @@ ul {
   content: '';
   position: absolute;
   left: 0;
-  top: 0.75em;
-  width: 0.5rem;
+  top: 0.8em;
+  width: 1rem;
   height: 1px;
-  background-color: var(--brass);
+  background-color: var(--frame);
 }
 
-/* --- Publicaciones ------------------------------------------------------- */
+/* Las membresias (diez) se parten en dos columnas. */
+.credential-list--columns {
+  columns: 2;
+  column-gap: 2.5rem;
+}
+
+.credential-list--columns li {
+  break-inside: avoid;
+}
+
+.credential-list--columns li + li {
+  margin-top: 0.7rem;
+}
+
+/* --- Publicaciones: dos libros sobre una repisa -------------------------- */
+
+.publications-shelf {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  align-items: end;
+  padding-bottom: 1.75rem;
+  border-bottom: 4px solid var(--sill);
+}
 
 .publication {
+  background-color: var(--mat);
+  border: 1px solid var(--frame);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  min-height: 11rem;
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.75rem;
-  padding-block: 1.5rem;
-  border-bottom: 1px solid var(--line);
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
 }
 
-.publication:first-child {
-  border-top: 1px solid var(--line);
+@media (prefers-color-scheme: dark) {
+  .publication {
+    color: #17181a;
+  }
 }
 
 .publication__title {
   font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+  font-weight: 500;
   font-style: italic;
+  line-height: 1.15;
+  padding-bottom: 0.15rem;
 }
 
 .publication__note {
-  font-size: 0.85rem;
-  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: #64686f;
 }
 
 .publication-note {
   margin-top: 1.75rem;
-  color: var(--muted);
-  font-size: 0.98rem;
+  color: var(--ink-soft);
+  font-size: 1rem;
 }
 
 /* --- FAQ ----------------------------------------------------------------- */
@@ -653,10 +886,15 @@ ul {
 
 .faq__item {
   border-bottom: 1px solid var(--line);
+  transition: background-color 180ms var(--ease-out);
 }
 
 .faq__item:first-child {
   border-top: 1px solid var(--line);
+}
+
+.faq__item[open] {
+  background-color: var(--ribbon-tint);
 }
 
 .faq__question {
@@ -664,11 +902,12 @@ ul {
   align-items: baseline;
   justify-content: space-between;
   gap: 1.5rem;
-  padding-block: 1.5rem;
+  padding: 1.375rem 1rem;
   cursor: pointer;
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 1.375rem;
   font-weight: 600;
+  line-height: 1.2;
   list-style: none;
 }
 
@@ -681,7 +920,8 @@ ul {
   flex-shrink: 0;
   font-family: var(--font-sans);
   font-size: 1.25rem;
-  color: var(--brass);
+  font-weight: 500;
+  color: var(--ribbon);
 }
 
 .faq__item[open] .faq__question::after {
@@ -689,49 +929,54 @@ ul {
 }
 
 .faq__answer {
-  padding-bottom: 1.75rem;
+  padding: 0 1rem 1.75rem;
   color: var(--ink-soft);
   max-width: 62ch;
 }
 
-/* --- Contacto ------------------------------------------------------------ */
+/* --- Contacto: la placa negra ------------------------------------------- */
 
 .contact-panel {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: clamp(2rem, 5vw, 4rem);
-  background-color: var(--navy);
-  color: #fff;
+  background-color: var(--plaque);
+  color: var(--plaque-ink);
   padding: clamp(2rem, 5vw, 3.5rem);
-  border-radius: var(--radius);
+  /* Hairline: en la galeria nocturna separa la placa de la pared oscura. */
+  border: 1px solid var(--line);
 }
 
 .contact-panel__label {
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--brass-soft);
+  color: var(--plaque-ink-soft);
 }
 
 .contact-panel__phone {
   display: inline-block;
   margin-top: 0.75rem;
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 500;
   letter-spacing: 0.01em;
-  color: #fff;
+  line-height: 1;
+  color: var(--plaque-ink);
   text-decoration: none;
-  border-bottom: 1px solid rgba(201, 174, 123, 0.5);
+  border-bottom: 1px solid var(--plaque-line);
+  transition: border-color 160ms var(--ease-out);
 }
 
 .contact-panel__phone:hover {
-  border-bottom-color: var(--brass-soft);
+  border-bottom-color: var(--ribbon);
 }
 
 .contact-panel__note {
   margin-top: 1.25rem;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.98rem;
+  color: var(--plaque-ink-soft);
+  font-size: 0.938rem;
   max-width: 34rem;
 }
 
@@ -742,28 +987,37 @@ ul {
   margin-top: 2rem;
 }
 
+.contact-panel__emails {
+  margin-top: 1.75rem;
+}
+
+.contact-panel__email {
+  color: var(--plaque-ink);
+}
+
 .contact-aside__value {
   margin-top: 0.75rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--plaque-ink);
+}
+
+.contact-aside__value a {
+  color: inherit;
 }
 
 .contact-map {
   display: block;
   width: 100%;
-  height: 220px;
+  height: 240px;
   margin-top: 1rem;
-  border: 0;
-  border-radius: var(--radius);
+  border: 1px solid var(--plaque-line);
+  filter: grayscale(0.2);
 }
 
 .contact-aside + .contact-aside {
   margin-top: 2rem;
 }
 
-/* Franja compacta de la portada (variante "compact" del panel): telefono,
-   nota y CTA en una sola linea navy. Sin mapa ni correos: esos siguen en la
-   ficha completa de /contacto. */
-
+/* Variante compacta de la portada: telefono, nota y acciones en una placa. */
 .contact-panel--compact {
   grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 2.5rem;
@@ -777,12 +1031,12 @@ ul {
 
 .contact-panel--compact .contact-panel__phone {
   margin-top: 0.5rem;
-  font-size: clamp(1.75rem, 4vw, 2.125rem);
+  font-size: clamp(1.9rem, 4vw, 2.5rem);
 }
 
 .contact-panel--compact .contact-panel__note {
   margin-top: 0;
-  font-size: 0.906rem;
+  font-size: 0.938rem;
 }
 
 .contact-panel--compact .contact-panel__actions {
@@ -790,45 +1044,86 @@ ul {
 }
 
 .contact-panel__more {
-  margin-top: 0.75rem;
-  font-size: 0.906rem;
-  color: var(--brass-soft);
+  margin-top: 0.6rem;
+  font-size: 0.938rem;
 }
 
-/* --- Estado vacio (blog) --------------------------------------------------
-   La seccion de articulos esta desactivada (ver src/router/routes.js), asi que
-   hoy no hay ninguna vista montada que use estas clases. Se conservan para que
-   reactivarla sea descomentar rutas y nada mas. */
+.contact-panel__more a {
+  color: var(--plaque-ink);
+  text-decoration-color: var(--plaque-line);
+  text-underline-offset: 0.2em;
+}
+
+.contact-panel__more a:hover {
+  text-decoration-color: var(--plaque-ink);
+}
+
+/* Pagina de contacto: el balcon del edificio cierra la pagina, colgado solo. */
+.contact-close {
+  max-width: 440px;
+  margin: clamp(3.5rem, 7vw, 6rem) auto 0;
+}
+
+/* --- Sello ---------------------------------------------------------------- */
+
+.seal {
+  display: block;
+  width: 112px;
+  height: 112px;
+  color: var(--seal-gold);
+}
+
+.seal__monogram {
+  font-family: var(--font-wordmark);
+  font-size: 34px;
+  font-weight: 500;
+}
+
+.seal__ring {
+  font-family: var(--font-sans);
+  font-size: 7.6px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* --- Estado vacio (404 y blog desactivado) -------------------------------- */
 
 .empty-state {
   max-width: 42rem;
   padding: clamp(2.5rem, 6vw, 4rem);
-  background-color: var(--paper-raised);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  background-color: var(--mat);
+  border: 1px solid var(--frame);
+  box-shadow: var(--shadow-frame);
   text-align: center;
   margin-inline: auto;
 }
 
+@media (prefers-color-scheme: dark) {
+  .empty-state {
+    color: #17181a;
+  }
+}
+
 .empty-state__badge {
   display: inline-block;
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--brass);
-  border: 1px solid rgba(168, 135, 76, 0.4);
-  border-radius: 999px;
-  padding: 0.35rem 0.9rem;
+  color: #64686f;
+  border: 1px solid #161616;
+  padding: 0.4rem 0.9rem;
 }
 
 .empty-state__title {
   margin-top: 1.5rem;
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
 }
 
 .empty-state__body {
   margin-top: 1rem;
-  color: var(--ink-soft);
+  color: #44474d;
 }
 
 .empty-state__actions {
@@ -839,35 +1134,40 @@ ul {
   flex-wrap: wrap;
 }
 
-/* --- Pie ------------------------------------------------------------------ */
+/* --- Pie: el zocalo de la pared ------------------------------------------ */
 
 .site-footer {
-  background-color: var(--navy-deep);
-  color: rgba(255, 255, 255, 0.7);
+  --muted: #585c63;
+  background-color: var(--wall-deep);
+  border-top: 4px solid var(--sill);
+  color: var(--ink-soft);
   padding-block: clamp(3rem, 6vw, 4.5rem);
   font-size: 0.92rem;
 }
 
 .site-footer__top {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 2rem;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: start;
   padding-bottom: 2.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid var(--line);
 }
 
 .site-footer__name {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  color: #fff;
+  font-family: var(--font-wordmark);
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: var(--ink);
 }
 
 .site-footer__role {
   margin-top: 0.35rem;
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--brass-soft);
+  color: var(--muted);
 }
 
 .site-footer__links {
@@ -878,11 +1178,23 @@ ul {
 
 .site-footer__links a {
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--ink-soft);
 }
 
 .site-footer__links a:hover {
-  color: #fff;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.site-footer .contact-panel__label {
+  color: var(--muted);
+}
+
+.site-footer .contact-aside__value {
+  color: var(--ink);
+  margin-top: 0.35rem;
+  margin-bottom: 1rem;
 }
 
 .site-footer__bottom {
@@ -892,7 +1204,7 @@ ul {
   gap: 1rem;
   padding-top: 2rem;
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--muted);
 }
 
 .site-footer__disclaimer {
@@ -901,25 +1213,46 @@ ul {
 
 /* --- Responsive ----------------------------------------------------------- */
 
+@media (max-width: 1100px) {
+  /* Cinco placas: tres arriba y dos abajo, sin celda vacia. */
+  .card-grid--rule {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .card-grid--rule .card--rule {
+    grid-column: span 2;
+  }
+
+  .card-grid--rule .card--rule:nth-child(n + 4) {
+    grid-column: span 3;
+  }
+}
+
 @media (max-width: 900px) {
-  .hero__grid {
+  .hero__grid,
+  .room,
+  .room--frame-first {
     grid-template-columns: 1fr;
   }
 
-  .portrait {
-    max-width: 320px;
-    margin-inline: auto;
-    order: -1;
-  }
-
-  /* En el hero navy el retrato va DEBAJO del texto, no encima: sigue apoyado
-     en el borde inferior de la banda igual que en escritorio. */
-  .portrait--hero-navy {
-    order: 0;
-  }
-
   .hero__copy {
-    padding-bottom: clamp(2rem, 6vw, 3rem);
+    max-width: none;
+  }
+
+  /* El retrato va debajo del texto: la accion de llamar primero. */
+  .portrait {
+    max-width: 420px;
+    justify-self: center;
+  }
+
+  .frame--sticky {
+    position: static;
+  }
+
+  .room > .frame {
+    max-width: 520px;
+    width: 100%;
+    margin-inline: auto;
   }
 
   .contact-panel--compact {
@@ -928,12 +1261,19 @@ ul {
     padding: 2rem;
   }
 
-  .credential-group__layout {
-    grid-template-columns: 1fr;
+  .site-footer__top {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .credential-group__title {
-    margin-bottom: 1.25rem;
+  .site-footer__seal {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+}
+
+@media (max-width: 700px) {
+  .credential-list--columns {
+    columns: 1;
   }
 }
 
@@ -942,10 +1282,25 @@ ul {
     font-size: 1rem;
   }
 
+  /* En el movil la cabecera pegada no puede comerse el viewport: cae la
+     linea del rol y se aprietan las dos filas. */
+  .site-header {
+    position: static;
+  }
+
   .site-header__inner {
     flex-wrap: wrap;
-    gap: 0.75rem;
-    padding-block: 0.85rem;
+    gap: 0.5rem;
+    min-height: 0;
+    padding-block: 0.65rem;
+  }
+
+  .brand__name {
+    font-size: 1.35rem;
+  }
+
+  .brand__role {
+    display: none;
   }
 
   .site-nav {
@@ -958,23 +1313,47 @@ ul {
     font-size: 0.88rem;
   }
 
-  /* El boton de laton se aprieta para que la segunda fila de la cabecera
-     (enlaces + idioma + llamada) no desborde el ancho del movil. */
   .site-nav__call {
-    padding: 0.563rem 0.75rem;
-    font-size: 0.813rem;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.7rem;
   }
 
-  /* La banda de credenciales pasa a dos columnas: en fila plana las cuatro
-     entradas quedan apretadas contra el gutter. */
   .credential-band__inner {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem 1.25rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding-block: 0.25rem;
+  }
+
+  .credential-band__item {
+    padding-block: 0.75rem;
+  }
+
+  .credential-band__item + .credential-band__item {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .card-grid--rule {
+    grid-template-columns: 1fr;
+  }
+
+  .card-grid--rule .card--rule,
+  .card-grid--rule .card--rule:nth-child(n + 4) {
+    grid-column: auto;
   }
 
   .hero__actions .btn,
-  .contact-panel__actions .btn {
+  .contact-panel__actions .btn,
+  .empty-state__actions .btn {
     width: 100%;
+  }
+
+  .faq__question {
+    font-size: 1.15rem;
+  }
+
+  .site-footer__top {
+    grid-template-columns: 1fr;
   }
 }

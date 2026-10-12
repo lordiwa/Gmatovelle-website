@@ -76,7 +76,7 @@ const mapSrc = computed(() => mapEmbedUrl());
       </div>
 
       <div class="contact-panel__actions">
-        <a class="btn btn--on-dark" :href="contact.phoneHref">{{ t.contact.callCta }}</a>
+        <a class="btn btn--brass" :href="contact.phoneHref">{{ t.contact.callCta }}</a>
         <a
           v-if="whatsapp"
           class="btn btn--on-dark"

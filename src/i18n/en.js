@@ -69,6 +69,26 @@ export default {
     credentialBand: ['40 years of experience', 'Quito', 'WPA · WFSBP'],
   },
 
+  /**
+   * Photographs of the Dr. in his office (October 2026 session), hung on the
+   * home and contact pages. Alt texts describe the scene; captions are the
+   * engraved plaques under each frame and state only what is visible.
+   */
+  photos: {
+    consultorio: 'Dr. Gonzalo Matovelle seated in the armchair of his practice in Quito',
+    consultorioCaption: 'Private practice · Quito',
+    paredAzul:
+      'Dr. Gonzalo Matovelle standing with his arms crossed beside a blue wall of his practice',
+    diplomas:
+      'Dr. Gonzalo Matovelle in front of his two framed degrees from the Universidad Central del Ecuador',
+    diplomasCaption: 'Degrees · Universidad Central del Ecuador',
+    balcon: 'Dr. Gonzalo Matovelle on the balcony of the building of his practice in Quito',
+    balconCaption: 'Centro de Negocios La Esquina · Quito',
+  },
+
+  /** Text of the ring of the seal that closes the page. */
+  seal: 'Forty years of practice · Quito · Ecuador ·',
+
   about: {
     heading: 'Professional profile',
     lead: 'Four decades of continuous clinical practice in psychiatry, with a verifiable professional and academic record.',

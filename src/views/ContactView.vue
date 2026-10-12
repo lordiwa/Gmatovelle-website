@@ -1,9 +1,11 @@
 <script setup>
+import { computed } from 'vue';
 import { useI18n } from '@/i18n/index.js';
+import { profile } from '@/data/profile.js';
 import SectionHeading from '@/components/SectionHeading.vue';
 import ContactPanel from '@/components/ContactPanel.vue';
+import FramedPhoto from '@/components/FramedPhoto.vue';
 import FaqList from '@/components/FaqList.vue';
-import { computed } from 'vue';
 
 const { t } = useI18n();
 
@@ -15,15 +17,25 @@ const bookingFaq = computed(() => t.value.faq.items.slice(1, 3));
   <div>
     <section class="section section--plain">
       <div class="shell">
-        <SectionHeading index="01" :title="t.contact.heading" :lead="t.contact.lead" />
+        <SectionHeading :title="t.contact.heading" :lead="t.contact.lead" />
         <ContactPanel />
       </div>
     </section>
 
+    <!-- Las dos preguntas de agenda y, cerrando la pagina, el balcon del
+         edificio del consultorio colgado solo en la pared. -->
     <section class="section">
       <div class="shell">
-        <SectionHeading index="02" :title="t.faq.heading" />
+        <SectionHeading :title="t.faq.heading" />
         <FaqList :items="bookingFaq" />
+        <div class="contact-close">
+          <FramedPhoto
+            :photo="profile.photos.balcon"
+            :alt="t.photos.balcon"
+            :caption="t.photos.balconCaption"
+            sizes="(max-width: 900px) 92vw, 440px"
+          />
+        </div>
       </div>
     </section>
   </div>

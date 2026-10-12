@@ -1,6 +1,12 @@
 import { createSSRApp } from 'vue';
 import App from './App.vue';
 import { createAppRouter } from './router/index.js';
+// Fuentes autoalojadas (fontsource): Bodoni con eje optico para los titulares,
+// la grotesca para leer y la gotica del diploma solo para el nombre del Dr.
+import '@fontsource-variable/bodoni-moda/opsz.css';
+import '@fontsource-variable/bodoni-moda/opsz-italic.css';
+import '@fontsource-variable/schibsted-grotesk/index.css';
+import '@fontsource-variable/grenze-gotisch/index.css';
 import './styles/main.css';
 
 /**

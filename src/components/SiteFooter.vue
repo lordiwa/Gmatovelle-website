@@ -4,6 +4,7 @@ import { pathFor } from '@/router/routes.js';
 import { useI18n } from '@/i18n/index.js';
 import { profile } from '@/data/profile.js';
 import { contact, mailtoHref } from '@/data/contact.js';
+import SealMark from './SealMark.vue';
 
 const { locale, t } = useI18n();
 
@@ -39,6 +40,10 @@ const links = computed(() => [
           <p v-for="email in contact.emails" :key="email" class="contact-aside__value">
             <a :href="mailtoHref(email)">{{ email }}</a>
           </p>
+        </div>
+
+        <div class="site-footer__seal">
+          <SealMark :text="t.seal" />
         </div>
       </div>
 

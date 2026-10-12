@@ -2,17 +2,18 @@
 import { computed } from 'vue';
 import { useI18n } from '@/i18n/index.js';
 import { contact, whatsappUrl } from '@/data/contact.js';
+import { profile } from '@/data/profile.js';
 import SectionHeading from '@/components/SectionHeading.vue';
 import ProfilePortrait from '@/components/ProfilePortrait.vue';
+import FramedPhoto from '@/components/FramedPhoto.vue';
 import FaqList from '@/components/FaqList.vue';
 import ContactPanel from '@/components/ContactPanel.vue';
 
 const { t } = useI18n();
 
 /**
- * WhatsApp del consultorio como CTA secundario del hero (redisenio 1c). Va
- * detras de un v-if porque el campo puede volver a null: la fuente unica es
- * src/data/contact.js.
+ * WhatsApp del consultorio como CTA secundario del hero. Va detras de un v-if
+ * porque el campo puede volver a null: la fuente unica es src/data/contact.js.
  */
 const whatsapp = computed(() => whatsappUrl());
 </script>
@@ -20,11 +21,11 @@ const whatsapp = computed(() => whatsappUrl());
 <template>
   <div>
     <!--
-      Hero del redisenio 1c "Navy de confianza": banda navy a sangre de ancho
-      completo (el .shell va dentro de la banda) con el retrato apoyado en su
-      borde inferior. El h1 es un titular editorial y no el nombre del Dr.; la
+      Hero "La pared de titulos": texto a la izquierda, el retrato enmarcado a
+      la derecha. El h1 es un titular editorial y no el nombre del Dr.; la
       linea de credencial que va justo debajo conserva el nombre y la
       titulacion, que es la senal de entidad que el SEO/GEO necesita.
+      (.hero--navy es el nombre que fijan los locks; la banda navy se retiro.)
     -->
     <section class="hero hero--navy">
       <div class="shell">
@@ -39,7 +40,7 @@ const whatsapp = computed(() => whatsappUrl());
               <a class="btn btn--brass" :href="contact.phoneHref">{{ t.hero.primaryCta }}</a>
               <a
                 v-if="whatsapp"
-                class="btn btn--on-dark"
+                class="btn btn--ghost"
                 :href="whatsapp"
                 rel="noopener"
                 target="_blank"
@@ -54,8 +55,8 @@ const whatsapp = computed(() => whatsappUrl());
     </section>
 
     <!--
-      Banda de credenciales: sustituye a la vieja fila de "facts" del hero. Los
-      tres items y su orden los fijo el cliente ("40 años / Quito / WPA·WFSBP").
+      Banda de credenciales: tira grabada bajo el hero. Los tres items y su
+      orden los fijo el cliente ("40 años / Quito / WPA·WFSBP").
     -->
     <section class="credential-band">
       <div class="shell credential-band__inner">
@@ -65,19 +66,33 @@ const whatsapp = computed(() => whatsappUrl());
       </div>
     </section>
 
+    <!-- Perfil: la prosa y, colgado al lado, el sillon del consultorio. -->
     <section id="perfil" class="section section--plain">
       <div class="shell">
-        <SectionHeading index="01" :title="t.about.heading" :lead="t.about.lead" />
-        <div class="prose">
-          <p v-for="(paragraph, index) in t.about.paragraphs" :key="index">{{ paragraph }}</p>
+        <SectionHeading :title="t.about.heading" :lead="t.about.lead" />
+        <div class="room">
+          <div class="prose">
+            <p v-for="(paragraph, index) in t.about.paragraphs" :key="index">{{ paragraph }}</p>
+          </div>
+          <FramedPhoto
+            :photo="profile.photos.consultorio"
+            :alt="t.photos.consultorio"
+            :caption="t.photos.consultorioCaption"
+          />
         </div>
       </div>
     </section>
 
-    <!-- Enfoque de la consulta. Solo recoge lo que el CV respalda. -->
+    <!-- Enfoque de la consulta: la foto ancha colgada arriba, dos tarjetas debajo. -->
     <section class="section section--sunk">
       <div class="shell">
-        <SectionHeading index="02" :title="t.practice.heading" :lead="t.practice.lead" />
+        <SectionHeading :title="t.practice.heading" :lead="t.practice.lead" />
+        <FramedPhoto
+          :photo="profile.photos.paredAzul"
+          :alt="t.photos.paredAzul"
+          sizes="(max-width: 1200px) 92vw, 1120px"
+          wide
+        />
         <div class="card-grid">
           <article v-for="item in t.practice.items" :key="item.title" class="card">
             <h3 class="card__title">{{ item.title }}</h3>
@@ -89,8 +104,8 @@ const whatsapp = computed(() => whatsappUrl());
 
     <!--
       Areas de experiencia confirmadas por el cliente (ver
-      profile.declaredConditions). En la 1c esta seccion lleva antetitulo en vez
-      de indice numerico y sus tarjetas pierden la caja: solo una regla superior.
+      profile.declaredConditions): cinco placas en fila. Esta seccion lleva
+      antetitulo; es, con el del hero, uno de los dos del sitio.
     -->
     <section class="section">
       <div class="shell">
@@ -109,41 +124,53 @@ const whatsapp = computed(() => whatsappUrl());
     </section>
 
     <!--
-      "Contacto primero": en la 1c la franja de contacto sube por delante de las
-      secciones largas de CV. Usa la variante compacta del panel; la ficha
-      completa (mapa, correos, emergencias) sigue viviendo en /contacto.
+      "Contacto primero": la placa negra sube por delante de las secciones
+      largas de CV. Variante compacta; la ficha completa (mapa, correos,
+      emergencias) sigue viviendo en /contacto.
     -->
     <section class="section section--sunk">
       <div class="shell">
-        <SectionHeading index="03" :title="t.contact.heading" :lead="t.contact.lead" />
+        <SectionHeading :title="t.contact.heading" :lead="t.contact.lead" />
         <ContactPanel variant="compact" />
       </div>
     </section>
 
+    <!-- Credenciales: los titulos enmarcados a la izquierda, fijos mientras se
+         recorre la lista; cada grupo del CV a la derecha. -->
     <section class="section">
       <div class="shell">
-        <SectionHeading index="04" :title="t.credentials.heading" :lead="t.credentials.lead" />
-        <div>
-          <section
-            v-for="group in t.credentials.groups"
-            :key="group.title"
-            class="credential-group"
-          >
-            <div class="credential-group__layout">
+        <SectionHeading :title="t.credentials.heading" :lead="t.credentials.lead" />
+        <div class="room room--frame-first">
+          <FramedPhoto
+            :photo="profile.photos.diplomas"
+            :alt="t.photos.diplomas"
+            :caption="t.photos.diplomasCaption"
+            sticky
+          />
+          <div>
+            <section
+              v-for="group in t.credentials.groups"
+              :key="group.title"
+              class="credential-group"
+            >
               <h3 class="credential-group__title">{{ group.title }}</h3>
-              <ul class="credential-list">
+              <ul
+                class="credential-list"
+                :class="{ 'credential-list--columns': group.items.length > 5 }"
+              >
                 <li v-for="item in group.items" :key="item">{{ item }}</li>
               </ul>
-            </div>
-          </section>
+            </section>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- Publicaciones: dos libros sobre una repisa. -->
     <section class="section section--sunk">
       <div class="shell">
-        <SectionHeading index="05" :title="t.publications.heading" :lead="t.publications.lead" />
-        <ul>
+        <SectionHeading :title="t.publications.heading" :lead="t.publications.lead" />
+        <ul class="publications-shelf">
           <li v-for="item in t.publications.items" :key="item.title" class="publication">
             <span class="publication__title">{{ item.title }}</span>
             <span v-if="item.note" class="publication__note">{{ item.note }}</span>
@@ -155,7 +182,7 @@ const whatsapp = computed(() => whatsappUrl());
 
     <section class="section">
       <div class="shell">
-        <SectionHeading index="06" :title="t.faq.heading" :lead="t.faq.lead" />
+        <SectionHeading :title="t.faq.heading" :lead="t.faq.lead" />
         <FaqList :items="t.faq.items" />
       </div>
     </section>

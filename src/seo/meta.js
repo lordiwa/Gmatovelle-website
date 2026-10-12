@@ -216,11 +216,18 @@ export function buildHead(page, locale) {
       'og:url': url,
       'og:locale': OG_LOCALE_TAGS[locale],
       'og:locale:alternate': OG_LOCALE_TAGS[locale === 'es' ? 'en' : 'es'],
+      // Tarjeta de 1200x630 con el retrato del Dr.: la misma sesion que el
+      // retrato del hero, recortada al formato que piden las redes.
+      'og:image': absoluteUrl(profile.ogImagePath),
+      'og:image:width': String(profile.ogImageWidth),
+      'og:image:height': String(profile.ogImageHeight),
+      'og:image:alt': t.hero.portraitAlt,
     },
     twitter: {
       'twitter:card': 'summary',
       'twitter:title': meta.title,
       'twitter:description': meta.description,
+      'twitter:image': absoluteUrl(profile.ogImagePath),
     },
     jsonLd,
   };
